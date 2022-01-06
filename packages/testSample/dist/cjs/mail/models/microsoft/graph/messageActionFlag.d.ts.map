@@ -1,0 +1,1 @@
+{"version":3,"file":"messageActionFlag.d.ts","sourceRoot":"","sources":["../../../../../../src/mail/models/microsoft/graph/messageActionFlag.ts"],"names":[],"mappings":"AAAA,oBAAY,iBAAiB;IACzB,GAAG,QAAQ;IACX,IAAI,SAAS;IACb,YAAY,iBAAiB;IAC7B,QAAQ,aAAa;IACrB,GAAG,QAAQ;IACX,OAAO,YAAY;IACnB,mBAAmB,wBAAwB;IAC3C,IAAI,SAAS;IACb,KAAK,UAAU;IACf,UAAU,eAAe;IACzB,MAAM,WAAW;CACpB"}
