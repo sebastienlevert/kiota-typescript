@@ -24,7 +24,7 @@ export class JsonParseNodeFactory implements ParseNodeFactory {
   }
 
   private convertArrayBufferToJson(arrayBuffer:ArrayBuffer) {
-    const formData = new Uint8Array(arrayBuffer);
+    const formData = new Uint16Array(arrayBuffer);
     const json = String.fromCharCode.apply(null, [...formData]);
     return JSON.parse(json);
   }
