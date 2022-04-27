@@ -19,10 +19,15 @@ export class JsonParseNodeFactory implements ParseNodeFactory {
       throw new Error("content cannot be undefined of empty");
     }
   
-    const formData = new Uint8Array(content);
-    const json = String.fromCharCode.apply(null, formData);
-    const contentAsJson = JSON.parse(json);
-     
-    return new JsonParseNode(contentAsJson);
+   
+    return new JsonParseNode(this.convertArrayBufferToJson(content));
   }
+
+  private convertArrayBufferToJson(arrayBuffer:ArrayBuffer) {
+    const formData = new Uint8Array(arrayBuffer);
+    const json = String.fromCharCode.apply(null, [...formData]);
+    return JSON.parse(json);
+  }
+
+  
 }
