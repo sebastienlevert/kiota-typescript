@@ -19,6 +19,7 @@ export class TextParseNodeFactory implements ParseNodeFactory {
     if (!content) {
       throw new Error("content cannot be undefined of empty");
     }
+    
     const decoder = new TextDecoder();
     const contentAsStr = decoder.decode(content);
     return new TextParseNode(contentAsStr);
