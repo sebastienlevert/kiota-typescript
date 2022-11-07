@@ -1,5 +1,7 @@
-import { ApiError, AuthenticationProvider, BackingStoreFactory, BackingStoreFactorySingleton, DateOnly, Duration, enableBackingStoreForParseNodeFactory, enableBackingStoreForSerializationWriterFactory, Parsable, ParsableFactory, ParseNode,ParseNodeFactory, ParseNodeFactoryRegistry, RequestAdapter, RequestInformation, ResponseHandler, SerializationWriterFactory, SerializationWriterFactoryRegistry, TimeOnly } from "@microsoft/kiota-abstractions";
+import { ApiError, AuthenticationProvider, BackingStoreFactory, BackingStoreFactorySingleton, DateOnly, Duration, enableBackingStoreForParseNodeFactory, enableBackingStoreForSerializationWriterFactory, Parsable, ParsableFactory, ParseNode, ParseNodeFactory, ParseNodeFactoryRegistry, RequestAdapter, RequestInformation, ResponseHandler, SerializationWriterFactory, SerializationWriterFactoryRegistry, TimeOnly } from "@microsoft/kiota-abstractions";
+import fetch from "node-fetch";
 
+import { FetchRequest } from "./fetchRestRequest";
 import { HttpClient } from "./httpClient";
 
 export class FetchRequestAdapter implements RequestAdapter {
@@ -267,4 +269,9 @@ export class FetchRequestAdapter implements RequestAdapter {
 		} as RequestInit;
 		return request;
 	};
+
+	public api(url: string): FetchRequest {
+		const request = new FetchRequest(url, this.httpClient, {} as RequestInit);
+		return request;
+	}
 }

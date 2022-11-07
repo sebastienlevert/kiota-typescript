@@ -15,3 +15,5 @@ export * from "./serialization";
 export * from "./store";
 export * from "./timeOnly";
 export * from "./utils";
+export * from "./rest/RestClient";
+export * from "./rest/RestRequest";
