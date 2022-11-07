@@ -11,5 +11,5 @@ const fetchRequestAdapter = new FetchRequestAdapter(authProvider);
 const client = new ApiClient(fetchRequestAdapter);
 
 async function test() {
-    const res = await client.api("/users").get();
+    const res = await client.api("/admin/serviceAnnouncement").api();
 }

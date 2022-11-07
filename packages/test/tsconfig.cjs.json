@@ -47,5 +47,5 @@
         }
     ],
 	"exclude": ["node_modules", "dist"],
-	"include": ["./generatedCode/**/*.ts", "./tests","./restSample"]
+	"include": ["./generatedCode/**/*.ts", "./tests","./restSample","./restGenerated"]
 }

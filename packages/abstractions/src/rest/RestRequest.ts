@@ -1,6 +1,6 @@
 export interface RestRequest {
-    get: () => Promise<unknown>;
-    post: () => Promise<unknown>;
-    patch: () => Promise<unknown>;
-    delete: () => Promise<unknown>;
+  get(...args: []): unknown;
+  post(...args: []): unknown;
+  patch(...args: []): unknown;
+  delete(...args: []): unknown;
 }
