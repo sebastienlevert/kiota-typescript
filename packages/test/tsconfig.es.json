@@ -48,5 +48,5 @@
             "../authentication/spfx"
         ],
     },
-	"include": ["./generatedCode/**/*.ts", "./tests/**/*.ts"]
+	"include": ["./generatedCode/**/*.ts", "./tests/**/*.ts","./restSample"]
 }

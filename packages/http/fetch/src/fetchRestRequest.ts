@@ -12,6 +12,13 @@ export class FetchRequest implements RestRequest {
 		return this.send();
 	}
 
+    public patch(): Promise<unknown> {
+		return this.send();
+	}
+	public delete(): Promise<unknown> {
+		return this.send();
+	}
+
 	private send(requestInit?: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<unknown> {
 		return this.httpClient.executeFetch(this.urlString, this.requestInit, requestOptions);
 	}

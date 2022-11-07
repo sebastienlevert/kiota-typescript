@@ -9,3 +9,4 @@ const authProvider = new AzureIdentityAuthenticationProvider(tokenCredential, ["
 const fetchRequestAdapter = new FetchRequestAdapter(authProvider)
 export const apiClient = new ApiClient(fetchRequestAdapter);
 
+
