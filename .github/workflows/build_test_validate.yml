@@ -11,16 +11,18 @@ jobs:
         runs-on: ubuntu-latest
         environment:
           name: build_test
+        env:
+          TENANT_ID: ${{ secrets.TENANT_ID }}
         strategy:
           matrix:
-            node-version: [ 16.x]
+            node-version: [14.x, 16.x, 18.x]
         steps:
         - uses: actions/checkout@v3
         - name: Use Node.js ${{ matrix.node-version }}
           uses: actions/setup-node@v3
           with:
             node-version: ${{ matrix.node-version }}
-        - run: yarn install --frozen-lockfile
+        - run: yarn install --frozen-lockfile --ignore-engines #spfx still not compatible with node 18
         - run: yarn global add mocha@6.2.3
         - run: yarn run build
         - name: Archive dist folders # archive dist folders to verify if they are transpiled correctly and available for publishing
@@ -33,12 +35,13 @@ jobs:
               packages/serialization/text/dist
               packages/http/fetch/dist
               packages/authentication/azure/dist
-        - run: lerna run test:integrated
+        - run: yarn lerna run test:integrated
+          if: ${{env.TENANT_ID != '' }}
           env:
               TENANT_ID:  ${{secrets.tenant_id}}
               CLIENT_ID: ${{secrets.client_id}}
               CLIENT_SECRET: ${{secrets.client_secret}}
-        - run: lerna run test --parallel
+        - run: yarn lerna run test --parallel
     
     publish-npm:
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'auto dependabot')}}
@@ -62,7 +65,6 @@ jobs:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 GITHUB_ACTOR: ${{ secrets.GIT_USERNAME }}
           - run: yarn install --frozen-lockfile
-          - run: yarn global add mocha@6.2.3
           - run: yarn run build
           - run: lerna run test --parallel
           - run: lerna publish from-package --yes --no-verify-access  
