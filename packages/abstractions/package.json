@@ -1,6 +1,6 @@
 {
     "name": "@microsoft/kiota-abstractions",
-    "version": "1.0.0-preview.6",
+    "version": "1.0.0-preview.7",
     "description": "Core abstractions for kiota generated libraries in TypeScript and JavaScript",
     "main": "dist/cjs/src/index.js",
     "files": [
@@ -18,9 +18,7 @@
         "clean": "rm -r ./dist",
         "karma": "npm run rollup && karma  start --single-run --browsers ChromeHeadless karma.conf.js",
         "rollup": "rollup -c",
-        "test": "npm run test:cjs && npm run test:es",
-        "test:cjs": "tsc -p tsconfig.cjs.json  && mocha  'dist/cjs/test/common/**/*.js'",
-        "test:es": "tsc -b tsconfig.es.json && mocha 'dist/es/test/common/**/*.js' --require esm"
+        "test": "npm run build  && mocha  'dist/cjs/test/common/**/*.js'"
     },
     "repository": "git://github.com/microsoft/kiota-typescript.git",
     "keywords": [
@@ -44,6 +42,6 @@
         "tinyduration": "^3.2.2",
         "tslib": "^2.3.1",
         "uri-template-lite": "^22.1.0",
-        "uuid": "^8.3.2"
+        "uuid": "^9.0.0"
     }
 }
