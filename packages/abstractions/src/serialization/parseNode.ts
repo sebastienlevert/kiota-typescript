@@ -66,6 +66,10 @@ export interface ParseNode {
   getCollectionOfObjectValues<T extends Parsable>(
     type: ParsableFactory<T>
   ): T[] | undefined;
+
+  getCollectionOfObjectValuesFromMethod<T>(
+    method: (value: unknown) => T
+  ): T[] | undefined;
   /**
    * Gets the model object value of the node.
    * @return the model object value of the node.

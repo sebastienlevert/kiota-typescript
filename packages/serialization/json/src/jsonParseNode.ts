@@ -58,6 +58,15 @@ export class JsonParseNode implements ParseNode {
       .map((x) => new JsonParseNode(x))
       .map((x) => x.getObjectValue<T>(type));
   };
+
+  public getCollectionOfObjectValuesFromMethod = <T>(
+    method: (value: unknown) => T
+  ): T[] | undefined => {
+    return (this._jsonNode as unknown[])
+      .map((x) => new JsonParseNode(x))
+      .map((x) => method(x));
+  };
+
   public getObjectValue = <T extends Parsable>(type: ParsableFactory<T>): T => {
     const result = type(this);
     if (this.onBeforeAssignFieldValues) {
@@ -68,6 +77,41 @@ export class JsonParseNode implements ParseNode {
       this.onAfterAssignFieldValues(result);
     }
     return result;
+  };
+
+  public getObject = (
+    deserializerFunction: (model: any) => Record<string, (n: ParseNode) => void>
+  ): unknown => {
+    const model = {};
+    // if (this.onBeforeAssignFieldValues) {
+    //   this.onBeforeAssignFieldValues(result);
+    // }
+    this.aF(model, deserializerFunction);
+    // if (this.onAfterAssignFieldValues) {
+    //   this.onAfterAssignFieldValues(result);
+    // }
+    return model;
+  };
+
+  private aF = (
+    model: unknown,
+    deserializerFunction: (model: any) => Record<string, (n: ParseNode) => void>
+  ): void => {
+    const fields = deserializerFunction(model);
+    let itemAdditionalData: Record<string, unknown> | undefined;
+    // const holder = item as unknown as AdditionalDataHolder;
+    // if (holder && holder.additionalData) {
+    //   itemAdditionalData = holder.additionalData;
+    // }
+    if (!this._jsonNode) return;
+    Object.entries(this._jsonNode as any).forEach(([k, v]) => {
+      const deserializer = fields[k];
+      if (deserializer) {
+        deserializer(new JsonParseNode(v));
+      } else if (itemAdditionalData) {
+        itemAdditionalData[k] = v;
+      }
+    });
   };
   public getEnumValues = <T>(type: any): T[] => {
     const rawValues = this.getStringValue();

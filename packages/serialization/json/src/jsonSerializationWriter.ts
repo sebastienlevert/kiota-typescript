@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {
   DateOnly,
   Duration,
   Parsable,
   SerializationWriter,
+  SerializerMethod,
   TimeOnly,
 } from "@microsoft/kiota-abstractions";
 
@@ -78,6 +80,27 @@ export class JsonSerializationWriter implements SerializationWriter {
       key && this.writer.push(JsonSerializationWriter.propertySeparator);
     }
   };
+  public writeCollectionOfObjectValuesFromMethod = <T>(
+    key: string,
+    values: T[],
+    serializerMethod: SerializerMethod<T>
+  ): void => {
+    if (values) {
+      key && this.writePropertyName(key);
+      this.writer.push(`[`);
+      values.forEach((v) => {
+        this.writeObjectValueFromMethod(undefined, v, serializerMethod);
+        this.writer.push(JsonSerializationWriter.propertySeparator);
+      });
+      if (values.length > 0) {
+        //removing the last separator
+        this.writer.pop();
+      }
+      this.writer.push(`]`);
+      key && this.writer.push(JsonSerializationWriter.propertySeparator);
+    }
+  };
+
   public writeCollectionOfObjectValues = <T extends Parsable>(
     key?: string,
     values?: T[]
@@ -97,6 +120,29 @@ export class JsonSerializationWriter implements SerializationWriter {
       key && this.writer.push(JsonSerializationWriter.propertySeparator);
     }
   };
+
+  public writeObjectValueFromMethod<T>(
+    key: string | undefined,
+    value: T,
+    serializerMethod: SerializerMethod<T>
+  ): void {
+    this.onBeforeObjectSerialization && this.onBeforeObjectSerialization(value);
+    this.writer.push(`{`);
+    this.onStartObjectSerialization &&
+      this.onStartObjectSerialization(value, this);
+    serializerMethod(value);
+    this.onAfterObjectSerialization && this.onAfterObjectSerialization(value);
+    if (
+      this.writer.length > 0 &&
+      this.writer[this.writer.length - 1] ===
+        JsonSerializationWriter.propertySeparator
+    ) {
+      //removing the last separator
+      this.writer.pop();
+    }
+    this.writer.push(`}`);
+    key && this.writer.push(JsonSerializationWriter.propertySeparator);
+  }
   public writeObjectValue = <T extends Parsable>(
     key?: string,
     value?: T
@@ -156,9 +202,9 @@ export class JsonSerializationWriter implements SerializationWriter {
   public writeAdditionalData = (value: Record<string, unknown>): void => {
     if (!value) return;
 
-    for(const key in value ) {
+    for (const key in value) {
       this.writeAnyValue(key, value[key]);
-    };
+    }
   };
   private writeNonParsableObjectValue = (
     key?: string | undefined,

@@ -5,6 +5,7 @@ import {
   SerializationWriter,
   TimeOnly,
 } from "@microsoft/kiota-abstractions";
+import { SerializerMethod } from "@microsoft/kiota-abstractions/dist/cjs/src/serialization/serializerMethod";
 
 export class TextSerializationWriter implements SerializationWriter {
   private static noStructuredDataMessage =
@@ -124,4 +125,13 @@ export class TextSerializationWriter implements SerializationWriter {
   public writeAdditionalData = (value: Record<string, unknown>): void => {
     throw new Error(TextSerializationWriter.noStructuredDataMessage);
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public writeObjectValueFromMethod<T extends Parsable>(
+    key: string,
+    value: T,
+    serializerMethod: SerializerMethod<T>
+  ): void {
+    throw new Error("Method not implemented.");
+  }
 }

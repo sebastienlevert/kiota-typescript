@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   DateOnly,
   Duration,
@@ -23,6 +24,7 @@ export class TextParseNode implements ParseNode {
         ? this.text.substring(1, this.text.length - 2)
         : this.text;
   }
+
   public onBeforeAssignFieldValues: ((value: Parsable) => void) | undefined;
   public onAfterAssignFieldValues: ((value: Parsable) => void) | undefined;
   public getStringValue = (): string => this.text;
@@ -47,6 +49,12 @@ export class TextParseNode implements ParseNode {
   ): T[] | undefined => {
     throw new Error(TextParseNode.noStructuredDataMessage);
   };
+
+  public getCollectionOfObjectValuesFromMethod<T>(
+    method: (value: unknown) => T
+  ): T[] | undefined {
+    throw new Error(TextParseNode.noStructuredDataMessage);
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getObjectValue = <T extends Parsable>(type: ParsableFactory<T>): T => {
     throw new Error(TextParseNode.noStructuredDataMessage);
