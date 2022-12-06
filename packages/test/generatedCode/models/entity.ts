@@ -5,4 +5,6 @@ export interface Entity extends Partial<AdditionalDataHolder>, Partial<Parsable>
     additionalData?: Record<string, unknown>;
     /** The unique idenfier for an entity. Read-only. */
     id?: string;
+    /** The OdataType property */
+    odataType?: string;
 }

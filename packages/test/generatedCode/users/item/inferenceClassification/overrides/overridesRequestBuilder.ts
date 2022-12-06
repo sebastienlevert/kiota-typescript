@@ -2,14 +2,20 @@ import {deserializeIntoInferenceClassificationOverride} from '../../../../models
 import {deserializeIntoInferenceClassificationOverrideCollectionResponse} from '../../../../models/deserializeIntoInferenceClassificationOverrideCollectionResponse';
 import {InferenceClassificationOverride} from '../../../../models/inferenceClassificationOverride';
 import {InferenceClassificationOverrideCollectionResponse} from '../../../../models/inferenceClassificationOverrideCollectionResponse';
+import {ODataError} from '../../../../models/oDataErrors/oDataError';
 import {serializeInferenceClassificationOverride} from '../../../../models/serializeInferenceClassificationOverride';
 import {serializeInferenceClassificationOverrideCollectionResponse} from '../../../../models/serializeInferenceClassificationOverrideCollectionResponse';
+import {CountRequestBuilder} from './count/countRequestBuilder';
 import {OverridesRequestBuilderGetRequestConfiguration} from './overridesRequestBuilderGetRequestConfiguration';
 import {OverridesRequestBuilderPostRequestConfiguration} from './overridesRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/inferenceClassification/overrides */
+/** Provides operations to manage the overrides property of the microsoft.graph.inferenceClassification entity. */
 export class OverridesRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests. */
@@ -77,7 +83,7 @@ export class OverridesRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<InferenceClassificationOverrideCollectionResponse>(requestInfo,deserializeIntoInferenceClassificationOverrideCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<InferenceClassificationOverrideCollectionResponse>(requestInfo,deserializeIntoInferenceClassificationOverrideCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Create an override for a sender identified by an SMTP address. Future messages from that SMTP address will be consistently classifiedas specified in the override. **Note**
@@ -91,6 +97,6 @@ export class OverridesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<InferenceClassificationOverride>(requestInfo,deserializeIntoInferenceClassificationOverride, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<InferenceClassificationOverride>(requestInfo,deserializeIntoInferenceClassificationOverride, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

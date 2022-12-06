@@ -2,14 +2,25 @@ import {Attachment} from '../../../../../models/attachment';
 import {AttachmentCollectionResponse} from '../../../../../models/attachmentCollectionResponse';
 import {deserializeIntoAttachment} from '../../../../../models/deserializeIntoAttachment';
 import {deserializeIntoAttachmentCollectionResponse} from '../../../../../models/deserializeIntoAttachmentCollectionResponse';
+import {ODataError} from '../../../../../models/oDataErrors/oDataError';
 import {serializeAttachment} from '../../../../../models/serializeAttachment';
 import {serializeAttachmentCollectionResponse} from '../../../../../models/serializeAttachmentCollectionResponse';
 import {AttachmentsRequestBuilderGetRequestConfiguration} from './attachmentsRequestBuilderGetRequestConfiguration';
 import {AttachmentsRequestBuilderPostRequestConfiguration} from './attachmentsRequestBuilderPostRequestConfiguration';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {CreateUploadSessionRequestBuilder} from './createUploadSession/createUploadSessionRequestBuilder';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/messages/{message-id}/attachments */
+/** Provides operations to manage the attachments property of the microsoft.graph.message entity. */
 export class AttachmentsRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to call the createUploadSession method. */
+    public get createUploadSession(): CreateUploadSessionRequestBuilder {
+        return new CreateUploadSessionRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests. */
@@ -77,7 +88,7 @@ export class AttachmentsRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<AttachmentCollectionResponse>(requestInfo,deserializeIntoAttachmentCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<AttachmentCollectionResponse>(requestInfo,deserializeIntoAttachmentCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Use this API to add an attachment to a message.  An attachment can be one of the following types: All these types of attachment resources are derived from the attachmentresource.  You can add an attachment to an existing message by posting to its attachments collection, or you can add an attachment to a message that is being created and sent on the fly. This operation limits the size of the attachment you can add to under 3 MB.
@@ -91,6 +102,6 @@ export class AttachmentsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Attachment>(requestInfo,deserializeIntoAttachment, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Attachment>(requestInfo,deserializeIntoAttachment, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

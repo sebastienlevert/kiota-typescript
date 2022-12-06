@@ -12,6 +12,7 @@ export function serializeMessageRuleActions(writer: SerializationWriter, message
             writer.writeBooleanValue("markAsRead", messageRuleActions.markAsRead);
             writer.writeEnumValue<Importance>("markImportance", messageRuleActions.markImportance);
             writer.writeStringValue("moveToFolder", messageRuleActions.moveToFolder);
+            writer.writeStringValue("@odata.type", messageRuleActions.odataType);
             writer.writeBooleanValue("permanentDelete", messageRuleActions.permanentDelete);
             writer.writeCollectionOfObjectValuesFromMethod("redirectTo", messageRuleActions.redirectTo as any, serializeRecipient);
             writer.writeBooleanValue("stopProcessingRules", messageRuleActions.stopProcessingRules);

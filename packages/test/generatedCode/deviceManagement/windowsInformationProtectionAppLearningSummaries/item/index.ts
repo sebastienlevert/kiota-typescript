@@ -1,0 +1,4 @@
+export * from './windowsInformationProtectionAppLearningSummaryItemRequestBuilderGetRequestConfiguration'
+export * from './windowsInformationProtectionAppLearningSummaryItemRequestBuilderPatchRequestConfiguration'
+export * from './windowsInformationProtectionAppLearningSummaryItemRequestBuilderDeleteRequestConfiguration'
+export * from './windowsInformationProtectionAppLearningSummaryItemRequestBuilderGetQueryParameters'

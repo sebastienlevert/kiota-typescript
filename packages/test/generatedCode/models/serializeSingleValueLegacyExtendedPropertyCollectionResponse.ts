@@ -1,8 +1,9 @@
 import {SingleValueLegacyExtendedPropertyCollectionResponse} from './index';
+import {serializeBaseCollectionPaginationCountResponse} from './serializeBaseCollectionPaginationCountResponse';
 import {serializeSingleValueLegacyExtendedProperty} from './serializeSingleValueLegacyExtendedProperty';
-import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function serializeSingleValueLegacyExtendedPropertyCollectionResponse(writer: SerializationWriter, singleValueLegacyExtendedPropertyCollectionResponse: SingleValueLegacyExtendedPropertyCollectionResponse | undefined = {}) : void {
-            writer.writeStringValue("@odata.nextLink", singleValueLegacyExtendedPropertyCollectionResponse.odataNextLink);
+        serializeBaseCollectionPaginationCountResponse(writer, singleValueLegacyExtendedPropertyCollectionResponse)
             writer.writeCollectionOfObjectValuesFromMethod("value", singleValueLegacyExtendedPropertyCollectionResponse.value as any, serializeSingleValueLegacyExtendedProperty);
 }

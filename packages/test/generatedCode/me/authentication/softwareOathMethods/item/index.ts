@@ -1,0 +1,4 @@
+export * from './softwareOathAuthenticationMethodItemRequestBuilderGetRequestConfiguration'
+export * from './softwareOathAuthenticationMethodItemRequestBuilderGetQueryParameters'
+export * from './softwareOathAuthenticationMethodItemRequestBuilderPatchRequestConfiguration'
+export * from './softwareOathAuthenticationMethodItemRequestBuilderDeleteRequestConfiguration'

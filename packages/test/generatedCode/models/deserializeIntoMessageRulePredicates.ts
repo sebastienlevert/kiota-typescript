@@ -28,6 +28,7 @@ export function deserializeIntoMessageRulePredicates(messageRulePredicates: Mess
         "isVoicemail": n => { messageRulePredicates.isVoicemail = n.getBooleanValue() as any ; },
         "messageActionFlag": n => { messageRulePredicates.messageActionFlag = n.getEnumValue<MessageActionFlag>(MessageActionFlag) as any ; },
         "notSentToMe": n => { messageRulePredicates.notSentToMe = n.getBooleanValue() as any ; },
+        "@odata.type": n => { messageRulePredicates.odataType = n.getStringValue() as any ; },
         "recipientContains": n => { messageRulePredicates.recipientContains = n.getCollectionOfPrimitiveValues<string>() as any ; },
         "senderContains": n => { messageRulePredicates.senderContains = n.getCollectionOfPrimitiveValues<string>() as any ; },
         "sensitivity": n => { messageRulePredicates.sensitivity = n.getEnumValue<Sensitivity>(Sensitivity) as any ; },

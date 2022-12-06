@@ -1,3 +1,4 @@
+/** Provides operations to manage the auditLogRoot singleton. */
 export enum MessageActionFlag {
     Any = "any",
     Call = "call",

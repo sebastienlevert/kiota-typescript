@@ -1,0 +1,7 @@
+export * from './deserializeIntoFavoritePostRequestBody'
+export * from './serializeFavoritePostRequestBody'
+export * from './serializeFavoriteResponse'
+export * from './deserializeIntoFavoriteResponse'
+export * from './favoriteResponse'
+export * from './favoriteRequestBuilderPostRequestConfiguration'
+export * from './favoritePostRequestBody'

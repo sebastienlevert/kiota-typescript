@@ -3,5 +3,6 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function serializeInternetMessageHeader(writer: SerializationWriter, internetMessageHeader: InternetMessageHeader | undefined = {}) : void {
             writer.writeStringValue("name", internetMessageHeader.name);
+            writer.writeStringValue("@odata.type", internetMessageHeader.odataType);
             writer.writeStringValue("value", internetMessageHeader.value);
 }

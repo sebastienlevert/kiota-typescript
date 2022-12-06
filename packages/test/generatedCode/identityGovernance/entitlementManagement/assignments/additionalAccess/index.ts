@@ -1,0 +1,5 @@
+export * from './deserializeIntoAdditionalAccessResponse'
+export * from './serializeAdditionalAccessResponse'
+export * from './additionalAccessResponse'
+export * from './additionalAccessRequestBuilderGetRequestConfiguration'
+export * from './additionalAccessRequestBuilderGetQueryParameters'

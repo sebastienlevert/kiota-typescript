@@ -1,0 +1,4 @@
+export * from './deviceAndAppManagementRoleAssignmentItemRequestBuilderGetQueryParameters'
+export * from './deviceAndAppManagementRoleAssignmentItemRequestBuilderDeleteRequestConfiguration'
+export * from './deviceAndAppManagementRoleAssignmentItemRequestBuilderGetRequestConfiguration'
+export * from './deviceAndAppManagementRoleAssignmentItemRequestBuilderPatchRequestConfiguration'

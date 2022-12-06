@@ -4,4 +4,5 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function serializeRecipient(writer: SerializationWriter, recipient: Recipient | undefined = {}) : void {
             writer.writeObjectValueFromMethod("emailAddress", recipient.emailAddress as any, serializeEmailAddress);
+            writer.writeStringValue("@odata.type", recipient.odataType);
 }

@@ -13,6 +13,7 @@ export function deserializeIntoMessageRuleActions(messageRuleActions: MessageRul
         "markAsRead": n => { messageRuleActions.markAsRead = n.getBooleanValue() as any ; },
         "markImportance": n => { messageRuleActions.markImportance = n.getEnumValue<Importance>(Importance) as any ; },
         "moveToFolder": n => { messageRuleActions.moveToFolder = n.getStringValue() as any ; },
+        "@odata.type": n => { messageRuleActions.odataType = n.getStringValue() as any ; },
         "permanentDelete": n => { messageRuleActions.permanentDelete = n.getBooleanValue() as any ; },
         "redirectTo": n => { messageRuleActions.redirectTo = n.getCollectionOfObjectValuesFromMethod(deserializeIntoRecipient) as any ; },
         "stopProcessingRules": n => { messageRuleActions.stopProcessingRules = n.getBooleanValue() as any ; },

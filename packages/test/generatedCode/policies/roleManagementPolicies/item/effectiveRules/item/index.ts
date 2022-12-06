@@ -1,0 +1,4 @@
+export * from './unifiedRoleManagementPolicyRuleItemRequestBuilderDeleteRequestConfiguration'
+export * from './unifiedRoleManagementPolicyRuleItemRequestBuilderGetQueryParameters'
+export * from './unifiedRoleManagementPolicyRuleItemRequestBuilderPatchRequestConfiguration'
+export * from './unifiedRoleManagementPolicyRuleItemRequestBuilderGetRequestConfiguration'

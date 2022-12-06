@@ -2,14 +2,20 @@ import {deserializeIntoMessageRule} from '../../../../../models/deserializeIntoM
 import {deserializeIntoMessageRuleCollectionResponse} from '../../../../../models/deserializeIntoMessageRuleCollectionResponse';
 import {MessageRule} from '../../../../../models/messageRule';
 import {MessageRuleCollectionResponse} from '../../../../../models/messageRuleCollectionResponse';
+import {ODataError} from '../../../../../models/oDataErrors/oDataError';
 import {serializeMessageRule} from '../../../../../models/serializeMessageRule';
 import {serializeMessageRuleCollectionResponse} from '../../../../../models/serializeMessageRuleCollectionResponse';
+import {CountRequestBuilder} from './count/countRequestBuilder';
 import {MessageRulesRequestBuilderGetRequestConfiguration} from './messageRulesRequestBuilderGetRequestConfiguration';
 import {MessageRulesRequestBuilderPostRequestConfiguration} from './messageRulesRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/messageRules */
+/** Provides operations to manage the messageRules property of the microsoft.graph.mailFolder entity. */
 export class MessageRulesRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests. */
@@ -77,7 +83,7 @@ export class MessageRulesRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MessageRuleCollectionResponse>(requestInfo,deserializeIntoMessageRuleCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MessageRuleCollectionResponse>(requestInfo,deserializeIntoMessageRuleCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Create a messageRule object by specifying a set of conditions and actions.  Outlook carries out those actions if an incoming message in the user's Inbox meets the specified conditions.
@@ -91,6 +97,6 @@ export class MessageRulesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MessageRule>(requestInfo,deserializeIntoMessageRule, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MessageRule>(requestInfo,deserializeIntoMessageRule, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

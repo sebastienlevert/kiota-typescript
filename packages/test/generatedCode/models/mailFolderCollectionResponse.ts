@@ -1,11 +1,7 @@
-import {MailFolder} from './index';
-import {AdditionalDataHolder, Parsable} from '@microsoft/kiota-abstractions';
+import {BaseCollectionPaginationCountResponse, MailFolder} from './index';
+import {Parsable} from '@microsoft/kiota-abstractions';
 
-export interface MailFolderCollectionResponse extends Partial<AdditionalDataHolder>, Partial<Parsable> {
-    /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well. */
-    additionalData?: Record<string, unknown>;
-    /** The OdataNextLink property */
-    odataNextLink?: string;
+export interface MailFolderCollectionResponse extends BaseCollectionPaginationCountResponse, Partial<Parsable> {
     /** The value property */
     value?: MailFolder[];
 }

@@ -7,4 +7,6 @@ export interface EmailAddress extends Partial<AdditionalDataHolder>, Partial<Par
     address?: string;
     /** The display name of the person or entity. */
     name?: string;
+    /** The OdataType property */
+    odataType?: string;
 }

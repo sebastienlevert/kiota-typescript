@@ -1,10 +1,11 @@
 import {deserializeIntoAttachment} from './deserializeIntoAttachment';
+import {deserializeIntoBaseCollectionPaginationCountResponse} from './deserializeIntoBaseCollectionPaginationCountResponse';
 import {AttachmentCollectionResponse} from './index';
-import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function deserializeIntoAttachmentCollectionResponse(attachmentCollectionResponse: AttachmentCollectionResponse | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "@odata.nextLink": n => { attachmentCollectionResponse.odataNextLink = n.getStringValue() as any ; },
+        ...deserializeIntoBaseCollectionPaginationCountResponse(attachmentCollectionResponse),
         "value": n => { attachmentCollectionResponse.value = n.getCollectionOfObjectValuesFromMethod(deserializeIntoAttachment) as any ; },
     }
 }

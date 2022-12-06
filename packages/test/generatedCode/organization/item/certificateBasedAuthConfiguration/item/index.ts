@@ -1,0 +1,2 @@
+export * from './certificateBasedAuthConfigurationItemRequestBuilderGetQueryParameters'
+export * from './certificateBasedAuthConfigurationItemRequestBuilderGetRequestConfiguration'

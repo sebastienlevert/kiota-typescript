@@ -4,6 +4,7 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 export function deserializeIntoDateTimeTimeZone(dateTimeTimeZone: DateTimeTimeZone | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "dateTime": n => { dateTimeTimeZone.dateTime = n.getStringValue() as any ; },
+        "@odata.type": n => { dateTimeTimeZone.odataType = n.getStringValue() as any ; },
         "timeZone": n => { dateTimeTimeZone.timeZone = n.getStringValue() as any ; },
     }
 }

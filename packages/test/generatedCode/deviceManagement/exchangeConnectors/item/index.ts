@@ -1,0 +1,4 @@
+export * from './deviceManagementExchangeConnectorItemRequestBuilderGetRequestConfiguration'
+export * from './deviceManagementExchangeConnectorItemRequestBuilderGetQueryParameters'
+export * from './deviceManagementExchangeConnectorItemRequestBuilderDeleteRequestConfiguration'
+export * from './deviceManagementExchangeConnectorItemRequestBuilderPatchRequestConfiguration'

@@ -1,0 +1,4 @@
+export * from './unifiedRoleAssignmentScheduleRequestItemRequestBuilderPatchRequestConfiguration'
+export * from './unifiedRoleAssignmentScheduleRequestItemRequestBuilderGetQueryParameters'
+export * from './unifiedRoleAssignmentScheduleRequestItemRequestBuilderGetRequestConfiguration'
+export * from './unifiedRoleAssignmentScheduleRequestItemRequestBuilderDeleteRequestConfiguration'

@@ -1,11 +1,12 @@
 import {Attachment} from '../../../../../../../../../../models/attachment';
 import {deserializeIntoAttachment} from '../../../../../../../../../../models/deserializeIntoAttachment';
+import {ODataError} from '../../../../../../../../../../models/oDataErrors/oDataError';
 import {serializeAttachment} from '../../../../../../../../../../models/serializeAttachment';
 import {AttachmentItemRequestBuilderDeleteRequestConfiguration} from './attachmentItemRequestBuilderDeleteRequestConfiguration';
 import {AttachmentItemRequestBuilderGetRequestConfiguration} from './attachmentItemRequestBuilderGetRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/childFolders/{mailFolder-id1}/messages/{message-id}/attachments/{attachment-id} */
+/** Provides operations to manage the attachments property of the microsoft.graph.message entity. */
 export class AttachmentItemRequestBuilder {
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
@@ -69,7 +70,7 @@ export class AttachmentItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * The fileAttachment and itemAttachment attachments for the message.
@@ -81,6 +82,6 @@ export class AttachmentItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Attachment>(requestInfo,deserializeIntoAttachment, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Attachment>(requestInfo,deserializeIntoAttachment, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

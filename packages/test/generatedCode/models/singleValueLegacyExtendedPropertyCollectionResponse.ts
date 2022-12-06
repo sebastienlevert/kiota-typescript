@@ -1,11 +1,7 @@
-import {SingleValueLegacyExtendedProperty} from './index';
-import {AdditionalDataHolder, Parsable} from '@microsoft/kiota-abstractions';
+import {BaseCollectionPaginationCountResponse, SingleValueLegacyExtendedProperty} from './index';
+import {Parsable} from '@microsoft/kiota-abstractions';
 
-export interface SingleValueLegacyExtendedPropertyCollectionResponse extends Partial<AdditionalDataHolder>, Partial<Parsable> {
-    /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well. */
-    additionalData?: Record<string, unknown>;
-    /** The OdataNextLink property */
-    odataNextLink?: string;
+export interface SingleValueLegacyExtendedPropertyCollectionResponse extends BaseCollectionPaginationCountResponse, Partial<Parsable> {
     /** The value property */
     value?: SingleValueLegacyExtendedProperty[];
 }

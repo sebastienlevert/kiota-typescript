@@ -6,6 +6,8 @@ export interface ItemBody extends Partial<AdditionalDataHolder>, Partial<Parsabl
     additionalData?: Record<string, unknown>;
     /** The content of the item. */
     content?: string;
-    /** The contentType property */
+    /** The type of the content. Possible values are text and html. */
     contentType?: BodyType;
+    /** The OdataType property */
+    odataType?: string;
 }

@@ -1,0 +1,4 @@
+export * from './crossTenantAccessPolicyConfigurationPartnerTenantItemRequestBuilderPatchRequestConfiguration'
+export * from './crossTenantAccessPolicyConfigurationPartnerTenantItemRequestBuilderGetQueryParameters'
+export * from './crossTenantAccessPolicyConfigurationPartnerTenantItemRequestBuilderDeleteRequestConfiguration'
+export * from './crossTenantAccessPolicyConfigurationPartnerTenantItemRequestBuilderGetRequestConfiguration'

@@ -3,4 +3,5 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function serializeEntity(writer: SerializationWriter, entity: Entity | undefined = {}) : void {
             writer.writeStringValue("id", entity.id);
+            writer.writeStringValue("@odata.type", entity.odataType);
 }

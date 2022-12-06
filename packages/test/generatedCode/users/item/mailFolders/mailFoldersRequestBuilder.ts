@@ -2,14 +2,21 @@ import {deserializeIntoMailFolder} from '../../../models/deserializeIntoMailFold
 import {deserializeIntoMailFolderCollectionResponse} from '../../../models/deserializeIntoMailFolderCollectionResponse';
 import {MailFolder} from '../../../models/mailFolder';
 import {MailFolderCollectionResponse} from '../../../models/mailFolderCollectionResponse';
+import {ODataError} from '../../../models/oDataErrors/oDataError';
 import {serializeMailFolder} from '../../../models/serializeMailFolder';
 import {serializeMailFolderCollectionResponse} from '../../../models/serializeMailFolderCollectionResponse';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {DeltaRequestBuilder} from './delta/deltaRequestBuilder';
 import {MailFoldersRequestBuilderGetRequestConfiguration} from './mailFoldersRequestBuilderGetRequestConfiguration';
 import {MailFoldersRequestBuilderPostRequestConfiguration} from './mailFoldersRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders */
+/** Provides operations to manage the mailFolders property of the microsoft.graph.user entity. */
 export class MailFoldersRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests. */
@@ -68,6 +75,13 @@ export class MailFoldersRequestBuilder {
         return requestInfo;
     };
     /**
+     * Provides operations to call the delta method.
+     * @returns a deltaRequestBuilder
+     */
+    public delta() : DeltaRequestBuilder {
+        return new DeltaRequestBuilder(this.pathParameters, this.requestAdapter);
+    };
+    /**
      * Get the mail folder collection directly under the root folder of the signed-in user. The returned collection includes any mail search folders directly under the root. By default, this operation does not return hidden folders. Use a query parameter _includeHiddenFolders_ to include them in the response.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -77,7 +91,7 @@ export class MailFoldersRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MailFolderCollectionResponse>(requestInfo,deserializeIntoMailFolderCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MailFolderCollectionResponse>(requestInfo,deserializeIntoMailFolderCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Use this API to create a new mail folder in the root folder of the user's mailbox. If you intend a new folder to be hidden, you must set the **isHidden** property to `true` on creation.
@@ -91,6 +105,6 @@ export class MailFoldersRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo,deserializeIntoMailFolder, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo,deserializeIntoMailFolder, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

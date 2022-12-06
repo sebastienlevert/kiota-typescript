@@ -5,6 +5,8 @@ export interface DateTimeTimeZone extends Partial<AdditionalDataHolder>, Partial
     additionalData?: Record<string, unknown>;
     /** A single point of time in a combined date and time representation ({date}T{time}; for example, 2017-08-29T04:00:00.0000000). */
     dateTime?: string;
+    /** The OdataType property */
+    odataType?: string;
     /** Represents a time zone, for example, 'Pacific Standard Time'. See below for more possible values. */
     timeZone?: string;
 }

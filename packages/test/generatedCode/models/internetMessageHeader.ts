@@ -5,6 +5,8 @@ export interface InternetMessageHeader extends Partial<AdditionalDataHolder>, Pa
     additionalData?: Record<string, unknown>;
     /** Represents the key in a key-value pair. */
     name?: string;
+    /** The OdataType property */
+    odataType?: string;
     /** The value in a key-value pair. */
     value?: string;
 }

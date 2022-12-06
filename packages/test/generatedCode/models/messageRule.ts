@@ -2,13 +2,13 @@ import {Entity, MessageRuleActions, MessageRulePredicates} from './index';
 import {Parsable} from '@microsoft/kiota-abstractions';
 
 export interface MessageRule extends Entity, Partial<Parsable> {
-    /** The actions property */
+    /** Actions to be taken on a message when the corresponding conditions are fulfilled. */
     actions?: MessageRuleActions;
-    /** The conditions property */
+    /** Conditions that when fulfilled, will trigger the corresponding actions for that rule. */
     conditions?: MessageRulePredicates;
     /** The display name of the rule. */
     displayName?: string;
-    /** The exceptions property */
+    /** Exception conditions for the rule. */
     exceptions?: MessageRulePredicates;
     /** Indicates whether the rule is in an error condition. Read-only. */
     hasError?: boolean;

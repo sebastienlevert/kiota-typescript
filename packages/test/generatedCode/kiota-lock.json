@@ -1,6 +1,6 @@
 {
-  "descriptionHash": "F596AEE180E3F5E630E95E91134E5F51300268288352AD41F209515486123F460BB400675277991DDB81462B72C196FEB70CB2E148E9209DA2AA9ADBFA8F9233",
-  "descriptionLocation": "https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-powershell/dev/openApiDocs/v1.0/Mail.yml",
+  "descriptionHash": "A7167EB8124FCD32494CF7CB205F7F6CC3E0F0AE79758C2C90E5E9D351532DFBAD1228AEA4BC0A832A897F19BE118894C21D1B526CEA54B635CD0E2DBB6B4508",
+  "descriptionLocation": "https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml",
   "lockFileVersion": "1.0.0",
   "kiotaVersion": "0.7.1.0",
   "clientClassName": "ApiClient",

@@ -1,5 +1,6 @@
 import {deserializeIntoInferenceClassification} from '../../../models/deserializeIntoInferenceClassification';
 import {InferenceClassification} from '../../../models/inferenceClassification';
+import {ODataError} from '../../../models/oDataErrors/oDataError';
 import {serializeInferenceClassification} from '../../../models/serializeInferenceClassification';
 import {InferenceClassificationRequestBuilderGetRequestConfiguration} from './inferenceClassificationRequestBuilderGetRequestConfiguration';
 import {InferenceClassificationRequestBuilderPatchRequestConfiguration} from './inferenceClassificationRequestBuilderPatchRequestConfiguration';
@@ -7,9 +8,9 @@ import {InferenceClassificationOverrideItemRequestBuilder} from './overrides/ite
 import {OverridesRequestBuilder} from './overrides/overridesRequestBuilder';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/inferenceClassification */
+/** Provides operations to manage the inferenceClassification property of the microsoft.graph.user entity. */
 export class InferenceClassificationRequestBuilder {
-    /** The overrides property */
+    /** Provides operations to manage the overrides property of the microsoft.graph.inferenceClassification entity. */
     public get overrides(): OverridesRequestBuilder {
         return new OverridesRequestBuilder(this.pathParameters, this.requestAdapter);
     }
@@ -62,6 +63,7 @@ export class InferenceClassificationRequestBuilder {
         requestInfo.urlTemplate = this.urlTemplate;
         requestInfo.pathParameters = this.pathParameters;
         requestInfo.httpMethod = HttpMethod.PATCH;
+        requestInfo.headers["Accept"] = "application/json";
         if (requestConfiguration) {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
@@ -79,10 +81,10 @@ export class InferenceClassificationRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo,deserializeIntoInferenceClassification, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo,deserializeIntoInferenceClassification, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
-     * Gets an item from the ApiSdk.users.item.inferenceClassification.overrides.item collection
+     * Provides operations to manage the overrides property of the microsoft.graph.inferenceClassification entity.
      * @param id Unique identifier of the item
      * @returns a InferenceClassificationOverrideItemRequestBuilder
      */
@@ -97,12 +99,13 @@ export class InferenceClassificationRequestBuilder {
      * @param body 
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
+     * @returns a Promise of InferenceClassification
      */
-    public patch(body: InferenceClassification | undefined, requestConfiguration?: InferenceClassificationRequestBuilderPatchRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
+    public patch(body: InferenceClassification | undefined, requestConfiguration?: InferenceClassificationRequestBuilderPatchRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<InferenceClassification | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPatchRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo,deserializeIntoInferenceClassification, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

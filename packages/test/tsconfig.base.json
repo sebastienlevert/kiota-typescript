@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"importHelpers": true,
-		"noEmitOnError": true,
+		"noEmitOnError": false,
 		"moduleResolution": "node",
 		"strict": true,
         "noImplicitAny": true,

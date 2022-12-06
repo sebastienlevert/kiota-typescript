@@ -7,5 +7,6 @@ export function serializeFollowupFlag(writer: SerializationWriter, followupFlag:
             writer.writeObjectValueFromMethod("completedDateTime", followupFlag.completedDateTime as any, serializeDateTimeTimeZone);
             writer.writeObjectValueFromMethod("dueDateTime", followupFlag.dueDateTime as any, serializeDateTimeTimeZone);
             writer.writeEnumValue<FollowupFlagStatus>("flagStatus", followupFlag.flagStatus);
+            writer.writeStringValue("@odata.type", followupFlag.odataType);
             writer.writeObjectValueFromMethod("startDateTime", followupFlag.startDateTime as any, serializeDateTimeTimeZone);
 }

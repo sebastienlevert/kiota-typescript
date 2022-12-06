@@ -5,5 +5,6 @@ export function deserializeIntoSizeRange(sizeRange: SizeRange | undefined = {}) 
     return {
         "maximumSize": n => { sizeRange.maximumSize = n.getNumberValue() as any ; },
         "minimumSize": n => { sizeRange.minimumSize = n.getNumberValue() as any ; },
+        "@odata.type": n => { sizeRange.odataType = n.getStringValue() as any ; },
     }
 }

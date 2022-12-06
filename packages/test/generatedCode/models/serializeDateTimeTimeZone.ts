@@ -3,5 +3,6 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function serializeDateTimeTimeZone(writer: SerializationWriter, dateTimeTimeZone: DateTimeTimeZone | undefined = {}) : void {
             writer.writeStringValue("dateTime", dateTimeTimeZone.dateTime);
+            writer.writeStringValue("@odata.type", dateTimeTimeZone.odataType);
             writer.writeStringValue("timeZone", dateTimeTimeZone.timeZone);
 }

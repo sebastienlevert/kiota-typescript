@@ -1,0 +1,4 @@
+export * from './mdmWindowsInformationProtectionPolicyItemRequestBuilderGetRequestConfiguration'
+export * from './mdmWindowsInformationProtectionPolicyItemRequestBuilderDeleteRequestConfiguration'
+export * from './mdmWindowsInformationProtectionPolicyItemRequestBuilderGetQueryParameters'
+export * from './mdmWindowsInformationProtectionPolicyItemRequestBuilderPatchRequestConfiguration'

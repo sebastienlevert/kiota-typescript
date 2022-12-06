@@ -1,0 +1,7 @@
+export * from './deserializeIntoGetStaffAvailabilityPostRequestBody'
+export * from './deserializeIntoGetStaffAvailabilityResponse'
+export * from './serializeGetStaffAvailabilityResponse'
+export * from './serializeGetStaffAvailabilityPostRequestBody'
+export * from './getStaffAvailabilityRequestBuilderPostRequestConfiguration'
+export * from './getStaffAvailabilityPostRequestBody'
+export * from './getStaffAvailabilityResponse'

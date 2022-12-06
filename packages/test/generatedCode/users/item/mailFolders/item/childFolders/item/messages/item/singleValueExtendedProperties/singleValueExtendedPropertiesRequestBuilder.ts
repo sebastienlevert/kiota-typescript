@@ -1,15 +1,21 @@
 import {deserializeIntoSingleValueLegacyExtendedProperty} from '../../../../../../../../../models/deserializeIntoSingleValueLegacyExtendedProperty';
 import {deserializeIntoSingleValueLegacyExtendedPropertyCollectionResponse} from '../../../../../../../../../models/deserializeIntoSingleValueLegacyExtendedPropertyCollectionResponse';
+import {ODataError} from '../../../../../../../../../models/oDataErrors/oDataError';
 import {serializeSingleValueLegacyExtendedProperty} from '../../../../../../../../../models/serializeSingleValueLegacyExtendedProperty';
 import {serializeSingleValueLegacyExtendedPropertyCollectionResponse} from '../../../../../../../../../models/serializeSingleValueLegacyExtendedPropertyCollectionResponse';
 import {SingleValueLegacyExtendedProperty} from '../../../../../../../../../models/singleValueLegacyExtendedProperty';
 import {SingleValueLegacyExtendedPropertyCollectionResponse} from '../../../../../../../../../models/singleValueLegacyExtendedPropertyCollectionResponse';
+import {CountRequestBuilder} from './count/countRequestBuilder';
 import {SingleValueExtendedPropertiesRequestBuilderGetRequestConfiguration} from './singleValueExtendedPropertiesRequestBuilderGetRequestConfiguration';
 import {SingleValueExtendedPropertiesRequestBuilderPostRequestConfiguration} from './singleValueExtendedPropertiesRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/childFolders/{mailFolder-id1}/messages/{message-id}/singleValueExtendedProperties */
+/** Provides operations to manage the singleValueExtendedProperties property of the microsoft.graph.message entity. */
 export class SingleValueExtendedPropertiesRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests. */
@@ -77,7 +83,7 @@ export class SingleValueExtendedPropertiesRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<SingleValueLegacyExtendedPropertyCollectionResponse>(requestInfo,deserializeIntoSingleValueLegacyExtendedPropertyCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<SingleValueLegacyExtendedPropertyCollectionResponse>(requestInfo,deserializeIntoSingleValueLegacyExtendedPropertyCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Create new navigation property to singleValueExtendedProperties for users
@@ -91,6 +97,6 @@ export class SingleValueExtendedPropertiesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<SingleValueLegacyExtendedProperty>(requestInfo,deserializeIntoSingleValueLegacyExtendedProperty, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<SingleValueLegacyExtendedProperty>(requestInfo,deserializeIntoSingleValueLegacyExtendedProperty, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

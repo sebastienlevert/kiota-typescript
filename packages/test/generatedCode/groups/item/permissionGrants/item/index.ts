@@ -1,0 +1,4 @@
+export * from './resourceSpecificPermissionGrantItemRequestBuilderDeleteRequestConfiguration'
+export * from './resourceSpecificPermissionGrantItemRequestBuilderGetRequestConfiguration'
+export * from './resourceSpecificPermissionGrantItemRequestBuilderGetQueryParameters'
+export * from './resourceSpecificPermissionGrantItemRequestBuilderPatchRequestConfiguration'

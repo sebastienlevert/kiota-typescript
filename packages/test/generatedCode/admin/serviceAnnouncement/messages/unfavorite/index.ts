@@ -1,0 +1,7 @@
+export * from './serializeUnfavoritePostRequestBody'
+export * from './serializeUnfavoriteResponse'
+export * from './deserializeIntoUnfavoriteResponse'
+export * from './deserializeIntoUnfavoritePostRequestBody'
+export * from './unfavoritePostRequestBody'
+export * from './unfavoriteResponse'
+export * from './unfavoriteRequestBuilderPostRequestConfiguration'

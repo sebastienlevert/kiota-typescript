@@ -17,10 +17,12 @@ export interface MessageRuleActions extends Partial<AdditionalDataHolder>, Parti
     forwardTo?: Recipient[];
     /** Indicates whether a message should be marked as read. */
     markAsRead?: boolean;
-    /** The markImportance property */
+    /** Sets the importance of the message, which can be: low, normal, high. */
     markImportance?: Importance;
     /** The ID of the folder that a message will be moved to. */
     moveToFolder?: string;
+    /** The OdataType property */
+    odataType?: string;
     /** Indicates whether a message should be permanently deleted and not saved to the Deleted Items folder. */
     permanentDelete?: boolean;
     /** The email addresses to which a message should be redirected. */

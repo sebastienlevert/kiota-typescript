@@ -4,4 +4,5 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 export function serializeSizeRange(writer: SerializationWriter, sizeRange: SizeRange | undefined = {}) : void {
             writer.writeNumberValue("maximumSize", sizeRange.maximumSize);
             writer.writeNumberValue("minimumSize", sizeRange.minimumSize);
+            writer.writeStringValue("@odata.type", sizeRange.odataType);
 }

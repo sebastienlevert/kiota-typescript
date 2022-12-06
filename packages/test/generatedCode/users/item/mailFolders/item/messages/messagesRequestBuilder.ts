@@ -2,14 +2,21 @@ import {deserializeIntoMessage} from '../../../../../models/deserializeIntoMessa
 import {deserializeIntoMessageCollectionResponse} from '../../../../../models/deserializeIntoMessageCollectionResponse';
 import {Message} from '../../../../../models/message';
 import {MessageCollectionResponse} from '../../../../../models/messageCollectionResponse';
+import {ODataError} from '../../../../../models/oDataErrors/oDataError';
 import {serializeMessage} from '../../../../../models/serializeMessage';
 import {serializeMessageCollectionResponse} from '../../../../../models/serializeMessageCollectionResponse';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {DeltaRequestBuilder} from './delta/deltaRequestBuilder';
 import {MessagesRequestBuilderGetRequestConfiguration} from './messagesRequestBuilderGetRequestConfiguration';
 import {MessagesRequestBuilderPostRequestConfiguration} from './messagesRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/messages */
+/** Provides operations to manage the messages property of the microsoft.graph.mailFolder entity. */
 export class MessagesRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests. */
@@ -68,6 +75,13 @@ export class MessagesRequestBuilder {
         return requestInfo;
     };
     /**
+     * Provides operations to call the delta method.
+     * @returns a deltaRequestBuilder
+     */
+    public delta() : DeltaRequestBuilder {
+        return new DeltaRequestBuilder(this.pathParameters, this.requestAdapter);
+    };
+    /**
      * Get all the messages in the specified user's mailbox, or those messages in a specified folder in the mailbox.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -77,7 +91,7 @@ export class MessagesRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MessageCollectionResponse>(requestInfo,deserializeIntoMessageCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MessageCollectionResponse>(requestInfo,deserializeIntoMessageCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Use this API to create a new Message in a mailfolder.
@@ -91,6 +105,6 @@ export class MessagesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Message>(requestInfo,deserializeIntoMessage, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Message>(requestInfo,deserializeIntoMessage, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

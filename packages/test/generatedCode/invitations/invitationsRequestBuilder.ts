@@ -1,0 +1,102 @@
+import {deserializeIntoInvitation} from '../models/deserializeIntoInvitation';
+import {deserializeIntoInvitationCollectionResponse} from '../models/deserializeIntoInvitationCollectionResponse';
+import {Invitation} from '../models/invitation';
+import {InvitationCollectionResponse} from '../models/invitationCollectionResponse';
+import {ODataError} from '../models/oDataErrors/oDataError';
+import {serializeInvitation} from '../models/serializeInvitation';
+import {serializeInvitationCollectionResponse} from '../models/serializeInvitationCollectionResponse';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {InvitationsRequestBuilderGetRequestConfiguration} from './invitationsRequestBuilderGetRequestConfiguration';
+import {InvitationsRequestBuilderPostRequestConfiguration} from './invitationsRequestBuilderPostRequestConfiguration';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+
+/** Provides operations to manage the collection of invitation entities. */
+export class InvitationsRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Path parameters for the request */
+    private readonly pathParameters: Record<string, unknown>;
+    /** The request adapter to use to execute the requests. */
+    private readonly requestAdapter: RequestAdapter;
+    /** Url template to use to build the URL for the current request builder */
+    private readonly urlTemplate: string;
+    /**
+     * Instantiates a new InvitationsRequestBuilder and sets the default values.
+     * @param pathParameters The raw url or the Url template parameters for the request.
+     * @param requestAdapter The request adapter to use to execute the requests.
+     */
+    public constructor(pathParameters: Record<string, unknown> | string | undefined, requestAdapter: RequestAdapter) {
+        if(!pathParameters) throw new Error("pathParameters cannot be undefined");
+        if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
+        this.urlTemplate = "{+baseurl}/invitations{?%24top,%24skip,%24search,%24filter,%24count,%24orderby,%24select,%24expand}";
+        const urlTplParams = getPathParameters(pathParameters);
+        this.pathParameters = urlTplParams;
+        this.requestAdapter = requestAdapter;
+    };
+    /**
+     * Get entities from invitations
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @returns a RequestInformation
+     */
+    public createGetRequestInformation(requestConfiguration?: InvitationsRequestBuilderGetRequestConfiguration | undefined) : RequestInformation {
+        const requestInfo = new RequestInformation();
+        requestInfo.urlTemplate = this.urlTemplate;
+        requestInfo.pathParameters = this.pathParameters;
+        requestInfo.httpMethod = HttpMethod.GET;
+        requestInfo.headers["Accept"] = "application/json";
+        if (requestConfiguration) {
+            requestInfo.addRequestHeaders(requestConfiguration.headers);
+            requestInfo.setQueryStringParametersFromRawObject(requestConfiguration.queryParameters);
+            requestInfo.addRequestOptions(requestConfiguration.options);
+        }
+        return requestInfo;
+    };
+    /**
+     * Use this API to create a new invitation. Invitation adds an external user to the organization. When creating a new invitation you have several options available:
+     * @param body 
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @returns a RequestInformation
+     */
+    public createPostRequestInformation(body: Invitation | undefined, requestConfiguration?: InvitationsRequestBuilderPostRequestConfiguration | undefined) : RequestInformation {
+        if(!body) throw new Error("body cannot be undefined");
+        const requestInfo = new RequestInformation();
+        requestInfo.urlTemplate = this.urlTemplate;
+        requestInfo.pathParameters = this.pathParameters;
+        requestInfo.httpMethod = HttpMethod.POST;
+        requestInfo.headers["Accept"] = "application/json";
+        if (requestConfiguration) {
+            requestInfo.addRequestHeaders(requestConfiguration.headers);
+            requestInfo.addRequestOptions(requestConfiguration.options);
+        }
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeInvitation);
+        return requestInfo;
+    };
+    /**
+     * Get entities from invitations
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @param responseHandler Response handler to use in place of the default response handling provided by the core service
+     * @returns a Promise of InvitationCollectionResponse
+     */
+    public get(requestConfiguration?: InvitationsRequestBuilderGetRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<InvitationCollectionResponse | undefined> {
+        const requestInfo = this.createGetRequestInformation(
+            requestConfiguration
+        );
+        return this.requestAdapter?.sendAsync<InvitationCollectionResponse>(requestInfo,deserializeIntoInvitationCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
+    };
+    /**
+     * Use this API to create a new invitation. Invitation adds an external user to the organization. When creating a new invitation you have several options available:
+     * @param body 
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @param responseHandler Response handler to use in place of the default response handling provided by the core service
+     * @returns a Promise of Invitation
+     */
+    public post(body: Invitation | undefined, requestConfiguration?: InvitationsRequestBuilderPostRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<Invitation | undefined> {
+        if(!body) throw new Error("body cannot be undefined");
+        const requestInfo = this.createPostRequestInformation(
+            body, requestConfiguration
+        );
+        return this.requestAdapter?.sendAsync<Invitation>(requestInfo,deserializeIntoInvitation, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
+    };
+}

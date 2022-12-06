@@ -5,4 +5,5 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 export function serializeItemBody(writer: SerializationWriter, itemBody: ItemBody | undefined = {}) : void {
             writer.writeStringValue("content", itemBody.content);
             writer.writeEnumValue<BodyType>("contentType", itemBody.contentType);
+            writer.writeStringValue("@odata.type", itemBody.odataType);
 }

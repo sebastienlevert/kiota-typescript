@@ -1,0 +1,8 @@
+import {ImplicitGrantSettings} from './index';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+
+export function serializeImplicitGrantSettings(writer: SerializationWriter, implicitGrantSettings: ImplicitGrantSettings | undefined = {}) : void {
+            writer.writeBooleanValue("enableAccessTokenIssuance", implicitGrantSettings.enableAccessTokenIssuance);
+            writer.writeBooleanValue("enableIdTokenIssuance", implicitGrantSettings.enableIdTokenIssuance);
+            writer.writeStringValue("@odata.type", implicitGrantSettings.odataType);
+}

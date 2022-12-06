@@ -1,0 +1,127 @@
+import {deserializeIntoInvitation} from '../../models/deserializeIntoInvitation';
+import {Invitation} from '../../models/invitation';
+import {ODataError} from '../../models/oDataErrors/oDataError';
+import {serializeInvitation} from '../../models/serializeInvitation';
+import {InvitationItemRequestBuilderDeleteRequestConfiguration} from './invitationItemRequestBuilderDeleteRequestConfiguration';
+import {InvitationItemRequestBuilderGetRequestConfiguration} from './invitationItemRequestBuilderGetRequestConfiguration';
+import {InvitationItemRequestBuilderPatchRequestConfiguration} from './invitationItemRequestBuilderPatchRequestConfiguration';
+import {InvitedUserRequestBuilder} from './invitedUser/invitedUserRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+
+/** Provides operations to manage the collection of invitation entities. */
+export class InvitationItemRequestBuilder {
+    /** Provides operations to manage the invitedUser property of the microsoft.graph.invitation entity. */
+    public get invitedUser(): InvitedUserRequestBuilder {
+        return new InvitedUserRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Path parameters for the request */
+    private readonly pathParameters: Record<string, unknown>;
+    /** The request adapter to use to execute the requests. */
+    private readonly requestAdapter: RequestAdapter;
+    /** Url template to use to build the URL for the current request builder */
+    private readonly urlTemplate: string;
+    /**
+     * Instantiates a new InvitationItemRequestBuilder and sets the default values.
+     * @param pathParameters The raw url or the Url template parameters for the request.
+     * @param requestAdapter The request adapter to use to execute the requests.
+     */
+    public constructor(pathParameters: Record<string, unknown> | string | undefined, requestAdapter: RequestAdapter) {
+        if(!pathParameters) throw new Error("pathParameters cannot be undefined");
+        if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
+        this.urlTemplate = "{+baseurl}/invitations/{invitation%2Did}{?%24select,%24expand}";
+        const urlTplParams = getPathParameters(pathParameters);
+        this.pathParameters = urlTplParams;
+        this.requestAdapter = requestAdapter;
+    };
+    /**
+     * Delete entity from invitations
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @returns a RequestInformation
+     */
+    public createDeleteRequestInformation(requestConfiguration?: InvitationItemRequestBuilderDeleteRequestConfiguration | undefined) : RequestInformation {
+        const requestInfo = new RequestInformation();
+        requestInfo.urlTemplate = this.urlTemplate;
+        requestInfo.pathParameters = this.pathParameters;
+        requestInfo.httpMethod = HttpMethod.DELETE;
+        if (requestConfiguration) {
+            requestInfo.addRequestHeaders(requestConfiguration.headers);
+            requestInfo.addRequestOptions(requestConfiguration.options);
+        }
+        return requestInfo;
+    };
+    /**
+     * Get entity from invitations by key
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @returns a RequestInformation
+     */
+    public createGetRequestInformation(requestConfiguration?: InvitationItemRequestBuilderGetRequestConfiguration | undefined) : RequestInformation {
+        const requestInfo = new RequestInformation();
+        requestInfo.urlTemplate = this.urlTemplate;
+        requestInfo.pathParameters = this.pathParameters;
+        requestInfo.httpMethod = HttpMethod.GET;
+        requestInfo.headers["Accept"] = "application/json";
+        if (requestConfiguration) {
+            requestInfo.addRequestHeaders(requestConfiguration.headers);
+            requestInfo.setQueryStringParametersFromRawObject(requestConfiguration.queryParameters);
+            requestInfo.addRequestOptions(requestConfiguration.options);
+        }
+        return requestInfo;
+    };
+    /**
+     * Update entity in invitations
+     * @param body 
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @returns a RequestInformation
+     */
+    public createPatchRequestInformation(body: Invitation | undefined, requestConfiguration?: InvitationItemRequestBuilderPatchRequestConfiguration | undefined) : RequestInformation {
+        if(!body) throw new Error("body cannot be undefined");
+        const requestInfo = new RequestInformation();
+        requestInfo.urlTemplate = this.urlTemplate;
+        requestInfo.pathParameters = this.pathParameters;
+        requestInfo.httpMethod = HttpMethod.PATCH;
+        requestInfo.headers["Accept"] = "application/json";
+        if (requestConfiguration) {
+            requestInfo.addRequestHeaders(requestConfiguration.headers);
+            requestInfo.addRequestOptions(requestConfiguration.options);
+        }
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeInvitation);
+        return requestInfo;
+    };
+    /**
+     * Delete entity from invitations
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @param responseHandler Response handler to use in place of the default response handling provided by the core service
+     */
+    public delete(requestConfiguration?: InvitationItemRequestBuilderDeleteRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
+        const requestInfo = this.createDeleteRequestInformation(
+            requestConfiguration
+        );
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
+    };
+    /**
+     * Get entity from invitations by key
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @param responseHandler Response handler to use in place of the default response handling provided by the core service
+     * @returns a Promise of Invitation
+     */
+    public get(requestConfiguration?: InvitationItemRequestBuilderGetRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<Invitation | undefined> {
+        const requestInfo = this.createGetRequestInformation(
+            requestConfiguration
+        );
+        return this.requestAdapter?.sendAsync<Invitation>(requestInfo,deserializeIntoInvitation, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
+    };
+    /**
+     * Update entity in invitations
+     * @param body 
+     * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
+     * @param responseHandler Response handler to use in place of the default response handling provided by the core service
+     * @returns a Promise of Invitation
+     */
+    public patch(body: Invitation | undefined, requestConfiguration?: InvitationItemRequestBuilderPatchRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<Invitation | undefined> {
+        if(!body) throw new Error("body cannot be undefined");
+        const requestInfo = this.createPatchRequestInformation(
+            body, requestConfiguration
+        );
+        return this.requestAdapter?.sendAsync<Invitation>(requestInfo,deserializeIntoInvitation, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
+    };
+}

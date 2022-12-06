@@ -1,0 +1,7 @@
+import {BaseCollectionPaginationCountResponse, IosCompliancePolicy} from './index';
+import {Parsable} from '@microsoft/kiota-abstractions';
+
+export interface IosCompliancePolicyCollectionResponse extends BaseCollectionPaginationCountResponse, Partial<Parsable> {
+    /** The value property */
+    value?: IosCompliancePolicy[];
+}

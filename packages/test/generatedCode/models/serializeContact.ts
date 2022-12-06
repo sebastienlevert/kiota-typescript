@@ -1,0 +1,50 @@
+import {Contact} from './index';
+import {serializeEmailAddress} from './serializeEmailAddress';
+import {serializeExtension} from './serializeExtension';
+import {serializeMultiValueLegacyExtendedProperty} from './serializeMultiValueLegacyExtendedProperty';
+import {serializeOutlookItem} from './serializeOutlookItem';
+import {serializePhysicalAddress} from './serializePhysicalAddress';
+import {serializeProfilePhoto} from './serializeProfilePhoto';
+import {serializeSingleValueLegacyExtendedProperty} from './serializeSingleValueLegacyExtendedProperty';
+import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+
+export function serializeContact(writer: SerializationWriter, contact: Contact | undefined = {}) : void {
+        serializeOutlookItem(writer, contact)
+            writer.writeStringValue("assistantName", contact.assistantName);
+            writer.writeDateValue("birthday", contact.birthday);
+            writer.writeObjectValueFromMethod("businessAddress", contact.businessAddress as any, serializePhysicalAddress);
+            writer.writeStringValue("businessHomePage", contact.businessHomePage);
+            writer.writeCollectionOfPrimitiveValues<string>("businessPhones", contact.businessPhones);
+            writer.writeCollectionOfPrimitiveValues<string>("children", contact.children);
+            writer.writeStringValue("companyName", contact.companyName);
+            writer.writeStringValue("department", contact.department);
+            writer.writeStringValue("displayName", contact.displayName);
+            writer.writeCollectionOfObjectValuesFromMethod("emailAddresses", contact.emailAddresses as any, serializeEmailAddress);
+            writer.writeCollectionOfObjectValuesFromMethod("extensions", contact.extensions as any, serializeExtension);
+            writer.writeStringValue("fileAs", contact.fileAs);
+            writer.writeStringValue("generation", contact.generation);
+            writer.writeStringValue("givenName", contact.givenName);
+            writer.writeObjectValueFromMethod("homeAddress", contact.homeAddress as any, serializePhysicalAddress);
+            writer.writeCollectionOfPrimitiveValues<string>("homePhones", contact.homePhones);
+            writer.writeCollectionOfPrimitiveValues<string>("imAddresses", contact.imAddresses);
+            writer.writeStringValue("initials", contact.initials);
+            writer.writeStringValue("jobTitle", contact.jobTitle);
+            writer.writeStringValue("manager", contact.manager);
+            writer.writeStringValue("middleName", contact.middleName);
+            writer.writeStringValue("mobilePhone", contact.mobilePhone);
+            writer.writeCollectionOfObjectValuesFromMethod("multiValueExtendedProperties", contact.multiValueExtendedProperties as any, serializeMultiValueLegacyExtendedProperty);
+            writer.writeStringValue("nickName", contact.nickName);
+            writer.writeStringValue("officeLocation", contact.officeLocation);
+            writer.writeObjectValueFromMethod("otherAddress", contact.otherAddress as any, serializePhysicalAddress);
+            writer.writeStringValue("parentFolderId", contact.parentFolderId);
+            writer.writeStringValue("personalNotes", contact.personalNotes);
+            writer.writeObjectValueFromMethod("photo", contact.photo as any, serializeProfilePhoto);
+            writer.writeStringValue("profession", contact.profession);
+            writer.writeCollectionOfObjectValuesFromMethod("singleValueExtendedProperties", contact.singleValueExtendedProperties as any, serializeSingleValueLegacyExtendedProperty);
+            writer.writeStringValue("spouseName", contact.spouseName);
+            writer.writeStringValue("surname", contact.surname);
+            writer.writeStringValue("title", contact.title);
+            writer.writeStringValue("yomiCompanyName", contact.yomiCompanyName);
+            writer.writeStringValue("yomiGivenName", contact.yomiGivenName);
+            writer.writeStringValue("yomiSurname", contact.yomiSurname);
+}

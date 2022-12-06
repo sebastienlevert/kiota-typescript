@@ -27,6 +27,7 @@ export function serializeMessageRulePredicates(writer: SerializationWriter, mess
             writer.writeBooleanValue("isVoicemail", messageRulePredicates.isVoicemail);
             writer.writeEnumValue<MessageActionFlag>("messageActionFlag", messageRulePredicates.messageActionFlag);
             writer.writeBooleanValue("notSentToMe", messageRulePredicates.notSentToMe);
+            writer.writeStringValue("@odata.type", messageRulePredicates.odataType);
             writer.writeCollectionOfPrimitiveValues<string>("recipientContains", messageRulePredicates.recipientContains);
             writer.writeCollectionOfPrimitiveValues<string>("senderContains", messageRulePredicates.senderContains);
             writer.writeEnumValue<Sensitivity>("sensitivity", messageRulePredicates.sensitivity);

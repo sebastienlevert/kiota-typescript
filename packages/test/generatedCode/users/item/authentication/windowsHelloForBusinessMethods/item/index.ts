@@ -1,0 +1,4 @@
+export * from './windowsHelloForBusinessAuthenticationMethodItemRequestBuilderPatchRequestConfiguration'
+export * from './windowsHelloForBusinessAuthenticationMethodItemRequestBuilderGetRequestConfiguration'
+export * from './windowsHelloForBusinessAuthenticationMethodItemRequestBuilderGetQueryParameters'
+export * from './windowsHelloForBusinessAuthenticationMethodItemRequestBuilderDeleteRequestConfiguration'

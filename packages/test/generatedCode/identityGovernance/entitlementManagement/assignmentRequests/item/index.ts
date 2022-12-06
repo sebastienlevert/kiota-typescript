@@ -1,0 +1,4 @@
+export * from './accessPackageAssignmentRequestItemRequestBuilderGetRequestConfiguration'
+export * from './accessPackageAssignmentRequestItemRequestBuilderPatchRequestConfiguration'
+export * from './accessPackageAssignmentRequestItemRequestBuilderGetQueryParameters'
+export * from './accessPackageAssignmentRequestItemRequestBuilderDeleteRequestConfiguration'

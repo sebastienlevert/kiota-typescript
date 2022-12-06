@@ -1,0 +1,40 @@
+import {PrinterCapabilities} from './index';
+import {PrintColorMode} from './printColorMode';
+import {PrintDuplexMode} from './printDuplexMode';
+import {PrinterFeedOrientation} from './printerFeedOrientation';
+import {PrintFinishing} from './printFinishing';
+import {PrintMultipageLayout} from './printMultipageLayout';
+import {PrintOrientation} from './printOrientation';
+import {PrintQuality} from './printQuality';
+import {PrintScaling} from './printScaling';
+import {serializeIntegerRange} from './serializeIntegerRange';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+
+export function serializePrinterCapabilities(writer: SerializationWriter, printerCapabilities: PrinterCapabilities | undefined = {}) : void {
+            writer.writeCollectionOfPrimitiveValues<number>("bottomMargins", printerCapabilities.bottomMargins);
+            writer.writeBooleanValue("collation", printerCapabilities.collation);
+            writer.writeEnumValue<PrintColorMode>("colorModes", printerCapabilities.colorModes);
+            writer.writeCollectionOfPrimitiveValues<string>("contentTypes", printerCapabilities.contentTypes);
+            writer.writeObjectValueFromMethod("copiesPerJob", printerCapabilities.copiesPerJob as any, serializeIntegerRange);
+            writer.writeCollectionOfPrimitiveValues<number>("dpis", printerCapabilities.dpis);
+            writer.writeEnumValue<PrintDuplexMode>("duplexModes", printerCapabilities.duplexModes);
+            writer.writeEnumValue<PrinterFeedOrientation>("feedOrientations", printerCapabilities.feedOrientations);
+            writer.writeEnumValue<PrintFinishing>("finishings", printerCapabilities.finishings);
+            writer.writeCollectionOfPrimitiveValues<string>("inputBins", printerCapabilities.inputBins);
+            writer.writeBooleanValue("isColorPrintingSupported", printerCapabilities.isColorPrintingSupported);
+            writer.writeBooleanValue("isPageRangeSupported", printerCapabilities.isPageRangeSupported);
+            writer.writeCollectionOfPrimitiveValues<number>("leftMargins", printerCapabilities.leftMargins);
+            writer.writeCollectionOfPrimitiveValues<string>("mediaColors", printerCapabilities.mediaColors);
+            writer.writeCollectionOfPrimitiveValues<string>("mediaSizes", printerCapabilities.mediaSizes);
+            writer.writeCollectionOfPrimitiveValues<string>("mediaTypes", printerCapabilities.mediaTypes);
+            writer.writeEnumValue<PrintMultipageLayout>("multipageLayouts", printerCapabilities.multipageLayouts);
+            writer.writeStringValue("@odata.type", printerCapabilities.odataType);
+            writer.writeEnumValue<PrintOrientation>("orientations", printerCapabilities.orientations);
+            writer.writeCollectionOfPrimitiveValues<string>("outputBins", printerCapabilities.outputBins);
+            writer.writeCollectionOfPrimitiveValues<number>("pagesPerSheet", printerCapabilities.pagesPerSheet);
+            writer.writeEnumValue<PrintQuality>("qualities", printerCapabilities.qualities);
+            writer.writeCollectionOfPrimitiveValues<number>("rightMargins", printerCapabilities.rightMargins);
+            writer.writeEnumValue<PrintScaling>("scalings", printerCapabilities.scalings);
+            writer.writeBooleanValue("supportsFitPdfToPage", printerCapabilities.supportsFitPdfToPage);
+            writer.writeCollectionOfPrimitiveValues<number>("topMargins", printerCapabilities.topMargins);
+}

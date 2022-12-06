@@ -8,6 +8,7 @@ export function deserializeIntoFollowupFlag(followupFlag: FollowupFlag | undefin
         "completedDateTime": n => { followupFlag.completedDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
         "dueDateTime": n => { followupFlag.dueDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
         "flagStatus": n => { followupFlag.flagStatus = n.getEnumValue<FollowupFlagStatus>(FollowupFlagStatus) as any ; },
+        "@odata.type": n => { followupFlag.odataType = n.getStringValue() as any ; },
         "startDateTime": n => { followupFlag.startDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
     }
 }

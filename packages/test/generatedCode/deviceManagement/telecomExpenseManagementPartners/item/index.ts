@@ -1,0 +1,4 @@
+export * from './telecomExpenseManagementPartnerItemRequestBuilderPatchRequestConfiguration'
+export * from './telecomExpenseManagementPartnerItemRequestBuilderDeleteRequestConfiguration'
+export * from './telecomExpenseManagementPartnerItemRequestBuilderGetRequestConfiguration'
+export * from './telecomExpenseManagementPartnerItemRequestBuilderGetQueryParameters'

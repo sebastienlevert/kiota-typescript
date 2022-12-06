@@ -1,0 +1,7 @@
+export * from './deserializeIntoGetMailTipsResponse'
+export * from './serializeGetMailTipsPostRequestBody'
+export * from './deserializeIntoGetMailTipsPostRequestBody'
+export * from './serializeGetMailTipsResponse'
+export * from './getMailTipsPostRequestBody'
+export * from './getMailTipsRequestBuilderPostRequestConfiguration'
+export * from './getMailTipsResponse'

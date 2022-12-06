@@ -1,50 +1,96 @@
 import {deserializeIntoMessage} from '../../../../../../../../models/deserializeIntoMessage';
 import {Message} from '../../../../../../../../models/message';
+import {ODataError} from '../../../../../../../../models/oDataErrors/oDataError';
 import {serializeMessage} from '../../../../../../../../models/serializeMessage';
 import {AttachmentsRequestBuilder} from './attachments/attachmentsRequestBuilder';
 import {AttachmentItemRequestBuilder} from './attachments/item/attachmentItemRequestBuilder';
+import {CopyRequestBuilder} from './copy/copyRequestBuilder';
+import {CreateForwardRequestBuilder} from './createForward/createForwardRequestBuilder';
+import {CreateReplyRequestBuilder} from './createReply/createReplyRequestBuilder';
+import {CreateReplyAllRequestBuilder} from './createReplyAll/createReplyAllRequestBuilder';
 import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
 import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {ForwardRequestBuilder} from './forward/forwardRequestBuilder';
 import {MessageItemRequestBuilderDeleteRequestConfiguration} from './messageItemRequestBuilderDeleteRequestConfiguration';
 import {MessageItemRequestBuilderGetRequestConfiguration} from './messageItemRequestBuilderGetRequestConfiguration';
 import {MessageItemRequestBuilderPatchRequestConfiguration} from './messageItemRequestBuilderPatchRequestConfiguration';
+import {MoveRequestBuilder} from './move/moveRequestBuilder';
 import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
 import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {ReplyRequestBuilder} from './reply/replyRequestBuilder';
+import {ReplyAllRequestBuilder} from './replyAll/replyAllRequestBuilder';
+import {SendRequestBuilder} from './send/sendRequestBuilder';
 import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
 import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
 import {ContentRequestBuilder} from './value/contentRequestBuilder';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/childFolders/{mailFolder-id1}/messages/{message-id} */
+/** Provides operations to manage the messages property of the microsoft.graph.mailFolder entity. */
 export class MessageItemRequestBuilder {
-    /** The attachments property */
+    /** Provides operations to manage the attachments property of the microsoft.graph.message entity. */
     public get attachments(): AttachmentsRequestBuilder {
         return new AttachmentsRequestBuilder(this.pathParameters, this.requestAdapter);
     }
-    /** The Content property */
+    /** Provides operations to manage the media for the user entity. */
     public get content(): ContentRequestBuilder {
         return new ContentRequestBuilder(this.pathParameters, this.requestAdapter);
     }
-    /** The extensions property */
+    /** Provides operations to call the copy method. */
+    public get copy(): CopyRequestBuilder {
+        return new CopyRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to call the createForward method. */
+    public get createForward(): CreateForwardRequestBuilder {
+        return new CreateForwardRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to call the createReply method. */
+    public get createReply(): CreateReplyRequestBuilder {
+        return new CreateReplyRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to call the createReplyAll method. */
+    public get createReplyAll(): CreateReplyAllRequestBuilder {
+        return new CreateReplyAllRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to manage the extensions property of the microsoft.graph.message entity. */
     public get extensions(): ExtensionsRequestBuilder {
         return new ExtensionsRequestBuilder(this.pathParameters, this.requestAdapter);
     }
-    /** The multiValueExtendedProperties property */
+    /** Provides operations to call the forward method. */
+    public get forward(): ForwardRequestBuilder {
+        return new ForwardRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to call the move method. */
+    public get move(): MoveRequestBuilder {
+        return new MoveRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to manage the multiValueExtendedProperties property of the microsoft.graph.message entity. */
     public get multiValueExtendedProperties(): MultiValueExtendedPropertiesRequestBuilder {
         return new MultiValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
+    /** Provides operations to call the reply method. */
+    public get reply(): ReplyRequestBuilder {
+        return new ReplyRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to call the replyAll method. */
+    public get replyAll(): ReplyAllRequestBuilder {
+        return new ReplyAllRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** The request adapter to use to execute the requests. */
     private readonly requestAdapter: RequestAdapter;
-    /** The singleValueExtendedProperties property */
+    /** Provides operations to call the send method. */
+    public get send(): SendRequestBuilder {
+        return new SendRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /** Provides operations to manage the singleValueExtendedProperties property of the microsoft.graph.message entity. */
     public get singleValueExtendedProperties(): SingleValueExtendedPropertiesRequestBuilder {
         return new SingleValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     /** Url template to use to build the URL for the current request builder */
     private readonly urlTemplate: string;
     /**
-     * Gets an item from the ApiSdk.users.item.mailFolders.item.childFolders.item.messages.item.attachments.item collection
+     * Provides operations to manage the attachments property of the microsoft.graph.message entity.
      * @param id Unique identifier of the item
      * @returns a AttachmentItemRequestBuilder
      */
@@ -113,6 +159,7 @@ export class MessageItemRequestBuilder {
         requestInfo.urlTemplate = this.urlTemplate;
         requestInfo.pathParameters = this.pathParameters;
         requestInfo.httpMethod = HttpMethod.PATCH;
+        requestInfo.headers["Accept"] = "application/json";
         if (requestConfiguration) {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
@@ -129,10 +176,10 @@ export class MessageItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
-     * Gets an item from the ApiSdk.users.item.mailFolders.item.childFolders.item.messages.item.extensions.item collection
+     * Provides operations to manage the extensions property of the microsoft.graph.message entity.
      * @param id Unique identifier of the item
      * @returns a ExtensionItemRequestBuilder
      */
@@ -152,10 +199,10 @@ export class MessageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Message>(requestInfo,deserializeIntoMessage, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Message>(requestInfo,deserializeIntoMessage, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
-     * Gets an item from the ApiSdk.users.item.mailFolders.item.childFolders.item.messages.item.multiValueExtendedProperties.item collection
+     * Provides operations to manage the multiValueExtendedProperties property of the microsoft.graph.message entity.
      * @param id Unique identifier of the item
      * @returns a MultiValueLegacyExtendedPropertyItemRequestBuilder
      */
@@ -170,16 +217,17 @@ export class MessageItemRequestBuilder {
      * @param body 
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
+     * @returns a Promise of Message
      */
-    public patch(body: Message | undefined, requestConfiguration?: MessageItemRequestBuilderPatchRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
+    public patch(body: Message | undefined, requestConfiguration?: MessageItemRequestBuilderPatchRequestConfiguration | undefined, responseHandler?: ResponseHandler | undefined) : Promise<Message | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPatchRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Message>(requestInfo,deserializeIntoMessage, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
-     * Gets an item from the ApiSdk.users.item.mailFolders.item.childFolders.item.messages.item.singleValueExtendedProperties.item collection
+     * Provides operations to manage the singleValueExtendedProperties property of the microsoft.graph.message entity.
      * @param id Unique identifier of the item
      * @returns a SingleValueLegacyExtendedPropertyItemRequestBuilder
      */

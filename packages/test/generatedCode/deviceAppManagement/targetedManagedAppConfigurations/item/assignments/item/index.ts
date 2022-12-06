@@ -1,0 +1,4 @@
+export * from './targetedManagedAppPolicyAssignmentItemRequestBuilderPatchRequestConfiguration'
+export * from './targetedManagedAppPolicyAssignmentItemRequestBuilderGetQueryParameters'
+export * from './targetedManagedAppPolicyAssignmentItemRequestBuilderDeleteRequestConfiguration'
+export * from './targetedManagedAppPolicyAssignmentItemRequestBuilderGetRequestConfiguration'

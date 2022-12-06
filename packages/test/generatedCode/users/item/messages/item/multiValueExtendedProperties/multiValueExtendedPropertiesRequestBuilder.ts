@@ -2,14 +2,20 @@ import {deserializeIntoMultiValueLegacyExtendedProperty} from '../../../../../mo
 import {deserializeIntoMultiValueLegacyExtendedPropertyCollectionResponse} from '../../../../../models/deserializeIntoMultiValueLegacyExtendedPropertyCollectionResponse';
 import {MultiValueLegacyExtendedProperty} from '../../../../../models/multiValueLegacyExtendedProperty';
 import {MultiValueLegacyExtendedPropertyCollectionResponse} from '../../../../../models/multiValueLegacyExtendedPropertyCollectionResponse';
+import {ODataError} from '../../../../../models/oDataErrors/oDataError';
 import {serializeMultiValueLegacyExtendedProperty} from '../../../../../models/serializeMultiValueLegacyExtendedProperty';
 import {serializeMultiValueLegacyExtendedPropertyCollectionResponse} from '../../../../../models/serializeMultiValueLegacyExtendedPropertyCollectionResponse';
+import {CountRequestBuilder} from './count/countRequestBuilder';
 import {MultiValueExtendedPropertiesRequestBuilderGetRequestConfiguration} from './multiValueExtendedPropertiesRequestBuilderGetRequestConfiguration';
 import {MultiValueExtendedPropertiesRequestBuilderPostRequestConfiguration} from './multiValueExtendedPropertiesRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/messages/{message-id}/multiValueExtendedProperties */
+/** Provides operations to manage the multiValueExtendedProperties property of the microsoft.graph.message entity. */
 export class MultiValueExtendedPropertiesRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests. */
@@ -77,7 +83,7 @@ export class MultiValueExtendedPropertiesRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedPropertyCollectionResponse>(requestInfo,deserializeIntoMultiValueLegacyExtendedPropertyCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedPropertyCollectionResponse>(requestInfo,deserializeIntoMultiValueLegacyExtendedPropertyCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Create new navigation property to multiValueExtendedProperties for users
@@ -91,6 +97,6 @@ export class MultiValueExtendedPropertiesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedProperty>(requestInfo,deserializeIntoMultiValueLegacyExtendedProperty, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedProperty>(requestInfo,deserializeIntoMultiValueLegacyExtendedProperty, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

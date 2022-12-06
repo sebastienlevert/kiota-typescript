@@ -7,4 +7,6 @@ export interface SizeRange extends Partial<AdditionalDataHolder>, Partial<Parsab
     maximumSize?: number;
     /** The minimum size (in kilobytes) that an incoming message must have in order for a condition or exception to apply. */
     minimumSize?: number;
+    /** The OdataType property */
+    odataType?: string;
 }

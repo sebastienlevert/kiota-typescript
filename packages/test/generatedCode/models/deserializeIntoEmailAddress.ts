@@ -5,5 +5,6 @@ export function deserializeIntoEmailAddress(emailAddress: EmailAddress | undefin
     return {
         "address": n => { emailAddress.address = n.getStringValue() as any ; },
         "name": n => { emailAddress.name = n.getStringValue() as any ; },
+        "@odata.type": n => { emailAddress.odataType = n.getStringValue() as any ; },
     }
 }

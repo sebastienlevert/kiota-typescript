@@ -1,8 +1,9 @@
 import {MessageCollectionResponse} from './index';
+import {serializeBaseCollectionPaginationCountResponse} from './serializeBaseCollectionPaginationCountResponse';
 import {serializeMessage} from './serializeMessage';
-import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function serializeMessageCollectionResponse(writer: SerializationWriter, messageCollectionResponse: MessageCollectionResponse | undefined = {}) : void {
-            writer.writeStringValue("@odata.nextLink", messageCollectionResponse.odataNextLink);
+        serializeBaseCollectionPaginationCountResponse(writer, messageCollectionResponse)
             writer.writeCollectionOfObjectValuesFromMethod("value", messageCollectionResponse.value as any, serializeMessage);
 }

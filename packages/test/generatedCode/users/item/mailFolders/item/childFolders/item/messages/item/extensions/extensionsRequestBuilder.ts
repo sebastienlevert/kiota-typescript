@@ -2,14 +2,20 @@ import {deserializeIntoExtension} from '../../../../../../../../../models/deseri
 import {deserializeIntoExtensionCollectionResponse} from '../../../../../../../../../models/deserializeIntoExtensionCollectionResponse';
 import {Extension} from '../../../../../../../../../models/extension';
 import {ExtensionCollectionResponse} from '../../../../../../../../../models/extensionCollectionResponse';
+import {ODataError} from '../../../../../../../../../models/oDataErrors/oDataError';
 import {serializeExtension} from '../../../../../../../../../models/serializeExtension';
 import {serializeExtensionCollectionResponse} from '../../../../../../../../../models/serializeExtensionCollectionResponse';
+import {CountRequestBuilder} from './count/countRequestBuilder';
 import {ExtensionsRequestBuilderGetRequestConfiguration} from './extensionsRequestBuilderGetRequestConfiguration';
 import {ExtensionsRequestBuilderPostRequestConfiguration} from './extensionsRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/childFolders/{mailFolder-id1}/messages/{message-id}/extensions */
+/** Provides operations to manage the extensions property of the microsoft.graph.message entity. */
 export class ExtensionsRequestBuilder {
+    /** Provides operations to count the resources in the collection. */
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests. */
@@ -77,7 +83,7 @@ export class ExtensionsRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<ExtensionCollectionResponse>(requestInfo,deserializeIntoExtensionCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<ExtensionCollectionResponse>(requestInfo,deserializeIntoExtensionCollectionResponse, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Create an open extension (openTypeExtension object) and add custom properties in a new or existing instance of a resource. You can create an open extension in a resource instance and store custom data to it all in the same operation, except for specific resources. See known limitations of open extensions for more information. The table in the Permissions section lists the resources that support open extensions.
@@ -91,6 +97,6 @@ export class ExtensionsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Extension>(requestInfo,deserializeIntoExtension, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Extension>(requestInfo,deserializeIntoExtension, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

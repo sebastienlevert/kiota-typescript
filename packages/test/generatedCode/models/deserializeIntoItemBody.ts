@@ -6,5 +6,6 @@ export function deserializeIntoItemBody(itemBody: ItemBody | undefined = {}) : R
     return {
         "content": n => { itemBody.content = n.getStringValue() as any ; },
         "contentType": n => { itemBody.contentType = n.getEnumValue<BodyType>(BodyType) as any ; },
+        "@odata.type": n => { itemBody.odataType = n.getStringValue() as any ; },
     }
 }
