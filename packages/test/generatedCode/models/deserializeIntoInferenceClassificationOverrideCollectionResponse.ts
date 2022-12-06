@@ -1,10 +1,10 @@
-import {InferenceClassificationOverride, InferenceClassificationOverrideCollectionResponse} from './index';
-import {InferenceClassificationOverride} from './inferenceClassificationOverride';
+import {deserializeIntoInferenceClassificationOverride} from './deserializeIntoInferenceClassificationOverride';
+import {InferenceClassificationOverrideCollectionResponse} from './index';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function deserializeIntoInferenceClassificationOverrideCollectionResponse(inferenceClassificationOverrideCollectionResponse: InferenceClassificationOverrideCollectionResponse | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "@odata.nextLink": n => { InferenceClassificationOverrideCollectionResponse.odataNextLink = n.getStringValue(); },
-        "value": n => { InferenceClassificationOverrideCollectionResponse.value = n.getCollectionOfObjectValuesFromMethod<InferenceClassificationOverride>(deserializeIntoInferenceClassificationOverride); },
+        "@odata.nextLink": n => { inferenceClassificationOverrideCollectionResponse.odataNextLink = n.getStringValue() as any ; },
+        "value": n => { inferenceClassificationOverrideCollectionResponse.value = n.getCollectionOfObjectValuesFromMethod(deserializeIntoInferenceClassificationOverride) as any ; },
     }
 }

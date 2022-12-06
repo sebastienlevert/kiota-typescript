@@ -3,7 +3,7 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function deserializeIntoSizeRange(sizeRange: SizeRange | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "maximumSize": n => { sizeRange.maximumSize = n.getNumberValue(); },
-        "minimumSize": n => { sizeRange.minimumSize = n.getNumberValue(); },
+        "maximumSize": n => { sizeRange.maximumSize = n.getNumberValue() as any ; },
+        "minimumSize": n => { sizeRange.minimumSize = n.getNumberValue() as any ; },
     }
 }

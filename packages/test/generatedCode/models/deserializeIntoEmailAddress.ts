@@ -3,7 +3,7 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function deserializeIntoEmailAddress(emailAddress: EmailAddress | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "address": n => { emailAddress.address = n.getStringValue(); },
-        "name": n => { emailAddress.name = n.getStringValue(); },
+        "address": n => { emailAddress.address = n.getStringValue() as any ; },
+        "name": n => { emailAddress.name = n.getStringValue() as any ; },
     }
 }

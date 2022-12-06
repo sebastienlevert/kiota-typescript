@@ -5,7 +5,11 @@ import { Duration } from "./duration";
 import { HttpMethod } from "./httpMethod";
 import { RequestAdapter } from "./requestAdapter";
 import { RequestOption } from "./requestOption";
-import { Parsable, SerializationWriter } from "./serialization";
+import {
+  Parsable,
+  SerializationWriter,
+  SerializerMethod,
+} from "./serialization";
 import { TimeOnly } from "./timeOnly";
 
 /** This class represents an abstract HTTP request. */
@@ -103,10 +107,11 @@ export class RequestInformation {
    * @param requestAdapter The adapter service to get the serialization writer from.
    * @typeParam T the model type.
    */
-  public setContentFromParsable = <T extends Parsable>(
+  public setContentFromParsable = <T>(
     requestAdapter?: RequestAdapter | undefined,
     contentType?: string | undefined,
-    value?: T[] | T
+    value?: T[] | T,
+    serializerMethod?: SerializerMethod
   ): void => {
     const writer = this.getSerializationWriter(
       requestAdapter,
@@ -117,9 +122,15 @@ export class RequestInformation {
       this.headers = {};
     }
     if (Array.isArray(value)) {
-      writer.writeCollectionOfObjectValues(undefined, value);
+      writer.writeCollectionOfObjectValuesFromMethod(
+        undefined,
+        value,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        serializerMethod!
+      );
     } else {
-      writer.writeObjectValue(undefined, value);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      writer.writeObjectValueFromMethod(undefined, value, serializerMethod!);
     }
     this.setContentAndContentType(writer, contentType);
   };

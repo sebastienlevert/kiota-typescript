@@ -1,6 +1,7 @@
 import {
   AdditionalDataHolder,
   DateOnly,
+  DeserializeMethod,
   Duration,
   Parsable,
   ParsableFactory,
@@ -59,14 +60,6 @@ export class JsonParseNode implements ParseNode {
       .map((x) => x.getObjectValue<T>(type));
   };
 
-  public getCollectionOfObjectValuesFromMethod = <T>(
-    method: (value: unknown) => T
-  ): T[] | undefined => {
-    return (this._jsonNode as unknown[])
-      .map((x) => new JsonParseNode(x))
-      .map((x) => method(x));
-  };
-
   public getObjectValue = <T extends Parsable>(type: ParsableFactory<T>): T => {
     const result = type(this);
     if (this.onBeforeAssignFieldValues) {
@@ -79,10 +72,16 @@ export class JsonParseNode implements ParseNode {
     return result;
   };
 
-  public getObject = (
-    deserializerFunction: (model: any) => Record<string, (n: ParseNode) => void>
-  ): unknown => {
-    const model = {};
+  public getCollectionOfObjectValuesFromMethod = <T>(
+    method: DeserializeMethod<T>
+  ): T[] | undefined => {
+    return (this._jsonNode as unknown[])
+      .map((x) => new JsonParseNode(x))
+      .map((x) => x.getObject<T>(method)); // test this
+  };
+
+  public getObject = <T>(deserializerFunction: DeserializeMethod<T>): T => {
+    const model = {} as T;
     // if (this.onBeforeAssignFieldValues) {
     //   this.onBeforeAssignFieldValues(result);
     // }

@@ -99,11 +99,18 @@ export interface SerializationWriter {
    * @param key the key to write the value with.
    * @param value the value to write to the stream.
    */
-  writeObjectValueFromMethod<T>(
-    key: string,
-    value: T,
-    serializerMethod: SerializerMethod<T>
+  writeObjectValueFromMethod(
+    key: string | undefined,
+    value: any,
+    serializerMethod: SerializerMethod
   ): void;
+
+  writeCollectionOfObjectValuesFromMethod(
+    key: string | undefined,
+    values: any[],
+    serializerMethod: SerializerMethod
+  ): void;
+
   /**
    * Writes the specified enum value to the stream with an optional given key.
    * @param key the key to write the value with.

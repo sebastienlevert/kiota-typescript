@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   DateOnly,
   Duration,
@@ -127,10 +128,18 @@ export class TextSerializationWriter implements SerializationWriter {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public writeObjectValueFromMethod<T extends Parsable>(
+  public writeObjectValueFromMethod<T>(
     key: string,
     value: T,
-    serializerMethod: SerializerMethod<T>
+    serializerMethod: SerializerMethod
+  ): void {
+    throw new Error("Method not implemented.");
+  }
+
+  public writeCollectionOfObjectValuesFromMethod<T>(
+    key: string,
+    values: T[],
+    serializerMethod: SerializerMethod
   ): void {
     throw new Error("Method not implemented.");
   }

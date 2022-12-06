@@ -1,5 +1,6 @@
-import {MessageRule} from '../../../../../../models/';
+import {deserializeIntoMessageRule} from '../../../../../../models/deserializeIntoMessageRule';
 import {MessageRule} from '../../../../../../models/messageRule';
+import {serializeMessageRule} from '../../../../../../models/serializeMessageRule';
 import {MessageRuleItemRequestBuilderDeleteRequestConfiguration} from './messageRuleItemRequestBuilderDeleteRequestConfiguration';
 import {MessageRuleItemRequestBuilderGetRequestConfiguration} from './messageRuleItemRequestBuilderGetRequestConfiguration';
 import {MessageRuleItemRequestBuilderPatchRequestConfiguration} from './messageRuleItemRequestBuilderPatchRequestConfiguration';
@@ -76,8 +77,7 @@ export class MessageRuleItemRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new MessageRuleImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeMessageRule);
         return requestInfo;
     };
     /**
@@ -101,7 +101,7 @@ export class MessageRuleItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MessageRule>(requestInfo, createMessageRuleFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MessageRule>(requestInfo,deserializeIntoMessageRule, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Update the navigation property messageRules in users

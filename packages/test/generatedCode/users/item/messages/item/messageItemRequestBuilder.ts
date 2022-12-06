@@ -1,5 +1,6 @@
-import {Message} from '../../../../models/';
+import {deserializeIntoMessage} from '../../../../models/deserializeIntoMessage';
 import {Message} from '../../../../models/message';
+import {serializeMessage} from '../../../../models/serializeMessage';
 import {AttachmentsRequestBuilder} from './attachments/attachmentsRequestBuilder';
 import {AttachmentItemRequestBuilder} from './attachments/item/attachmentItemRequestBuilder';
 import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
@@ -116,8 +117,7 @@ export class MessageItemRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new MessageImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeMessage);
         return requestInfo;
     };
     /**
@@ -152,7 +152,7 @@ export class MessageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Message>(requestInfo, createMessageFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Message>(requestInfo,deserializeIntoMessage, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Gets an item from the ApiSdk.users.item.messages.item.multiValueExtendedProperties.item collection

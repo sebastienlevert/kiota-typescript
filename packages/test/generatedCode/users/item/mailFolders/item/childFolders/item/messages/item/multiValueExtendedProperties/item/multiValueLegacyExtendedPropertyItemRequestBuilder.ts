@@ -1,5 +1,6 @@
-import {MultiValueLegacyExtendedProperty} from '../../../../../../../../../../models/';
+import {deserializeIntoMultiValueLegacyExtendedProperty} from '../../../../../../../../../../models/deserializeIntoMultiValueLegacyExtendedProperty';
 import {MultiValueLegacyExtendedProperty} from '../../../../../../../../../../models/multiValueLegacyExtendedProperty';
+import {serializeMultiValueLegacyExtendedProperty} from '../../../../../../../../../../models/serializeMultiValueLegacyExtendedProperty';
 import {MultiValueLegacyExtendedPropertyItemRequestBuilderDeleteRequestConfiguration} from './multiValueLegacyExtendedPropertyItemRequestBuilderDeleteRequestConfiguration';
 import {MultiValueLegacyExtendedPropertyItemRequestBuilderGetRequestConfiguration} from './multiValueLegacyExtendedPropertyItemRequestBuilderGetRequestConfiguration';
 import {MultiValueLegacyExtendedPropertyItemRequestBuilderPatchRequestConfiguration} from './multiValueLegacyExtendedPropertyItemRequestBuilderPatchRequestConfiguration';
@@ -76,8 +77,7 @@ export class MultiValueLegacyExtendedPropertyItemRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new MultiValueLegacyExtendedPropertyImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeMultiValueLegacyExtendedProperty);
         return requestInfo;
     };
     /**
@@ -101,7 +101,7 @@ export class MultiValueLegacyExtendedPropertyItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedProperty>(requestInfo, createMultiValueLegacyExtendedPropertyFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedProperty>(requestInfo,deserializeIntoMultiValueLegacyExtendedProperty, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Update the navigation property multiValueExtendedProperties in users

@@ -1,5 +1,6 @@
-import {MailFolder} from '../../../../models/';
+import {deserializeIntoMailFolder} from '../../../../models/deserializeIntoMailFolder';
 import {MailFolder} from '../../../../models/mailFolder';
+import {serializeMailFolder} from '../../../../models/serializeMailFolder';
 import {ChildFoldersRequestBuilder} from './childFolders/childFoldersRequestBuilder';
 import {MailFolderItemRequestBuilder as i36084a12a8c2957549d109e7f91948d7d23d840a9d2953f66bdb6e23f18a3eca} from './childFolders/item/mailFolderItemRequestBuilder';
 import {MailFolderItemRequestBuilderDeleteRequestConfiguration} from './mailFolderItemRequestBuilderDeleteRequestConfiguration';
@@ -117,8 +118,7 @@ export class MailFolderItemRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new MailFolderImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeMailFolder);
         return requestInfo;
     };
     /**
@@ -142,7 +142,7 @@ export class MailFolderItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo, createMailFolderFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo,deserializeIntoMailFolder, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Gets an item from the ApiSdk.users.item.mailFolders.item.messageRules.item collection

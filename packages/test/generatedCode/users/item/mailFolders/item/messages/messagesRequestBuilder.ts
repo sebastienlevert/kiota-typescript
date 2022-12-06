@@ -1,6 +1,9 @@
-import {Message} from '../../../../../models/';
+import {deserializeIntoMessage} from '../../../../../models/deserializeIntoMessage';
+import {deserializeIntoMessageCollectionResponse} from '../../../../../models/deserializeIntoMessageCollectionResponse';
 import {Message} from '../../../../../models/message';
 import {MessageCollectionResponse} from '../../../../../models/messageCollectionResponse';
+import {serializeMessage} from '../../../../../models/serializeMessage';
+import {serializeMessageCollectionResponse} from '../../../../../models/serializeMessageCollectionResponse';
 import {MessagesRequestBuilderGetRequestConfiguration} from './messagesRequestBuilderGetRequestConfiguration';
 import {MessagesRequestBuilderPostRequestConfiguration} from './messagesRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
@@ -61,8 +64,7 @@ export class MessagesRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new MessageImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeMessage);
         return requestInfo;
     };
     /**
@@ -75,7 +77,7 @@ export class MessagesRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MessageCollectionResponse>(requestInfo, createMessageCollectionResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MessageCollectionResponse>(requestInfo,deserializeIntoMessageCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Use this API to create a new Message in a mailfolder.
@@ -89,6 +91,6 @@ export class MessagesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Message>(requestInfo, createMessageFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Message>(requestInfo,deserializeIntoMessage, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

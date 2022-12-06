@@ -1,4 +1,4 @@
-import { ApiError, AuthenticationProvider, BackingStoreFactory, BackingStoreFactorySingleton, DateOnly, Duration, enableBackingStoreForParseNodeFactory, enableBackingStoreForSerializationWriterFactory, Parsable, ParsableFactory, ParseNode,ParseNodeFactory, ParseNodeFactoryRegistry, RequestAdapter, RequestInformation, ResponseHandler, SerializationWriterFactory, SerializationWriterFactoryRegistry, TimeOnly } from "@microsoft/kiota-abstractions";
+import { ApiError, AuthenticationProvider, BackingStoreFactory, BackingStoreFactorySingleton, DateOnly, DeserializeMethod, Duration, enableBackingStoreForParseNodeFactory, enableBackingStoreForSerializationWriterFactory, ParsableFactory, ParseNode, ParseNodeFactory, ParseNodeFactoryRegistry, RequestAdapter, RequestInformation, ResponseHandler, SerializationWriterFactory, SerializationWriterFactoryRegistry, TimeOnly } from "@microsoft/kiota-abstractions";
 
 import { HttpClient } from "./httpClient";
 
@@ -36,7 +36,7 @@ export class FetchRequestAdapter implements RequestAdapter {
 		if (segments.length === 0) return undefined;
 		else return segments[0];
 	};
-	public sendCollectionOfPrimitiveAsync = async <ResponseType>(requestInfo: RequestInformation, responseType: "string" | "number" | "boolean" | "Date", responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<Parsable>> | undefined): Promise<ResponseType[] | undefined> => {
+	public sendCollectionOfPrimitiveAsync = async <ResponseType>(requestInfo: RequestInformation, responseType: "string" | "number" | "boolean" | "Date", responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<any>> | undefined): Promise<ResponseType[] | undefined> => {
 		if (!requestInfo) {
 			throw new Error("requestInfo cannot be null");
 		}
@@ -77,7 +77,7 @@ export class FetchRequestAdapter implements RequestAdapter {
 			}
 		}
 	};
-	public sendCollectionAsync = async <ModelType extends Parsable>(requestInfo: RequestInformation, type: ParsableFactory<ModelType>, responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<Parsable>> | undefined): Promise<ModelType[] | undefined> => {
+	public sendCollectionAsync = async <ModelType>(requestInfo: RequestInformation, deserialization: DeserializeMethod<ModelType>, responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<any>> | undefined): Promise<ModelType[] | undefined> => {
 		if (!requestInfo) {
 			throw new Error("requestInfo cannot be null");
 		}
@@ -89,14 +89,14 @@ export class FetchRequestAdapter implements RequestAdapter {
 				await this.throwFailedResponses(response, errorMappings);
 				if (this.shouldReturnUndefined(response)) return undefined;
 				const rootNode = await this.getRootParseNode(response);
-				const result = rootNode.getCollectionOfObjectValues(type);
+				const result = rootNode.getCollectionOfObjectValuesFromMethod(deserialization);
 				return result as unknown as ModelType[];
 			} finally {
 				await this.purgeResponseBody(response);
 			}
 		}
 	};
-	public sendAsync = async <ModelType extends Parsable>(requestInfo: RequestInformation, type: ParsableFactory<ModelType>, responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<Parsable>> | undefined): Promise<ModelType | undefined> => {
+	public sendAsync = async <ModelType>(requestInfo: RequestInformation, deserializer: DeserializeMethod<ModelType>, responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<any>> | undefined): Promise<ModelType | undefined> => {
 		if (!requestInfo) {
 			throw new Error("requestInfo cannot be null");
 		}
@@ -108,14 +108,14 @@ export class FetchRequestAdapter implements RequestAdapter {
 				await this.throwFailedResponses(response, errorMappings);
 				if (this.shouldReturnUndefined(response)) return undefined;
 				const rootNode = await this.getRootParseNode(response);
-				const result = rootNode.getObjectValue(type);
+				const result = rootNode.getObject(deserializer);
 				return result as unknown as ModelType;
 			} finally {
 				await this.purgeResponseBody(response);
 			}
 		}
 	};
-	public sendPrimitiveAsync = async <ResponseType>(requestInfo: RequestInformation, responseType: "string" | "number" | "boolean" | "Date" | "ArrayBuffer", responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<Parsable>> | undefined): Promise<ResponseType | undefined> => {
+	public sendPrimitiveAsync = async <ResponseType>(requestInfo: RequestInformation, responseType: "string" | "number" | "boolean" | "Date" | "ArrayBuffer", responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<any>> | undefined): Promise<ResponseType | undefined> => {
 		if (!requestInfo) {
 			throw new Error("requestInfo cannot be null");
 		}
@@ -162,7 +162,7 @@ export class FetchRequestAdapter implements RequestAdapter {
 			}
 		}
 	};
-	public sendNoResponseContentAsync = async (requestInfo: RequestInformation, responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<Parsable>> | undefined): Promise<void> => {
+	public sendNoResponseContentAsync = async (requestInfo: RequestInformation, responseHandler: ResponseHandler | undefined, errorMappings: Record<string, ParsableFactory<any>> | undefined): Promise<void> => {
 		if (!requestInfo) {
 			throw new Error("requestInfo cannot be null");
 		}
@@ -200,7 +200,7 @@ export class FetchRequestAdapter implements RequestAdapter {
 			await response.arrayBuffer();
 		}
 	};
-	private throwFailedResponses = async (response: Response, errorMappings: Record<string, ParsableFactory<Parsable>> | undefined): Promise<void> => {
+	private throwFailedResponses = async (response: Response, errorMappings: Record<string, ParsableFactory<any>> | undefined): Promise<void> => {
 		if (response.ok) return;
 
 		const statusCode = response.status;

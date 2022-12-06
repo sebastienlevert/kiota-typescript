@@ -1,4 +1,5 @@
-import {SingleValueLegacyExtendedProperty} from '../../../../../../models/';
+import {deserializeIntoSingleValueLegacyExtendedProperty} from '../../../../../../models/deserializeIntoSingleValueLegacyExtendedProperty';
+import {serializeSingleValueLegacyExtendedProperty} from '../../../../../../models/serializeSingleValueLegacyExtendedProperty';
 import {SingleValueLegacyExtendedProperty} from '../../../../../../models/singleValueLegacyExtendedProperty';
 import {SingleValueLegacyExtendedPropertyItemRequestBuilderDeleteRequestConfiguration} from './singleValueLegacyExtendedPropertyItemRequestBuilderDeleteRequestConfiguration';
 import {SingleValueLegacyExtendedPropertyItemRequestBuilderGetRequestConfiguration} from './singleValueLegacyExtendedPropertyItemRequestBuilderGetRequestConfiguration';
@@ -76,8 +77,7 @@ export class SingleValueLegacyExtendedPropertyItemRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new SingleValueLegacyExtendedPropertyImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeSingleValueLegacyExtendedProperty);
         return requestInfo;
     };
     /**
@@ -101,7 +101,7 @@ export class SingleValueLegacyExtendedPropertyItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<SingleValueLegacyExtendedProperty>(requestInfo, createSingleValueLegacyExtendedPropertyFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<SingleValueLegacyExtendedProperty>(requestInfo,deserializeIntoSingleValueLegacyExtendedProperty, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Update the navigation property singleValueExtendedProperties in users

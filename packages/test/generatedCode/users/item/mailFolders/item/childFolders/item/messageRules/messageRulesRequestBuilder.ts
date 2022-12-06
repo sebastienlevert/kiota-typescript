@@ -1,6 +1,9 @@
-import {MessageRule} from '../../../../../../../models/';
+import {deserializeIntoMessageRule} from '../../../../../../../models/deserializeIntoMessageRule';
+import {deserializeIntoMessageRuleCollectionResponse} from '../../../../../../../models/deserializeIntoMessageRuleCollectionResponse';
 import {MessageRule} from '../../../../../../../models/messageRule';
 import {MessageRuleCollectionResponse} from '../../../../../../../models/messageRuleCollectionResponse';
+import {serializeMessageRule} from '../../../../../../../models/serializeMessageRule';
+import {serializeMessageRuleCollectionResponse} from '../../../../../../../models/serializeMessageRuleCollectionResponse';
 import {MessageRulesRequestBuilderGetRequestConfiguration} from './messageRulesRequestBuilderGetRequestConfiguration';
 import {MessageRulesRequestBuilderPostRequestConfiguration} from './messageRulesRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
@@ -61,8 +64,7 @@ export class MessageRulesRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new MessageRuleImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeMessageRule);
         return requestInfo;
     };
     /**
@@ -75,7 +77,7 @@ export class MessageRulesRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MessageRuleCollectionResponse>(requestInfo, createMessageRuleCollectionResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MessageRuleCollectionResponse>(requestInfo,deserializeIntoMessageRuleCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Create a messageRule object by specifying a set of conditions and actions.  Outlook carries out those actions if an incoming message in the user's Inbox meets the specified conditions.
@@ -89,6 +91,6 @@ export class MessageRulesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MessageRule>(requestInfo, createMessageRuleFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MessageRule>(requestInfo,deserializeIntoMessageRule, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

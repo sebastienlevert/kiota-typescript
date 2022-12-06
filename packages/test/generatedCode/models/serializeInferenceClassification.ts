@@ -1,9 +1,9 @@
-import {Entity} from './entity';
-import {InferenceClassification, InferenceClassificationOverride} from './index';
-import {InferenceClassificationOverride} from './inferenceClassificationOverride';
+import {InferenceClassification} from './index';
+import {serializeEntity} from './serializeEntity';
+import {serializeInferenceClassificationOverride} from './serializeInferenceClassificationOverride';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function serializeInferenceClassification(writer: SerializationWriter, inferenceClassification: InferenceClassification | undefined = {}) : void {
-        serializeEntityInterface(inferenceClassification)
-            writer.writeCollectionOfObjectValues<InferenceClassificationOverride>("overrides", inferenceClassification.overrides);
+        serializeEntity(writer, inferenceClassification)
+            writer.writeCollectionOfObjectValuesFromMethod("overrides", inferenceClassification.overrides as any, serializeInferenceClassificationOverride);
 }

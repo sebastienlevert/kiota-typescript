@@ -1,4 +1,6 @@
 import {Attachment} from '../../../../../../../../../../models/attachment';
+import {deserializeIntoAttachment} from '../../../../../../../../../../models/deserializeIntoAttachment';
+import {serializeAttachment} from '../../../../../../../../../../models/serializeAttachment';
 import {AttachmentItemRequestBuilderDeleteRequestConfiguration} from './attachmentItemRequestBuilderDeleteRequestConfiguration';
 import {AttachmentItemRequestBuilderGetRequestConfiguration} from './attachmentItemRequestBuilderGetRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
@@ -79,6 +81,6 @@ export class AttachmentItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Attachment>(requestInfo, createAttachmentFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Attachment>(requestInfo,deserializeIntoAttachment, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

@@ -1,6 +1,9 @@
-import {MailFolder} from '../../../../../models/';
+import {deserializeIntoMailFolder} from '../../../../../models/deserializeIntoMailFolder';
+import {deserializeIntoMailFolderCollectionResponse} from '../../../../../models/deserializeIntoMailFolderCollectionResponse';
 import {MailFolder} from '../../../../../models/mailFolder';
 import {MailFolderCollectionResponse} from '../../../../../models/mailFolderCollectionResponse';
+import {serializeMailFolder} from '../../../../../models/serializeMailFolder';
+import {serializeMailFolderCollectionResponse} from '../../../../../models/serializeMailFolderCollectionResponse';
 import {ChildFoldersRequestBuilderGetRequestConfiguration} from './childFoldersRequestBuilderGetRequestConfiguration';
 import {ChildFoldersRequestBuilderPostRequestConfiguration} from './childFoldersRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
@@ -61,8 +64,7 @@ export class ChildFoldersRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new MailFolderImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeMailFolder);
         return requestInfo;
     };
     /**
@@ -75,7 +77,7 @@ export class ChildFoldersRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MailFolderCollectionResponse>(requestInfo, createMailFolderCollectionResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MailFolderCollectionResponse>(requestInfo,deserializeIntoMailFolderCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Use this API to create a new child mailFolder. If you intend a new folder to be hidden, you must set the **isHidden** property to `true` on creation.
@@ -89,6 +91,6 @@ export class ChildFoldersRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo, createMailFolderFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo,deserializeIntoMailFolder, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

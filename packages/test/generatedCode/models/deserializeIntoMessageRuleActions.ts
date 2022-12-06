@@ -1,20 +1,20 @@
+import {deserializeIntoRecipient} from './deserializeIntoRecipient';
 import {Importance} from './importance';
-import {MessageRuleActions, Recipient} from './index';
-import {Recipient} from './recipient';
+import {MessageRuleActions} from './index';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function deserializeIntoMessageRuleActions(messageRuleActions: MessageRuleActions | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "assignCategories": n => { messageRuleActions.assignCategories = n.getCollectionOfPrimitiveValues<string>(); },
-        "copyToFolder": n => { messageRuleActions.copyToFolder = n.getStringValue(); },
-        "delete": n => { messageRuleActions.delete = n.getBooleanValue(); },
-        "forwardAsAttachmentTo": n => { messageRuleActions.forwardAsAttachmentTo = n.getCollectionOfObjectValuesFromMethod<Recipient>(deserializeIntoRecipient); },
-        "forwardTo": n => { messageRuleActions.forwardTo = n.getCollectionOfObjectValuesFromMethod<Recipient>(deserializeIntoRecipient); },
-        "markAsRead": n => { messageRuleActions.markAsRead = n.getBooleanValue(); },
-        "markImportance": n => { messageRuleActions.markImportance = n.getEnumValue<Importance>(Importance); },
-        "moveToFolder": n => { messageRuleActions.moveToFolder = n.getStringValue(); },
-        "permanentDelete": n => { messageRuleActions.permanentDelete = n.getBooleanValue(); },
-        "redirectTo": n => { messageRuleActions.redirectTo = n.getCollectionOfObjectValuesFromMethod<Recipient>(deserializeIntoRecipient); },
-        "stopProcessingRules": n => { messageRuleActions.stopProcessingRules = n.getBooleanValue(); },
+        "assignCategories": n => { messageRuleActions.assignCategories = n.getCollectionOfPrimitiveValues<string>() as any ; },
+        "copyToFolder": n => { messageRuleActions.copyToFolder = n.getStringValue() as any ; },
+        "delete": n => { messageRuleActions.delete = n.getBooleanValue() as any ; },
+        "forwardAsAttachmentTo": n => { messageRuleActions.forwardAsAttachmentTo = n.getCollectionOfObjectValuesFromMethod(deserializeIntoRecipient) as any ; },
+        "forwardTo": n => { messageRuleActions.forwardTo = n.getCollectionOfObjectValuesFromMethod(deserializeIntoRecipient) as any ; },
+        "markAsRead": n => { messageRuleActions.markAsRead = n.getBooleanValue() as any ; },
+        "markImportance": n => { messageRuleActions.markImportance = n.getEnumValue<Importance>(Importance) as any ; },
+        "moveToFolder": n => { messageRuleActions.moveToFolder = n.getStringValue() as any ; },
+        "permanentDelete": n => { messageRuleActions.permanentDelete = n.getBooleanValue() as any ; },
+        "redirectTo": n => { messageRuleActions.redirectTo = n.getCollectionOfObjectValuesFromMethod(deserializeIntoRecipient) as any ; },
+        "stopProcessingRules": n => { messageRuleActions.stopProcessingRules = n.getBooleanValue() as any ; },
     }
 }

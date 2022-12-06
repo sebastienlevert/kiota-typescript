@@ -1,7 +1,7 @@
-import { ParsableFactory } from ".";
 import { DateOnly } from "../dateOnly";
 import { Duration } from "../duration";
 import { TimeOnly } from "../timeOnly";
+import { DeserializeMethod, ParsableFactory } from ".";
 import { Parsable } from "./parsable";
 
 /**
@@ -68,13 +68,15 @@ export interface ParseNode {
   ): T[] | undefined;
 
   getCollectionOfObjectValuesFromMethod<T>(
-    method: (value: unknown) => T
+    method: DeserializeMethod<T>
   ): T[] | undefined;
   /**
    * Gets the model object value of the node.
    * @return the model object value of the node.
    */
   getObjectValue<T extends Parsable>(type: ParsableFactory<T>): T;
+
+  getObject<T>(deserializerFunction: DeserializeMethod<T>): T;
   /**
    * Gets the Enum values of the node.
    * @return the Enum values of the node.

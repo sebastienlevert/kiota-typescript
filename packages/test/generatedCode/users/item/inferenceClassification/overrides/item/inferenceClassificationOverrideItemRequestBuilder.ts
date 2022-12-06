@@ -1,5 +1,6 @@
-import {InferenceClassificationOverride} from '../../../../../models/';
+import {deserializeIntoInferenceClassificationOverride} from '../../../../../models/deserializeIntoInferenceClassificationOverride';
 import {InferenceClassificationOverride} from '../../../../../models/inferenceClassificationOverride';
+import {serializeInferenceClassificationOverride} from '../../../../../models/serializeInferenceClassificationOverride';
 import {InferenceClassificationOverrideItemRequestBuilderDeleteRequestConfiguration} from './inferenceClassificationOverrideItemRequestBuilderDeleteRequestConfiguration';
 import {InferenceClassificationOverrideItemRequestBuilderGetRequestConfiguration} from './inferenceClassificationOverrideItemRequestBuilderGetRequestConfiguration';
 import {InferenceClassificationOverrideItemRequestBuilderPatchRequestConfiguration} from './inferenceClassificationOverrideItemRequestBuilderPatchRequestConfiguration';
@@ -76,8 +77,7 @@ export class InferenceClassificationOverrideItemRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new InferenceClassificationOverrideImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeInferenceClassificationOverride);
         return requestInfo;
     };
     /**
@@ -101,7 +101,7 @@ export class InferenceClassificationOverrideItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<InferenceClassificationOverride>(requestInfo, createInferenceClassificationOverrideFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<InferenceClassificationOverride>(requestInfo,deserializeIntoInferenceClassificationOverride, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Update the navigation property overrides in users

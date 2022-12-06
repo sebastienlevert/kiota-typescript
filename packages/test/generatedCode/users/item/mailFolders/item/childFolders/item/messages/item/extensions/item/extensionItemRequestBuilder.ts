@@ -1,5 +1,6 @@
-import {Extension} from '../../../../../../../../../../models/';
+import {deserializeIntoExtension} from '../../../../../../../../../../models/deserializeIntoExtension';
 import {Extension} from '../../../../../../../../../../models/extension';
+import {serializeExtension} from '../../../../../../../../../../models/serializeExtension';
 import {ExtensionItemRequestBuilderDeleteRequestConfiguration} from './extensionItemRequestBuilderDeleteRequestConfiguration';
 import {ExtensionItemRequestBuilderGetRequestConfiguration} from './extensionItemRequestBuilderGetRequestConfiguration';
 import {ExtensionItemRequestBuilderPatchRequestConfiguration} from './extensionItemRequestBuilderPatchRequestConfiguration';
@@ -76,8 +77,7 @@ export class ExtensionItemRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new ExtensionImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeExtension);
         return requestInfo;
     };
     /**
@@ -101,7 +101,7 @@ export class ExtensionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Extension>(requestInfo, createExtensionFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Extension>(requestInfo,deserializeIntoExtension, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Update the navigation property extensions in users

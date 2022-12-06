@@ -4,7 +4,7 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function deserializeIntoItemBody(itemBody: ItemBody | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "content": n => { itemBody.content = n.getStringValue(); },
-        "contentType": n => { itemBody.contentType = n.getEnumValue<BodyType>(BodyType); },
+        "content": n => { itemBody.content = n.getStringValue() as any ; },
+        "contentType": n => { itemBody.contentType = n.getEnumValue<BodyType>(BodyType) as any ; },
     }
 }

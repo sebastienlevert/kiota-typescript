@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   DateOnly,
+  DeserializeMethod,
   Duration,
   Parsable,
   ParsableFactory,
@@ -51,8 +52,12 @@ export class TextParseNode implements ParseNode {
   };
 
   public getCollectionOfObjectValuesFromMethod<T>(
-    method: (value: unknown) => T
+    method: DeserializeMethod<T>
   ): T[] | undefined {
+    throw new Error(TextParseNode.noStructuredDataMessage);
+  }
+
+  public getObject<T>(deserializerFunction: DeserializeMethod<T>): T {
     throw new Error(TextParseNode.noStructuredDataMessage);
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

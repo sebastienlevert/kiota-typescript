@@ -1,13 +1,13 @@
-import {DateTimeTimeZone} from './dateTimeTimeZone';
+import {deserializeIntoDateTimeTimeZone} from './deserializeIntoDateTimeTimeZone';
 import {FollowupFlagStatus} from './followupFlagStatus';
-import {DateTimeTimeZone, FollowupFlag} from './index';
+import {FollowupFlag} from './index';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function deserializeIntoFollowupFlag(followupFlag: FollowupFlag | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "completedDateTime": n => { followupFlag.completedDateTime = n.deserializeIntoDateTimeTimeZoneInterface(); },
-        "dueDateTime": n => { followupFlag.dueDateTime = n.deserializeIntoDateTimeTimeZoneInterface(); },
-        "flagStatus": n => { followupFlag.flagStatus = n.getEnumValue<FollowupFlagStatus>(FollowupFlagStatus); },
-        "startDateTime": n => { followupFlag.startDateTime = n.deserializeIntoDateTimeTimeZoneInterface(); },
+        "completedDateTime": n => { followupFlag.completedDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
+        "dueDateTime": n => { followupFlag.dueDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
+        "flagStatus": n => { followupFlag.flagStatus = n.getEnumValue<FollowupFlagStatus>(FollowupFlagStatus) as any ; },
+        "startDateTime": n => { followupFlag.startDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
     }
 }

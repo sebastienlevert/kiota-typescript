@@ -1,5 +1,6 @@
-import {InferenceClassification} from '../../../models/';
+import {deserializeIntoInferenceClassification} from '../../../models/deserializeIntoInferenceClassification';
 import {InferenceClassification} from '../../../models/inferenceClassification';
+import {serializeInferenceClassification} from '../../../models/serializeInferenceClassification';
 import {InferenceClassificationRequestBuilderGetRequestConfiguration} from './inferenceClassificationRequestBuilderGetRequestConfiguration';
 import {InferenceClassificationRequestBuilderPatchRequestConfiguration} from './inferenceClassificationRequestBuilderPatchRequestConfiguration';
 import {InferenceClassificationOverrideItemRequestBuilder} from './overrides/item/inferenceClassificationOverrideItemRequestBuilder';
@@ -65,8 +66,7 @@ export class InferenceClassificationRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new InferenceClassificationImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeInferenceClassification);
         return requestInfo;
     };
     /**
@@ -79,7 +79,7 @@ export class InferenceClassificationRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo, createInferenceClassificationFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo,deserializeIntoInferenceClassification, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Gets an item from the ApiSdk.users.item.inferenceClassification.overrides.item collection

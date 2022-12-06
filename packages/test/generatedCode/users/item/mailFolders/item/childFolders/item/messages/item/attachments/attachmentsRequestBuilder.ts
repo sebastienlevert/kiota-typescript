@@ -1,6 +1,9 @@
-import {Attachment} from '../../../../../../../../../models/';
 import {Attachment} from '../../../../../../../../../models/attachment';
 import {AttachmentCollectionResponse} from '../../../../../../../../../models/attachmentCollectionResponse';
+import {deserializeIntoAttachment} from '../../../../../../../../../models/deserializeIntoAttachment';
+import {deserializeIntoAttachmentCollectionResponse} from '../../../../../../../../../models/deserializeIntoAttachmentCollectionResponse';
+import {serializeAttachment} from '../../../../../../../../../models/serializeAttachment';
+import {serializeAttachmentCollectionResponse} from '../../../../../../../../../models/serializeAttachmentCollectionResponse';
 import {AttachmentsRequestBuilderGetRequestConfiguration} from './attachmentsRequestBuilderGetRequestConfiguration';
 import {AttachmentsRequestBuilderPostRequestConfiguration} from './attachmentsRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
@@ -45,7 +48,7 @@ export class AttachmentsRequestBuilder {
         return requestInfo;
     };
     /**
-     * Use this API to create a new Attachment. An attachment can be one of the following types: All these types of attachment resources are derived from the attachmentresource. 
+     * Use this API to add an attachment to a message.  An attachment can be one of the following types: All these types of attachment resources are derived from the attachmentresource.  You can add an attachment to an existing message by posting to its attachments collection, or you can add an attachment to a message that is being created and sent on the fly. This operation limits the size of the attachment you can add to under 3 MB.
      * @param body 
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns a RequestInformation
@@ -61,8 +64,7 @@ export class AttachmentsRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new AttachmentImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeAttachment);
         return requestInfo;
     };
     /**
@@ -75,10 +77,10 @@ export class AttachmentsRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<AttachmentCollectionResponse>(requestInfo, createAttachmentCollectionResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<AttachmentCollectionResponse>(requestInfo,deserializeIntoAttachmentCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
-     * Use this API to create a new Attachment. An attachment can be one of the following types: All these types of attachment resources are derived from the attachmentresource. 
+     * Use this API to add an attachment to a message.  An attachment can be one of the following types: All these types of attachment resources are derived from the attachmentresource.  You can add an attachment to an existing message by posting to its attachments collection, or you can add an attachment to a message that is being created and sent on the fly. This operation limits the size of the attachment you can add to under 3 MB.
      * @param body 
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,6 +91,6 @@ export class AttachmentsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<Attachment>(requestInfo, createAttachmentFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<Attachment>(requestInfo,deserializeIntoAttachment, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

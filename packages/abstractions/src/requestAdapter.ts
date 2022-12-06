@@ -1,6 +1,11 @@
 import { RequestInformation } from "./requestInformation";
 import { ResponseHandler } from "./responseHandler";
-import { ParsableFactory, Parsable, SerializationWriterFactory } from "./serialization";
+import {
+  DeserializeMethod,
+  Parsable,
+  ParsableFactory,
+  SerializationWriterFactory,
+} from "./serialization";
 import { BackingStoreFactory } from "./store";
 
 /** Service responsible for translating abstract Request Info into concrete native HTTP requests. */
@@ -19,9 +24,9 @@ export interface RequestAdapter {
    * @typeParam ModelType the type of the response model to deserialize the response into.
    * @return a {@link Promise} with the deserialized response model.
    */
-  sendAsync<ModelType extends Parsable>(
+  sendAsync<ModelType>(
     requestInfo: RequestInformation,
-    type: ParsableFactory<ModelType>,
+    deserializerMethod: DeserializeMethod<ModelType>,
     responseHandler: ResponseHandler | undefined,
     errorMappings: Record<string, ParsableFactory<Parsable>> | undefined
   ): Promise<ModelType | undefined>;
@@ -34,11 +39,11 @@ export interface RequestAdapter {
    * @typeParam ModelType the type of the response model to deserialize the response into.
    * @return a {@link Promise} with the deserialized response model collection.
    */
-  sendCollectionAsync<ModelType extends Parsable>(
+  sendCollectionAsync<ModelType>(
     requestInfo: RequestInformation,
-    type: ParsableFactory<ModelType>,
+    deserializerMethod: DeserializeMethod<ModelType>,
     responseHandler: ResponseHandler | undefined,
-    errorMappings: Record<string, ParsableFactory<Parsable>> | undefined
+    errorMappings: Record<string, ParsableFactory<any>> | undefined
   ): Promise<ModelType[] | undefined>;
   /**
    * Excutes the HTTP request specified by the given RequestInformation and returns the deserialized response model collection.

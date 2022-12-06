@@ -1,13 +1,13 @@
-import {EmailAddress} from './emailAddress';
-import {Entity} from './entity';
-import {EmailAddress, InferenceClassificationOverride} from './index';
+import {deserializeIntoEmailAddress} from './deserializeIntoEmailAddress';
+import {deserializeIntoEntity} from './deserializeIntoEntity';
+import {InferenceClassificationOverride} from './index';
 import {InferenceClassificationType} from './inferenceClassificationType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function deserializeIntoInferenceClassificationOverride(inferenceClassificationOverride: InferenceClassificationOverride | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        ...deserializeIntoEntityInterface(inferenceClassificationOverride),
-        "classifyAs": n => { InferenceClassificationOverride.classifyAs = n.getEnumValue<InferenceClassificationType>(InferenceClassificationType); },
-        "senderEmailAddress": n => { InferenceClassificationOverride.senderEmailAddress = n.deserializeIntoEmailAddressInterface(); },
+        ...deserializeIntoEntity(inferenceClassificationOverride),
+        "classifyAs": n => { inferenceClassificationOverride.classifyAs = n.getEnumValue<InferenceClassificationType>(InferenceClassificationType) as any ; },
+        "senderEmailAddress": n => { inferenceClassificationOverride.senderEmailAddress = n.getObject(deserializeIntoEmailAddress) as any ; },
     }
 }

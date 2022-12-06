@@ -83,7 +83,7 @@ export class JsonSerializationWriter implements SerializationWriter {
   public writeCollectionOfObjectValuesFromMethod = <T>(
     key: string,
     values: T[],
-    serializerMethod: SerializerMethod<T>
+    serializerMethod: SerializerMethod
   ): void => {
     if (values) {
       key && this.writePropertyName(key);
@@ -124,14 +124,16 @@ export class JsonSerializationWriter implements SerializationWriter {
   public writeObjectValueFromMethod<T>(
     key: string | undefined,
     value: T,
-    serializerMethod: SerializerMethod<T>
+    serializerMethod: SerializerMethod
   ): void {
-    this.onBeforeObjectSerialization && this.onBeforeObjectSerialization(value);
+    this.onBeforeObjectSerialization &&
+      this.onBeforeObjectSerialization(value as Parsable);
     this.writer.push(`{`);
     this.onStartObjectSerialization &&
-      this.onStartObjectSerialization(value, this);
-    serializerMethod(value);
-    this.onAfterObjectSerialization && this.onAfterObjectSerialization(value);
+      this.onStartObjectSerialization(value as Parsable, this);
+    serializerMethod(this, value);
+    this.onAfterObjectSerialization &&
+      this.onAfterObjectSerialization(value as Parsable);
     if (
       this.writer.length > 0 &&
       this.writer[this.writer.length - 1] ===

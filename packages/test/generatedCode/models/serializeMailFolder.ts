@@ -1,23 +1,22 @@
-import {Entity} from './entity';
+import {MailFolder} from './index';
 import {serializeEntity} from './serializeEntity';
-import {MailFolder, Message, MessageRule, MultiValueLegacyExtendedProperty, SingleValueLegacyExtendedProperty} from './index';
-import {Message} from './message';
-import {MessageRule} from './messageRule';
-import {MultiValueLegacyExtendedProperty} from './multiValueLegacyExtendedProperty';
-import {SingleValueLegacyExtendedProperty} from './singleValueLegacyExtendedProperty';
+import {serializeMessage} from './serializeMessage';
+import {serializeMessageRule} from './serializeMessageRule';
+import {serializeMultiValueLegacyExtendedProperty} from './serializeMultiValueLegacyExtendedProperty';
+import {serializeSingleValueLegacyExtendedProperty} from './serializeSingleValueLegacyExtendedProperty';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function serializeMailFolder(writer: SerializationWriter, mailFolder: MailFolder | undefined = {}) : void {
-        serializeEntity(mailFolder);
+        serializeEntity(writer, mailFolder)
             writer.writeNumberValue("childFolderCount", mailFolder.childFolderCount);
-            writer.writeCollectionOfObjectValues<MailFolder>("childFolders", mailFolder.childFolders);
+            writer.writeCollectionOfObjectValuesFromMethod("childFolders", mailFolder.childFolders as any, serializeMailFolder);
             writer.writeStringValue("displayName", mailFolder.displayName);
             writer.writeBooleanValue("isHidden", mailFolder.isHidden);
-            writer.writeCollectionOfObjectValues<MessageRule>("messageRules", mailFolder.messageRules);
-            writer.writeCollectionOfObjectValues<Message>("messages", mailFolder.messages);
-            writer.writeCollectionOfObjectValues<MultiValueLegacyExtendedProperty>("multiValueExtendedProperties", mailFolder.multiValueExtendedProperties);
+            writer.writeCollectionOfObjectValuesFromMethod("messageRules", mailFolder.messageRules as any, serializeMessageRule);
+            writer.writeCollectionOfObjectValuesFromMethod("messages", mailFolder.messages as any, serializeMessage);
+            writer.writeCollectionOfObjectValuesFromMethod("multiValueExtendedProperties", mailFolder.multiValueExtendedProperties as any, serializeMultiValueLegacyExtendedProperty);
             writer.writeStringValue("parentFolderId", mailFolder.parentFolderId);
-            writer.writeCollectionOfObjectValues<SingleValueLegacyExtendedProperty>("singleValueExtendedProperties", mailFolder.singleValueExtendedProperties);
+            writer.writeCollectionOfObjectValuesFromMethod("singleValueExtendedProperties", mailFolder.singleValueExtendedProperties as any, serializeSingleValueLegacyExtendedProperty);
             writer.writeNumberValue("totalItemCount", mailFolder.totalItemCount);
             writer.writeNumberValue("unreadItemCount", mailFolder.unreadItemCount);
 }

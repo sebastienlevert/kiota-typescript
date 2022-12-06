@@ -1,6 +1,9 @@
-import {MultiValueLegacyExtendedProperty} from '../../../../../models/';
+import {deserializeIntoMultiValueLegacyExtendedProperty} from '../../../../../models/deserializeIntoMultiValueLegacyExtendedProperty';
+import {deserializeIntoMultiValueLegacyExtendedPropertyCollectionResponse} from '../../../../../models/deserializeIntoMultiValueLegacyExtendedPropertyCollectionResponse';
 import {MultiValueLegacyExtendedProperty} from '../../../../../models/multiValueLegacyExtendedProperty';
 import {MultiValueLegacyExtendedPropertyCollectionResponse} from '../../../../../models/multiValueLegacyExtendedPropertyCollectionResponse';
+import {serializeMultiValueLegacyExtendedProperty} from '../../../../../models/serializeMultiValueLegacyExtendedProperty';
+import {serializeMultiValueLegacyExtendedPropertyCollectionResponse} from '../../../../../models/serializeMultiValueLegacyExtendedPropertyCollectionResponse';
 import {MultiValueExtendedPropertiesRequestBuilderGetRequestConfiguration} from './multiValueExtendedPropertiesRequestBuilderGetRequestConfiguration';
 import {MultiValueExtendedPropertiesRequestBuilderPostRequestConfiguration} from './multiValueExtendedPropertiesRequestBuilderPostRequestConfiguration';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
@@ -61,8 +64,7 @@ export class MultiValueExtendedPropertiesRequestBuilder {
             requestInfo.addRequestHeaders(requestConfiguration.headers);
             requestInfo.addRequestOptions(requestConfiguration.options);
         }
-        const parsableBody = new MultiValueLegacyExtendedPropertyImpl(body)
-        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", parsableBody);
+        requestInfo.setContentFromParsable(this.requestAdapter, "application/json", body as any, serializeMultiValueLegacyExtendedProperty);
         return requestInfo;
     };
     /**
@@ -75,7 +77,7 @@ export class MultiValueExtendedPropertiesRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedPropertyCollectionResponse>(requestInfo, createMultiValueLegacyExtendedPropertyCollectionResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedPropertyCollectionResponse>(requestInfo,deserializeIntoMultiValueLegacyExtendedPropertyCollectionResponse, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
     /**
      * Create new navigation property to multiValueExtendedProperties for users
@@ -89,6 +91,6 @@ export class MultiValueExtendedPropertiesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, requestConfiguration
         );
-        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedProperty>(requestInfo, createMultiValueLegacyExtendedPropertyFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
+        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedProperty>(requestInfo,deserializeIntoMultiValueLegacyExtendedProperty, responseHandler, undefined) ?? Promise.reject(new Error('request adapter is null'));
     };
 }

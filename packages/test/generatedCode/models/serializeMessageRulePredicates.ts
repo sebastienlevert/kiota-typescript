@@ -1,16 +1,16 @@
 import {Importance} from './importance';
-import {MessageRulePredicates, Recipient, SizeRange} from './index';
+import {MessageRulePredicates} from './index';
 import {MessageActionFlag} from './messageActionFlag';
-import {Recipient} from './recipient';
 import {Sensitivity} from './sensitivity';
-import {SizeRange} from './sizeRange';
+import {serializeRecipient} from './serializeRecipient';
+import {serializeSizeRange} from './serializeSizeRange';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export function serializeMessageRulePredicates(writer: SerializationWriter, messageRulePredicates: MessageRulePredicates | undefined = {}) : void {
             writer.writeCollectionOfPrimitiveValues<string>("bodyContains", messageRulePredicates.bodyContains);
             writer.writeCollectionOfPrimitiveValues<string>("bodyOrSubjectContains", messageRulePredicates.bodyOrSubjectContains);
             writer.writeCollectionOfPrimitiveValues<string>("categories", messageRulePredicates.categories);
-            writer.writeCollectionOfObjectValues<Recipient>("fromAddresses", messageRulePredicates.fromAddresses);
+            writer.writeCollectionOfObjectValuesFromMethod("fromAddresses", messageRulePredicates.fromAddresses as any, serializeRecipient);
             writer.writeBooleanValue("hasAttachments", messageRulePredicates.hasAttachments);
             writer.writeCollectionOfPrimitiveValues<string>("headerContains", messageRulePredicates.headerContains);
             writer.writeEnumValue<Importance>("importance", messageRulePredicates.importance);
@@ -32,9 +32,9 @@ export function serializeMessageRulePredicates(writer: SerializationWriter, mess
             writer.writeEnumValue<Sensitivity>("sensitivity", messageRulePredicates.sensitivity);
             writer.writeBooleanValue("sentCcMe", messageRulePredicates.sentCcMe);
             writer.writeBooleanValue("sentOnlyToMe", messageRulePredicates.sentOnlyToMe);
-            writer.writeCollectionOfObjectValues<Recipient>("sentToAddresses", messageRulePredicates.sentToAddresses);
+            writer.writeCollectionOfObjectValuesFromMethod("sentToAddresses", messageRulePredicates.sentToAddresses as any, serializeRecipient);
             writer.writeBooleanValue("sentToMe", messageRulePredicates.sentToMe);
             writer.writeBooleanValue("sentToOrCcMe", messageRulePredicates.sentToOrCcMe);
             writer.writeCollectionOfPrimitiveValues<string>("subjectContains", messageRulePredicates.subjectContains);
-            writer.writeObjectValue<SizeRange>("withinSizeRange", messageRulePredicates.withinSizeRange);
+            writer.writeObjectValueFromMethod("withinSizeRange", messageRulePredicates.withinSizeRange as any, serializeSizeRange);
 }
