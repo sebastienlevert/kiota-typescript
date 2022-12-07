@@ -1,0 +1,55 @@
+import {Device} from './index';
+import {serializeAlternativeSecurityId} from './serializeAlternativeSecurityId';
+import {serializeCommand} from './serializeCommand';
+import {serializeDirectoryObject} from './serializeDirectoryObject';
+import {serializeExtension} from './serializeExtension';
+import {serializeOnPremisesExtensionAttributes} from './serializeOnPremisesExtensionAttributes';
+import {serializeUsageRight} from './serializeUsageRight';
+import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+
+export function serializeDevice(writer: SerializationWriter, device: Device | undefined = {}) : void {
+        serializeDirectoryObject(writer, device)
+            writer.writeBooleanValue("accountEnabled", device.accountEnabled);
+            writer.writeCollectionOfObjectValuesFromMethod("alternativeSecurityIds", device.alternativeSecurityIds as any, serializeAlternativeSecurityId);
+            writer.writeDateValue("approximateLastSignInDateTime", device.approximateLastSignInDateTime);
+            writer.writeCollectionOfObjectValuesFromMethod("commands", device.commands as any, serializeCommand);
+            writer.writeDateValue("complianceExpirationDateTime", device.complianceExpirationDateTime);
+            writer.writeStringValue("deviceCategory", device.deviceCategory);
+            writer.writeStringValue("deviceId", device.deviceId);
+            writer.writeStringValue("deviceMetadata", device.deviceMetadata);
+            writer.writeStringValue("deviceOwnership", device.deviceOwnership);
+            writer.writeNumberValue("deviceVersion", device.deviceVersion);
+            writer.writeStringValue("displayName", device.displayName);
+            writer.writeStringValue("domainName", device.domainName);
+            writer.writeStringValue("enrollmentProfileName", device.enrollmentProfileName);
+            writer.writeStringValue("enrollmentType", device.enrollmentType);
+            writer.writeObjectValueFromMethod("extensionAttributes", device.extensionAttributes as any, serializeOnPremisesExtensionAttributes);
+            writer.writeCollectionOfObjectValuesFromMethod("extensions", device.extensions as any, serializeExtension);
+            writer.writeCollectionOfPrimitiveValues<string>("hostnames", device.hostnames);
+            writer.writeBooleanValue("isCompliant", device.isCompliant);
+            writer.writeBooleanValue("isManaged", device.isManaged);
+            writer.writeBooleanValue("isManagementRestricted", device.isManagementRestricted);
+            writer.writeBooleanValue("isRooted", device.isRooted);
+            writer.writeStringValue("kind", device.kind);
+            writer.writeStringValue("managementType", device.managementType);
+            writer.writeStringValue("manufacturer", device.manufacturer);
+            writer.writeStringValue("mdmAppId", device.mdmAppId);
+            writer.writeCollectionOfObjectValuesFromMethod("memberOf", device.memberOf as any, serializeDirectoryObject);
+            writer.writeStringValue("model", device.model);
+            writer.writeStringValue("name", device.name);
+            writer.writeDateValue("onPremisesLastSyncDateTime", device.onPremisesLastSyncDateTime);
+            writer.writeBooleanValue("onPremisesSyncEnabled", device.onPremisesSyncEnabled);
+            writer.writeStringValue("operatingSystem", device.operatingSystem);
+            writer.writeStringValue("operatingSystemVersion", device.operatingSystemVersion);
+            writer.writeCollectionOfPrimitiveValues<string>("physicalIds", device.physicalIds);
+            writer.writeStringValue("platform", device.platform);
+            writer.writeStringValue("profileType", device.profileType);
+            writer.writeCollectionOfObjectValuesFromMethod("registeredOwners", device.registeredOwners as any, serializeDirectoryObject);
+            writer.writeCollectionOfObjectValuesFromMethod("registeredUsers", device.registeredUsers as any, serializeDirectoryObject);
+            writer.writeDateValue("registrationDateTime", device.registrationDateTime);
+            writer.writeStringValue("status", device.status);
+            writer.writeCollectionOfPrimitiveValues<string>("systemLabels", device.systemLabels);
+            writer.writeCollectionOfObjectValuesFromMethod("transitiveMemberOf", device.transitiveMemberOf as any, serializeDirectoryObject);
+            writer.writeStringValue("trustType", device.trustType);
+            writer.writeCollectionOfObjectValuesFromMethod("usageRights", device.usageRights as any, serializeUsageRight);
+}

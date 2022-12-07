@@ -1,6 +1,6 @@
 {
-  "descriptionHash": "2799D3CEFB96A6137DD55AE7F4019815C69FAB5D8221681F9EA10F3DF5D54D79DE1666957362D11F5296A5FF7563FA1ABDB9FB09545BECAB4D5D6006EDB45672",
-  "descriptionLocation": "https://raw.githubusercontent.com/swagger-api/swagger-petstore/master/src/main/resources/openapi.yaml",
+  "descriptionHash": "52B53F9C0B8FA09605CF264400AF1109C116E5D0124788A54D4168763CC9CC60D70E691CDD19ED217AC6AAA41B116BB8DF45B5BCD3A0C2DBB5550ECC36AD498C",
+  "descriptionLocation": "https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-powershell/dev/openApiDocs/beta/Users.yml",
   "lockFileVersion": "1.0.0",
   "kiotaVersion": "0.7.1.0",
   "clientClassName": "ApiClient",

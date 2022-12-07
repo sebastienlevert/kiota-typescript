@@ -1,0 +1,53 @@
+import {OnlineMeeting} from './index';
+import {MeetingCapabilities} from './meetingCapabilities';
+import {OnlineMeetingPresenters} from './onlineMeetingPresenters';
+import {OnlineMeetingRole} from './onlineMeetingRole';
+import {serializeAudioConferencing} from './serializeAudioConferencing';
+import {serializeBroadcastMeetingSettings} from './serializeBroadcastMeetingSettings';
+import {serializeCallTranscript} from './serializeCallTranscript';
+import {serializeChatInfo} from './serializeChatInfo';
+import {serializeEntity} from './serializeEntity';
+import {serializeItemBody} from './serializeItemBody';
+import {serializeJoinMeetingIdSettings} from './serializeJoinMeetingIdSettings';
+import {serializeLobbyBypassSettings} from './serializeLobbyBypassSettings';
+import {serializeMeetingAttendanceReport} from './serializeMeetingAttendanceReport';
+import {serializeMeetingParticipants} from './serializeMeetingParticipants';
+import {serializeMeetingRegistration} from './serializeMeetingRegistration';
+import {serializeVirtualAppointment} from './serializeVirtualAppointment';
+import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+
+export function serializeOnlineMeeting(writer: SerializationWriter, onlineMeeting: OnlineMeeting | undefined = {}) : void {
+        serializeEntity(writer, onlineMeeting)
+            writer.writeBooleanValue("allowAttendeeToEnableCamera", onlineMeeting.allowAttendeeToEnableCamera);
+            writer.writeBooleanValue("allowAttendeeToEnableMic", onlineMeeting.allowAttendeeToEnableMic);
+            writer.writeEnumValue<OnlineMeetingPresenters>("allowedPresenters", onlineMeeting.allowedPresenters);
+            writer.writeBooleanValue("allowTeamworkReactions", onlineMeeting.allowTeamworkReactions);
+            writer.writeStringValue("alternativeRecording", onlineMeeting.alternativeRecording);
+          //  writer.writeEnumValue<OnlineMeetingRole>("anonymizeIdentityForRoles", onlineMeeting.anonymizeIdentityForRoles);
+            writer.writeCollectionOfObjectValuesFromMethod("attendanceReports", onlineMeeting.attendanceReports as any, serializeMeetingAttendanceReport);
+            writer.writeStringValue("attendeeReport", onlineMeeting.attendeeReport);
+            writer.writeObjectValueFromMethod("audioConferencing", onlineMeeting.audioConferencing as any, serializeAudioConferencing);
+            writer.writeObjectValueFromMethod("broadcastSettings", onlineMeeting.broadcastSettings as any, serializeBroadcastMeetingSettings);
+           // writer.writeEnumValue<MeetingCapabilities>("capabilities", onlineMeeting.capabilities);
+            writer.writeObjectValueFromMethod("chatInfo", onlineMeeting.chatInfo as any, serializeChatInfo);
+            writer.writeDateValue("creationDateTime", onlineMeeting.creationDateTime);
+            writer.writeDateValue("endDateTime", onlineMeeting.endDateTime);
+            writer.writeStringValue("externalId", onlineMeeting.externalId);
+            writer.writeBooleanValue("isBroadcast", onlineMeeting.isBroadcast);
+            writer.writeBooleanValue("isEntryExitAnnounced", onlineMeeting.isEntryExitAnnounced);
+            writer.writeObjectValueFromMethod("joinInformation", onlineMeeting.joinInformation as any, serializeItemBody);
+            writer.writeObjectValueFromMethod("joinMeetingIdSettings", onlineMeeting.joinMeetingIdSettings as any, serializeJoinMeetingIdSettings);
+            writer.writeStringValue("joinUrl", onlineMeeting.joinUrl);
+            writer.writeStringValue("joinWebUrl", onlineMeeting.joinWebUrl);
+            writer.writeObjectValueFromMethod("lobbyBypassSettings", onlineMeeting.lobbyBypassSettings as any, serializeLobbyBypassSettings);
+            writer.writeObjectValueFromMethod("meetingAttendanceReport", onlineMeeting.meetingAttendanceReport as any, serializeMeetingAttendanceReport);
+            writer.writeObjectValueFromMethod("participants", onlineMeeting.participants as any, serializeMeetingParticipants);
+            writer.writeBooleanValue("recordAutomatically", onlineMeeting.recordAutomatically);
+            writer.writeStringValue("recording", onlineMeeting.recording);
+            writer.writeObjectValueFromMethod("registration", onlineMeeting.registration as any, serializeMeetingRegistration);
+            writer.writeDateValue("startDateTime", onlineMeeting.startDateTime);
+            writer.writeStringValue("subject", onlineMeeting.subject);
+            writer.writeCollectionOfObjectValuesFromMethod("transcripts", onlineMeeting.transcripts as any, serializeCallTranscript);
+            writer.writeStringValue("videoTeleconferenceId", onlineMeeting.videoTeleconferenceId);
+            writer.writeObjectValueFromMethod("virtualAppointment", onlineMeeting.virtualAppointment as any, serializeVirtualAppointment);
+}

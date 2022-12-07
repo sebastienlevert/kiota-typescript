@@ -1,0 +1,18 @@
+import {DirectoryDefinitionDiscoverabilities} from './directoryDefinitionDiscoverabilities';
+import {Entity, ObjectDefinition} from './index';
+import {Parsable} from '@microsoft/kiota-abstractions';
+
+export interface DirectoryDefinition extends Entity, Partial<Parsable> {
+    /** The discoverabilities property */
+    discoverabilities?: DirectoryDefinitionDiscoverabilities;
+    /** Represents the discovery date and time using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. */
+    discoveryDateTime?: Date;
+    /** Name of the directory. Must be unique within the synchronization schema. Not nullable. */
+    name?: string;
+    /** Collection of objects supported by the directory. */
+    objects?: ObjectDefinition[];
+    /** The readOnly property */
+    readOnly?: boolean;
+    /** Read only value that indicates version discovered. null if discovery has not yet occurred. */
+    version?: string;
+}
