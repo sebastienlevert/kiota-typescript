@@ -1,0 +1,7 @@
+import {Profile} from './index';
+import {ParseNode} from '@microsoft/kiota-abstractions';
+
+export function createProfileFromDiscriminatorValue(parseNode: ParseNode | undefined) : Profile {
+    if(!parseNode) throw new Error("parseNode cannot be undefined");
+    return new Profile();
+}

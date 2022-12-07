@@ -1,0 +1,15 @@
+export enum PrintMediaType {
+    Stationery = "stationery",
+    Transparency = "transparency",
+    Envelope = "envelope",
+    EnvelopePlain = "envelopePlain",
+    Continuous = "continuous",
+    Screen = "screen",
+    ScreenPaged = "screenPaged",
+    ContinuousLong = "continuousLong",
+    ContinuousShort = "continuousShort",
+    EnvelopeWindow = "envelopeWindow",
+    MultiPartForm = "multiPartForm",
+    MultiLayer = "multiLayer",
+    Labels = "labels",
+}
