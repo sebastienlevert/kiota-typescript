@@ -4,7 +4,7 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-
+ import { terser } from "rollup-plugin-terser";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 
@@ -21,7 +21,8 @@ const config = [{
             browser: true,
             preferBuiltins: false,
 
-        })
+        }),
+        terser()
     ],
 }];
 
