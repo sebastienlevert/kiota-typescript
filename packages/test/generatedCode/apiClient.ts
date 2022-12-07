@@ -1,5 +1,8 @@
-import {UserItemRequestBuilder} from './users/item/userItemRequestBuilder';
-import {UsersRequestBuilder} from './users/usersRequestBuilder';
+import {WithPetItemRequestBuilder} from './pet/item/withPetItemRequestBuilder';
+import {PetRequestBuilder} from './pet/petRequestBuilder';
+import {StoreRequestBuilder} from './store/storeRequestBuilder';
+import {WithUsernameItemRequestBuilder} from './user/item/withUsernameItemRequestBuilder';
+import {UserRequestBuilder} from './user/userRequestBuilder';
 import {enableBackingStoreForSerializationWriterFactory, getPathParameters, ParseNodeFactoryRegistry, registerDefaultDeserializer, registerDefaultSerializer, RequestAdapter, SerializationWriterFactoryRegistry} from '@microsoft/kiota-abstractions';
 import {JsonParseNodeFactory, JsonSerializationWriterFactory} from '@microsoft/kiota-serialization-json';
 import {TextParseNodeFactory, TextSerializationWriterFactory} from '@microsoft/kiota-serialization-text';
@@ -8,13 +11,21 @@ import {TextParseNodeFactory, TextSerializationWriterFactory} from '@microsoft/k
 export class ApiClient {
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
+    /** The pet property */
+    public get pet(): PetRequestBuilder {
+        return new PetRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** The request adapter to use to execute the requests. */
     private readonly requestAdapter: RequestAdapter;
+    /** The store property */
+    public get store(): StoreRequestBuilder {
+        return new StoreRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder */
     private readonly urlTemplate: string;
-    /** The users property */
-    public get users(): UsersRequestBuilder {
-        return new UsersRequestBuilder(this.pathParameters, this.requestAdapter);
+    /** The user property */
+    public get user(): UserRequestBuilder {
+        return new UserRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     /**
      * Instantiates a new ApiClient and sets the default values.
@@ -30,18 +41,29 @@ export class ApiClient {
         registerDefaultDeserializer(JsonParseNodeFactory);
         registerDefaultDeserializer(TextParseNodeFactory);
         if (requestAdapter.baseUrl === undefined || requestAdapter.baseUrl === "") {
-            requestAdapter.baseUrl = "https://graph.microsoft.com/v1.0";
+            requestAdapter.baseUrl = "/v3";
         }
     };
     /**
-     * Gets an item from the ApiSdk.users.item collection
+     * Gets an item from the ApiSdk.pet.item collection
      * @param id Unique identifier of the item
-     * @returns a UserItemRequestBuilder
+     * @returns a WithPetItemRequestBuilder
      */
-    public usersById(id: string) : UserItemRequestBuilder {
+    public petById(id: string) : WithPetItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["user%2Did"] = id
-        return new UserItemRequestBuilder(urlTplParams, this.requestAdapter);
+        urlTplParams["petId"] = id
+        return new WithPetItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the ApiSdk.user.item collection
+     * @param id Unique identifier of the item
+     * @returns a WithUsernameItemRequestBuilder
+     */
+    public userById(id: string) : WithUsernameItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["username"] = id
+        return new WithUsernameItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

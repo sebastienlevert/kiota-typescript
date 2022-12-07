@@ -189,6 +189,9 @@ export class JsonSerializationWriter implements SerializationWriter {
     }
   };
   public getSerializedContent = (): ArrayBuffer => {
+    console.log("this.writer");
+    console.log(this.writer);
+    console.log("this.writer");
     return this.convertStringToArrayBuffer(this.writer.join(``));
   };
 

@@ -9,9 +9,9 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 
 const config = [{
-    input: ["dist/es/test/browser/index.js"],
+    input: ["dist/es/tests/index.js"],
     output: {
-        file: "dist/es/test/index.js",
+        file: "rolledUpFile.js",
         format: "esm",
         name: "BrowserTest",
     },
