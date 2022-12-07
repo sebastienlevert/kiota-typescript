@@ -16,7 +16,7 @@ import {NotificationItemRequestBuilder} from './notifications/item/notificationI
 import {NotificationsRequestBuilder} from './notifications/notificationsRequestBuilder';
 import {OAuth2PermissionGrantItemRequestBuilder} from './oauth2PermissionGrants/item/oAuth2PermissionGrantItemRequestBuilder';
 import {Oauth2PermissionGrantsRequestBuilder} from './oauth2PermissionGrants/oauth2PermissionGrantsRequestBuilder';
-import {OutlookRequestBuilder} from './outlook/outlookRequestBuilder';
+//import {OutlookRequestBuilder} from './outlook/outlookRequestBuilder';
 import {DirectoryObjectItemRequestBuilder as ibb1775edc8b00d6847216de6125761519cda46437475647d9e60f76954f077ae} from './ownedDevices/item/directoryObjectItemRequestBuilder';
 import {OwnedDevicesRequestBuilder} from './ownedDevices/ownedDevicesRequestBuilder';
 import {DirectoryObjectItemRequestBuilder as i98442ed3c02b04c2ea2cc3066430c127966655dd1b8dca84cb0f918302ae7194} from './ownedObjects/item/directoryObjectItemRequestBuilder';
@@ -26,7 +26,7 @@ import {ProfilePhotoItemRequestBuilder} from './photos/item/profilePhotoItemRequ
 import {PhotosRequestBuilder} from './photos/photosRequestBuilder';
 import {DirectoryObjectItemRequestBuilder as ib10e13dd31dd16fe44cd02de693cacca2390370a3334683b4e37c5ee8b0d9e75} from './registeredDevices/item/directoryObjectItemRequestBuilder';
 import {RegisteredDevicesRequestBuilder} from './registeredDevices/registeredDevicesRequestBuilder';
-import {SettingsRequestBuilder} from './settings/settingsRequestBuilder';
+//import {SettingsRequestBuilder} from './settings/settingsRequestBuilder';
 import {TodoRequestBuilder} from './todo/todoRequestBuilder';
 import {DirectoryObjectItemRequestBuilder as i5b7723796b9ab65897fb41e71fbf92926338e0d88e2286f616e6e58348a1e1ed} from './transitiveMemberOf/item/directoryObjectItemRequestBuilder';
 import {TransitiveMemberOfRequestBuilder} from './transitiveMemberOf/transitiveMemberOfRequestBuilder';
@@ -39,82 +39,87 @@ import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter
 
 /** Builds and executes requests for operations under /users/{user-id} */
 export class UserItemRequestBuilder {
+
+    
+    public create<T>(f: { new(s: any, t: any): T; } ){
+        return new f(this.pathParameters, this.requestAdapter, );
+    }
     /** The createdObjects property */
     public get createdObjects(): CreatedObjectsRequestBuilder {
         return new CreatedObjectsRequestBuilder(this.pathParameters, this.requestAdapter);
     }
-    /** The directReports property */
-    public get directReports(): DirectReportsRequestBuilder {
-        return new DirectReportsRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The extensions property */
-    public get extensions(): ExtensionsRequestBuilder {
-        return new ExtensionsRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The licenseDetails property */
-    public get licenseDetails(): LicenseDetailsRequestBuilder {
-        return new LicenseDetailsRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The manager property */
-    public get manager(): ManagerRequestBuilder {
-        return new ManagerRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The memberOf property */
-    public get memberOf(): MemberOfRequestBuilder {
-        return new MemberOfRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The notifications property */
-    public get notifications(): NotificationsRequestBuilder {
-        return new NotificationsRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The oauth2PermissionGrants property */
-    public get oauth2PermissionGrants(): Oauth2PermissionGrantsRequestBuilder {
-        return new Oauth2PermissionGrantsRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
+    // /** The directReports property */
+    // public get directReports(): DirectReportsRequestBuilder {
+    //     return new DirectReportsRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The extensions property */
+    // public get extensions(): ExtensionsRequestBuilder {
+    //     return new ExtensionsRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The licenseDetails property */
+    // public get licenseDetails(): LicenseDetailsRequestBuilder {
+    //     return new LicenseDetailsRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The manager property */
+    // public get manager(): ManagerRequestBuilder {
+    //     return new ManagerRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The memberOf property */
+    // public get memberOf(): MemberOfRequestBuilder {
+    //     return new MemberOfRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The notifications property */
+    // public get notifications(): NotificationsRequestBuilder {
+    //     return new NotificationsRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The oauth2PermissionGrants property */
+    // public get oauth2PermissionGrants(): Oauth2PermissionGrantsRequestBuilder {
+    //     return new Oauth2PermissionGrantsRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
     /** The outlook property */
-    public get outlook(): OutlookRequestBuilder {
-        return new OutlookRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
+    // public get outlook(): OutlookRequestBuilder {
+    //     return new OutlookRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
     /** The ownedDevices property */
-    public get ownedDevices(): OwnedDevicesRequestBuilder {
-        return new OwnedDevicesRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The ownedObjects property */
-    public get ownedObjects(): OwnedObjectsRequestBuilder {
-        return new OwnedObjectsRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
+    // public get ownedDevices(): OwnedDevicesRequestBuilder {
+    //     return new OwnedDevicesRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The ownedObjects property */
+    // public get ownedObjects(): OwnedObjectsRequestBuilder {
+    //     return new OwnedObjectsRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
     /** Path parameters for the request */
     private readonly pathParameters: Record<string, unknown>;
     /** The photo property */
-    public get photo(): PhotoRequestBuilder {
-        return new PhotoRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The photos property */
-    public get photos(): PhotosRequestBuilder {
-        return new PhotosRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The registeredDevices property */
-    public get registeredDevices(): RegisteredDevicesRequestBuilder {
-        return new RegisteredDevicesRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
+    // public get photo(): PhotoRequestBuilder {
+    //     return new PhotoRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The photos property */
+    // public get photos(): PhotosRequestBuilder {
+    //     return new PhotosRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The registeredDevices property */
+    // public get registeredDevices(): RegisteredDevicesRequestBuilder {
+    //     return new RegisteredDevicesRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
     /** The request adapter to use to execute the requests. */
     private readonly requestAdapter: RequestAdapter;
     /** The settings property */
-    public get settings(): SettingsRequestBuilder {
-        return new SettingsRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
+    // public get settings(): SettingsRequestBuilder {
+    //     return new SettingsRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
     /** The todo property */
-    public get todo(): TodoRequestBuilder {
-        return new TodoRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    /** The transitiveMemberOf property */
-    public get transitiveMemberOf(): TransitiveMemberOfRequestBuilder {
-        return new TransitiveMemberOfRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
+    // public get todo(): TodoRequestBuilder {
+    //     return new TodoRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
+    // /** The transitiveMemberOf property */
+    // public get transitiveMemberOf(): TransitiveMemberOfRequestBuilder {
+    //     return new TransitiveMemberOfRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
     /** The transitiveReports property */
-    public get transitiveReports(): TransitiveReportsRequestBuilder {
-        return new TransitiveReportsRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
+    // public get transitiveReports(): TransitiveReportsRequestBuilder {
+    //     return new TransitiveReportsRequestBuilder(this.pathParameters, this.requestAdapter);
+    // }
     /** Url template to use to build the URL for the current request builder */
     private readonly urlTemplate: string;
     /**
@@ -151,12 +156,12 @@ export class UserItemRequestBuilder {
      * @param id Unique identifier of the item
      * @returns a DirectoryObjectItemRequestBuilder
      */
-    public createdObjectsById(id: string) : i5eed8585f0e3283348246e245da2a8062b886f11233fe02158dc2fd851fa5cb1 {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["directoryObject%2Did"] = id
-        return new i5eed8585f0e3283348246e245da2a8062b886f11233fe02158dc2fd851fa5cb1(urlTplParams, this.requestAdapter);
-    };
+    // public createdObjectsById(id: string) : i5eed8585f0e3283348246e245da2a8062b886f11233fe02158dc2fd851fa5cb1 {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["directoryObject%2Did"] = id
+    //     return new i5eed8585f0e3283348246e245da2a8062b886f11233fe02158dc2fd851fa5cb1(urlTplParams, this.requestAdapter);
+    // };
     /**
      * Retrieve the properties and relationships of user object. This operation returns by default only a subset of the more commonly used properties for each user. These _default_ properties are noted in the Properties section. To get properties that are _not_ returned by default, do a GET operation for the user and specify the properties in a `$select` OData query option. Because the **user** resource supports extensions, you can also use the `GET` operation to get custom properties and extension data in a **user** instance.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
@@ -205,28 +210,28 @@ export class UserItemRequestBuilder {
         );
         return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, {}) ?? Promise.reject(new Error('request adapter is null'));
     };
-    /**
-     * Gets an item from the ApiSdk.users.item.directReports.item collection
-     * @param id Unique identifier of the item
-     * @returns a DirectoryObjectItemRequestBuilder
-     */
-    public directReportsById(id: string) : i0c1a1b9376bd00b00f88b35ac4319ad248e61a7d2f339705d240a7e2553a7f56 {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["directoryObject%2Did"] = id
-        return new i0c1a1b9376bd00b00f88b35ac4319ad248e61a7d2f339705d240a7e2553a7f56(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.extensions.item collection
-     * @param id Unique identifier of the item
-     * @returns a ExtensionItemRequestBuilder
-     */
-    public extensionsById(id: string) : ExtensionItemRequestBuilder {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["extension%2Did"] = id
-        return new ExtensionItemRequestBuilder(urlTplParams, this.requestAdapter);
-    };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.directReports.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a DirectoryObjectItemRequestBuilder
+    //  */
+    // public directReportsById(id: string) : i0c1a1b9376bd00b00f88b35ac4319ad248e61a7d2f339705d240a7e2553a7f56 {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["directoryObject%2Did"] = id
+    //     return new i0c1a1b9376bd00b00f88b35ac4319ad248e61a7d2f339705d240a7e2553a7f56(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.extensions.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a ExtensionItemRequestBuilder
+    //  */
+    // public extensionsById(id: string) : ExtensionItemRequestBuilder {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["extension%2Did"] = id
+    //     return new ExtensionItemRequestBuilder(urlTplParams, this.requestAdapter);
+    // };
     /**
      * Retrieve the properties and relationships of user object. This operation returns by default only a subset of the more commonly used properties for each user. These _default_ properties are noted in the Properties section. To get properties that are _not_ returned by default, do a GET operation for the user and specify the properties in a `$select` OData query option. Because the **user** resource supports extensions, you can also use the `GET` operation to get custom properties and extension data in a **user** instance.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
@@ -244,67 +249,67 @@ export class UserItemRequestBuilder {
      * @param id Unique identifier of the item
      * @returns a LicenseDetailsItemRequestBuilder
      */
-    public licenseDetailsById(id: string) : LicenseDetailsItemRequestBuilder {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["licenseDetails%2Did"] = id
-        return new LicenseDetailsItemRequestBuilder(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.memberOf.item collection
-     * @param id Unique identifier of the item
-     * @returns a DirectoryObjectItemRequestBuilder
-     */
-    public memberOfById(id: string) : ia6e9e43a5ea33c64071b78c19e38c5c691aae47e6d98d4a7524d77f8337441c1 {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["directoryObject%2Did"] = id
-        return new ia6e9e43a5ea33c64071b78c19e38c5c691aae47e6d98d4a7524d77f8337441c1(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.notifications.item collection
-     * @param id Unique identifier of the item
-     * @returns a NotificationItemRequestBuilder
-     */
-    public notificationsById(id: string) : NotificationItemRequestBuilder {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["notification%2Did"] = id
-        return new NotificationItemRequestBuilder(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.oauth2PermissionGrants.item collection
-     * @param id Unique identifier of the item
-     * @returns a OAuth2PermissionGrantItemRequestBuilder
-     */
-    public oauth2PermissionGrantsById(id: string) : OAuth2PermissionGrantItemRequestBuilder {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["oAuth2PermissionGrant%2Did"] = id
-        return new OAuth2PermissionGrantItemRequestBuilder(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.ownedDevices.item collection
-     * @param id Unique identifier of the item
-     * @returns a DirectoryObjectItemRequestBuilder
-     */
-    public ownedDevicesById(id: string) : ibb1775edc8b00d6847216de6125761519cda46437475647d9e60f76954f077ae {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["directoryObject%2Did"] = id
-        return new ibb1775edc8b00d6847216de6125761519cda46437475647d9e60f76954f077ae(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.ownedObjects.item collection
-     * @param id Unique identifier of the item
-     * @returns a DirectoryObjectItemRequestBuilder
-     */
-    public ownedObjectsById(id: string) : i98442ed3c02b04c2ea2cc3066430c127966655dd1b8dca84cb0f918302ae7194 {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["directoryObject%2Did"] = id
-        return new i98442ed3c02b04c2ea2cc3066430c127966655dd1b8dca84cb0f918302ae7194(urlTplParams, this.requestAdapter);
-    };
+    // public licenseDetailsById(id: string) : LicenseDetailsItemRequestBuilder {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["licenseDetails%2Did"] = id
+    //     return new LicenseDetailsItemRequestBuilder(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.memberOf.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a DirectoryObjectItemRequestBuilder
+    //  */
+    // public memberOfById(id: string) : ia6e9e43a5ea33c64071b78c19e38c5c691aae47e6d98d4a7524d77f8337441c1 {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["directoryObject%2Did"] = id
+    //     return new ia6e9e43a5ea33c64071b78c19e38c5c691aae47e6d98d4a7524d77f8337441c1(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.notifications.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a NotificationItemRequestBuilder
+    //  */
+    // public notificationsById(id: string) : NotificationItemRequestBuilder {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["notification%2Did"] = id
+    //     return new NotificationItemRequestBuilder(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.oauth2PermissionGrants.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a OAuth2PermissionGrantItemRequestBuilder
+    //  */
+    // public oauth2PermissionGrantsById(id: string) : OAuth2PermissionGrantItemRequestBuilder {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["oAuth2PermissionGrant%2Did"] = id
+    //     return new OAuth2PermissionGrantItemRequestBuilder(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.ownedDevices.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a DirectoryObjectItemRequestBuilder
+    //  */
+    // public ownedDevicesById(id: string) : ibb1775edc8b00d6847216de6125761519cda46437475647d9e60f76954f077ae {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["directoryObject%2Did"] = id
+    //     return new ibb1775edc8b00d6847216de6125761519cda46437475647d9e60f76954f077ae(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.ownedObjects.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a DirectoryObjectItemRequestBuilder
+    //  */
+    // public ownedObjectsById(id: string) : i98442ed3c02b04c2ea2cc3066430c127966655dd1b8dca84cb0f918302ae7194 {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["directoryObject%2Did"] = id
+    //     return new i98442ed3c02b04c2ea2cc3066430c127966655dd1b8dca84cb0f918302ae7194(urlTplParams, this.requestAdapter);
+    // };
     /**
      * Update the properties of a user object. Not all properties can be updated by Member or Guest users with their default permissions without Administrator roles. Compare member and guest default permissions to see properties they can manage.
      * @param body 
@@ -323,43 +328,43 @@ export class UserItemRequestBuilder {
      * @param id Unique identifier of the item
      * @returns a ProfilePhotoItemRequestBuilder
      */
-    public photosById(id: string) : ProfilePhotoItemRequestBuilder {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["profilePhoto%2Did"] = id
-        return new ProfilePhotoItemRequestBuilder(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.registeredDevices.item collection
-     * @param id Unique identifier of the item
-     * @returns a DirectoryObjectItemRequestBuilder
-     */
-    public registeredDevicesById(id: string) : ib10e13dd31dd16fe44cd02de693cacca2390370a3334683b4e37c5ee8b0d9e75 {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["directoryObject%2Did"] = id
-        return new ib10e13dd31dd16fe44cd02de693cacca2390370a3334683b4e37c5ee8b0d9e75(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.transitiveMemberOf.item collection
-     * @param id Unique identifier of the item
-     * @returns a DirectoryObjectItemRequestBuilder
-     */
-    public transitiveMemberOfById(id: string) : i5b7723796b9ab65897fb41e71fbf92926338e0d88e2286f616e6e58348a1e1ed {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["directoryObject%2Did"] = id
-        return new i5b7723796b9ab65897fb41e71fbf92926338e0d88e2286f616e6e58348a1e1ed(urlTplParams, this.requestAdapter);
-    };
-    /**
-     * Gets an item from the ApiSdk.users.item.transitiveReports.item collection
-     * @param id Unique identifier of the item
-     * @returns a DirectoryObjectItemRequestBuilder
-     */
-    public transitiveReportsById(id: string) : ifa5ee9e926fd626bdf27cc2feeb41f5c4fa82f779afc20fef1da6f0cfd404e58 {
-        if(!id) throw new Error("id cannot be undefined");
-        const urlTplParams = getPathParameters(this.pathParameters);
-        urlTplParams["directoryObject%2Did"] = id
-        return new ifa5ee9e926fd626bdf27cc2feeb41f5c4fa82f779afc20fef1da6f0cfd404e58(urlTplParams, this.requestAdapter);
-    };
+    // public photosById(id: string) : ProfilePhotoItemRequestBuilder {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["profilePhoto%2Did"] = id
+    //     return new ProfilePhotoItemRequestBuilder(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.registeredDevices.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a DirectoryObjectItemRequestBuilder
+    //  */
+    // public registeredDevicesById(id: string) : ib10e13dd31dd16fe44cd02de693cacca2390370a3334683b4e37c5ee8b0d9e75 {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["directoryObject%2Did"] = id
+    //     return new ib10e13dd31dd16fe44cd02de693cacca2390370a3334683b4e37c5ee8b0d9e75(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.transitiveMemberOf.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a DirectoryObjectItemRequestBuilder
+    //  */
+    // public transitiveMemberOfById(id: string) : i5b7723796b9ab65897fb41e71fbf92926338e0d88e2286f616e6e58348a1e1ed {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["directoryObject%2Did"] = id
+    //     return new i5b7723796b9ab65897fb41e71fbf92926338e0d88e2286f616e6e58348a1e1ed(urlTplParams, this.requestAdapter);
+    // };
+    // /**
+    //  * Gets an item from the ApiSdk.users.item.transitiveReports.item collection
+    //  * @param id Unique identifier of the item
+    //  * @returns a DirectoryObjectItemRequestBuilder
+    //  */
+    // public transitiveReportsById(id: string) : ifa5ee9e926fd626bdf27cc2feeb41f5c4fa82f779afc20fef1da6f0cfd404e58 {
+    //     if(!id) throw new Error("id cannot be undefined");
+    //     const urlTplParams = getPathParameters(this.pathParameters);
+    //     urlTplParams["directoryObject%2Did"] = id
+    //     return new ifa5ee9e926fd626bdf27cc2feeb41f5c4fa82f779afc20fef1da6f0cfd404e58(urlTplParams, this.requestAdapter);
+    // };
 }

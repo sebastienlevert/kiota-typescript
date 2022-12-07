@@ -10,6 +10,7 @@ import {SettingsRequestBuilderPatchRequestConfiguration} from './settingsRequest
 import {ShiftPreferencesRequestBuilder} from './shiftPreferences/shiftPreferencesRequestBuilder';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
+export interface ISettingsRequestBuilder extends SettingsRequestBuilder {};
 /** Builds and executes requests for operations under /users/{user-id}/settings */
 export class SettingsRequestBuilder {
     /** The contactMergeSuggestions property */

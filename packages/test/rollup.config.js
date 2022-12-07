@@ -22,7 +22,7 @@ const config = [{
             preferBuiltins: false,
 
         }),
-        terser()
+        //terser()
     ],
 }];
 

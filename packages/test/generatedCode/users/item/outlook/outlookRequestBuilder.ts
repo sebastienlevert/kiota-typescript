@@ -12,6 +12,8 @@ import {OutlookTaskItemRequestBuilder} from './tasks/item/outlookTaskItemRequest
 import {TasksRequestBuilder} from './tasks/tasksRequestBuilder';
 import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
+export interface IOutlookRequestBuilder extends OutlookRequestBuilder{}
+
 /** Builds and executes requests for operations under /users/{user-id}/outlook */
 export class OutlookRequestBuilder {
     /** The masterCategories property */
