@@ -25,9 +25,12 @@ export class JsonSerializationWriter implements SerializationWriter {
     this.writer.push(`"${key}":`);
   };
   public writeBooleanValue = (key?: string, value?: boolean): void => {
-    key && value && this.writePropertyName(key);
-    value && this.writer.push(`${value}`);
-    key && value && this.writer.push(JsonSerializationWriter.propertySeparator);
+    const isValuePresent = value !== null && value !== undefined;
+    key && isValuePresent && this.writePropertyName(key);
+    isValuePresent && this.writer.push(`${value}`);
+    key &&
+      isValuePresent &&
+      this.writer.push(JsonSerializationWriter.propertySeparator);
   };
   public writeNumberValue = (key?: string, value?: number): void => {
     key && value && this.writePropertyName(key);
@@ -224,11 +227,9 @@ export class JsonSerializationWriter implements SerializationWriter {
     key?: string | undefined,
     value?: unknown | undefined
   ): void => {
-    if (value) {
+    if (value !== undefined && value !== null) {
       const valueType = typeof value;
-      if (!value) {
-        this.writeNullValue(key);
-      } else if (valueType === "boolean") {
+      if (valueType === "boolean") {
         this.writeBooleanValue(key, value as any as boolean);
       } else if (valueType === "string") {
         this.writeStringValue(key, value as any as string);
@@ -252,8 +253,7 @@ export class JsonSerializationWriter implements SerializationWriter {
         );
       }
     } else {
-      if (key) this.writePropertyName(key);
-      this.writer.push("null");
+      this.writeNullValue(key);
     }
   };
 }

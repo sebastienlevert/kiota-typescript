@@ -2,7 +2,7 @@
   "name": "kiota-typescript",
   "private": true,
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^23.0.0",
+    "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^10.0.0",
@@ -22,26 +22,30 @@
     "karma-firefox-launcher": "^2.1.1",
     "karma-mocha": "^2.0.1",
     "karma-typescript": "^5.5.2",
-    "lerna": "^5.0.0",
+    "lerna": "^6.1.0",
     "mocha": "^10.1.0",
     "prettier": "^2.6.0",
     "rollup": "2.79.1",
     "rollup-plugin-terser": "^7.0.2",
-    "sinon": "^14.0.0",
+    "sinon": "^15.0.0",
     "typescript": "^4.6.2"
   },
   "workspaces": [
     "packages/test/",
     "packages/abstractions",
     "packages/http/*",
+    "packages/serialization/form/",
     "packages/serialization/json/",
     "packages/serialization/text/",
     "packages/authentication/*"
   ],
   "scripts": {
     "build": "npm run build:cjs && npm run build:es",
+    "build:watch": "npm run build:watch:cjs & npm run build:watch:es",
     "build:cjs": "tsc -b packages/test/tsconfig.cjs.json",
+    "build:watch:cjs": "tsc -b packages/test/tsconfig.cjs.json -w",
     "build:es": "tsc -b packages/test/tsconfig.es.json",
+    "build:watch:es": "tsc -b packages/test/tsconfig.es.json -w",
     "test": "lerna run test --parallel"
   }
 }

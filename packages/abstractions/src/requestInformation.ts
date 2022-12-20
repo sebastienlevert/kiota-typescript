@@ -1,3 +1,4 @@
+import { trace } from "@opentelemetry/api";
 import * as urlTpl from "uri-template-lite";
 
 import { DateOnly } from "./dateOnly";
@@ -71,14 +72,14 @@ export class RequestInformation {
     string | number | boolean | undefined
   > = {}; //TODO: case insensitive
   /** The Request Headers. */
-  public headers: Record<string, string> = {}; //TODO: case insensitive
+  public headers: Record<string, string[]> = {};
   private _requestOptions: Record<string, RequestOption> = {}; //TODO: case insensitive
   /** Gets the request options for the request. */
   public getRequestOptions() {
     return this._requestOptions;
   }
   /** Adds the headers for the request. */
-  public addRequestHeaders(source: Record<string, string> | undefined) {
+  public addRequestHeaders(source: Record<string, string[]> | undefined) {
     if (!source) return;
     for (const key in source) {
       this.headers[key] = source[key];
@@ -98,8 +99,10 @@ export class RequestInformation {
       delete this._requestOptions[option.getKey()];
     });
   }
-  private static binaryContentType = "application/octet-stream";
-  private static contentTypeHeader = "Content-Type";
+  private static readonly binaryContentType = "application/octet-stream";
+  private static readonly contentTypeHeader = "Content-Type";
+  private static readonly tracerKey = "@microsoft/kiota-abstractions";
+  private static readonly requestTypeKey = "com.microsoft.kiota.request.type";
   /**
    * Sets the request body from a model with the specified content type.
    * @param value the models.
@@ -113,33 +116,47 @@ export class RequestInformation {
     value?: T[] | T,
     serializerMethod?: SerializerMethod
   ): void => {
-    const writer = this.getSerializationWriter(
-      requestAdapter,
-      contentType,
-      value
-    );
-    if (!this.headers) {
-      this.headers = {};
-    }
-    if (Array.isArray(value)) {
-      writer.writeCollectionOfObjectValuesFromMethod(
-        undefined,
-        value,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        serializerMethod!
-      );
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      writer.writeObjectValueFromMethod(undefined, value, serializerMethod!);
-    }
-    this.setContentAndContentType(writer, contentType);
+    trace
+      .getTracer(RequestInformation.tracerKey)
+      .startActiveSpan("setContentFromParsable", (span) => {
+        try {
+          const writer = this.getSerializationWriter(
+            requestAdapter,
+            contentType,
+            value
+          );
+          if (!this.headers) {
+            this.headers = {};
+          }
+
+          if (Array.isArray(value)) {
+            span.setAttribute(RequestInformation.requestTypeKey, "object[]");
+            writer.writeCollectionOfObjectValuesFromMethod(
+              undefined,
+              value,
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              serializerMethod!
+            );
+          } else {
+            span.setAttribute(RequestInformation.requestTypeKey, "object");
+            writer.writeObjectValueFromMethod(
+              undefined,
+              value,
+              serializerMethod!
+            );
+          }
+          this.setContentAndContentType(writer, contentType);
+        } finally {
+          span.end();
+        }
+      });
   };
   private setContentAndContentType = (
     writer: SerializationWriter,
     contentType?: string | undefined
   ) => {
     if (contentType) {
-      this.headers[RequestInformation.contentTypeHeader] = contentType;
+      this.headers[RequestInformation.contentTypeHeader] = [contentType];
     }
     this.content = writer.getSerializedContent();
   };
@@ -169,52 +186,63 @@ export class RequestInformation {
     contentType?: string | undefined,
     value?: T[] | T
   ): void => {
-    const writer = this.getSerializationWriter(
-      requestAdapter,
-      contentType,
-      value
-    );
-    if (!this.headers) {
-      this.headers = {};
-    }
+    trace
+      .getTracer(RequestInformation.tracerKey)
+      .startActiveSpan("setContentFromScalar", (span) => {
+        try {
+          const writer = this.getSerializationWriter(
+            requestAdapter,
+            contentType,
+            value
+          );
+          if (!this.headers) {
+            this.headers = {};
+          }
 
-    if (Array.isArray(value)) {
-      writer.writeCollectionOfPrimitiveValues(undefined, value);
-    } else {
-      const valueType = typeof value;
-      if (!value) {
-        writer.writeNullValue(undefined);
-      } else if (valueType === "boolean") {
-        writer.writeBooleanValue(undefined, value as any as boolean);
-      } else if (valueType === "string") {
-        writer.writeStringValue(undefined, value as any as string);
-      } else if (value instanceof Date) {
-        writer.writeDateValue(undefined, value as any as Date);
-      } else if (value instanceof DateOnly) {
-        writer.writeDateOnlyValue(undefined, value as any as DateOnly);
-      } else if (value instanceof TimeOnly) {
-        writer.writeTimeOnlyValue(undefined, value as any as TimeOnly);
-      } else if (value instanceof Duration) {
-        writer.writeDurationValue(undefined, value as any as Duration);
-      } else if (valueType === "number") {
-        writer.writeNumberValue(undefined, value as any as number);
-      } else if (Array.isArray(value)) {
-        writer.writeCollectionOfPrimitiveValues(undefined, value);
-      } else {
-        throw new Error(
-          `encountered unknown value type during serialization ${valueType}`
-        );
-      }
-    }
-    this.setContentAndContentType(writer, contentType);
+          if (Array.isArray(value)) {
+            span.setAttribute(RequestInformation.requestTypeKey, "[]");
+            writer.writeCollectionOfPrimitiveValues(undefined, value);
+          } else {
+            const valueType = typeof value;
+            span.setAttribute(RequestInformation.requestTypeKey, valueType);
+            if (!value) {
+              writer.writeNullValue(undefined);
+            } else if (valueType === "boolean") {
+              writer.writeBooleanValue(undefined, value as any as boolean);
+            } else if (valueType === "string") {
+              writer.writeStringValue(undefined, value as any as string);
+            } else if (value instanceof Date) {
+              writer.writeDateValue(undefined, value as any as Date);
+            } else if (value instanceof DateOnly) {
+              writer.writeDateOnlyValue(undefined, value as any as DateOnly);
+            } else if (value instanceof TimeOnly) {
+              writer.writeTimeOnlyValue(undefined, value as any as TimeOnly);
+            } else if (value instanceof Duration) {
+              writer.writeDurationValue(undefined, value as any as Duration);
+            } else if (valueType === "number") {
+              writer.writeNumberValue(undefined, value as any as number);
+            } else if (Array.isArray(value)) {
+              writer.writeCollectionOfPrimitiveValues(undefined, value);
+            } else {
+              throw new Error(
+                `encountered unknown value type during serialization ${valueType}`
+              );
+            }
+          }
+          this.setContentAndContentType(writer, contentType);
+        } finally {
+          span.end();
+        }
+      });
   };
   /**
    * Sets the request body to be a binary stream.
    * @param value the binary stream
    */
   public setStreamContent = (value: ArrayBuffer): void => {
-    this.headers[RequestInformation.contentTypeHeader] =
-      RequestInformation.binaryContentType;
+    this.headers[RequestInformation.contentTypeHeader] = [
+      RequestInformation.binaryContentType,
+    ];
     this.content = value;
   };
   /**

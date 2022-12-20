@@ -10,7 +10,13 @@ import { URL } from "url";
 
 const assert = chai.assert;
 
-import { Parsable, RequestAdapter, RequestInformation, SerializationWriter, SerializationWriterFactory } from "../../src";
+import {
+  Parsable,
+  RequestAdapter,
+  RequestInformation,
+  SerializationWriter,
+  SerializationWriterFactory,
+} from "../../src";
 
 class GetQueryParameters {
   select?: string[];
@@ -20,12 +26,18 @@ class GetQueryParameters {
   search?: string;
   getQueryParameter(originalName: string): string {
     switch (originalName.toLowerCase()) {
-      case 'select': return '%24select';
-      case 'count': return '%24count';
-      case 'filter': return '%24filter';
-      case 'orderby': return '%24orderby';
-      case 'search': return '%24search';
-      default: return originalName;
+      case "select":
+        return "%24select";
+      case "count":
+        return "%24count";
+      case "filter":
+        return "%24filter";
+      case "orderby":
+        return "%24orderby";
+      case "search":
+        return "%24search";
+      default:
+        return originalName;
     }
   }
 }
@@ -58,83 +70,89 @@ describe("RequestInformation", () => {
     const requestInformation = new RequestInformation();
     requestInformation.pathParameters["baseurl"] = baseUrl;
     requestInformation.urlTemplate = "http://localhost/me{?%24select}";
-    const headers: Record<string, string> = { ConsistencyLevel: "eventual" };
+    const headers: Record<string, string[]> = {
+      ConsistencyLevel: ["eventual"],
+    };
     requestInformation.addRequestHeaders(headers);
     assert.isNotEmpty(requestInformation.headers);
-    assert.equal("eventual", requestInformation.headers["ConsistencyLevel"]);
+    assert.equal(requestInformation.headers["ConsistencyLevel"][0], "eventual");
   });
 
-//   it("Sets a parsable content", () => {
-//     const requestInformation = new RequestInformation();
-//     let methodCalledCount = 0;
-//     const mockRequestAdapter = {
-//       getSerializationWriterFactory: () => {
-//         return {
-//           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//           getSerializationWriter: (_: string) => {
-//             return {
-//               writeObjectValue: <T extends Parsable>(
-//                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//                 key?: string | undefined,
-//                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//                 value?: T | undefined
-//               ) => {
-//                 methodCalledCount++;
-//               },
-//               getSerializedContent: () => {
-//                 return new ArrayBuffer(0);
-//               },
-//             } as unknown as SerializationWriter;
-//           },
-//         } as SerializationWriterFactory;
-//       },
-//     } as RequestAdapter;
-//     requestInformation.setContentFromParsable(
-//       mockRequestAdapter,
-//       "application/json",
-//       {} as unknown as Parsable
-//     );
-//     const headers: Record<string, string> = { ConsistencyLevel: "eventual" };
-//     requestInformation.addRequestHeaders(headers);
-//     assert.isNotEmpty(requestInformation.headers);
-//     assert.equal(methodCalledCount, 1);
-//   });
+  it("Sets a parsable content", () => {
+    const requestInformation = new RequestInformation();
+    let methodCalledCount = 0;
+    const mockRequestAdapter = {
+      getSerializationWriterFactory: () => {
+        return {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          getSerializationWriter: (_: string) => {
+            return {
+              writeObjectValue: <T extends Parsable>(
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                key?: string | undefined,
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                value?: T | undefined
+              ) => {
+                methodCalledCount++;
+              },
+              getSerializedContent: () => {
+                return new ArrayBuffer(0);
+              },
+            } as unknown as SerializationWriter;
+          },
+        } as SerializationWriterFactory;
+      },
+    } as RequestAdapter;
+    requestInformation.setContentFromParsable(
+      mockRequestAdapter,
+      "application/json",
+      {} as unknown as Parsable
+    );
+    const headers: Record<string, string[]> = {
+      ConsistencyLevel: ["eventual"],
+    };
+    requestInformation.addRequestHeaders(headers);
+    assert.isNotEmpty(requestInformation.headers);
+    assert.equal(methodCalledCount, 1);
+  });
 
-//   it("Sets a parsable collection content", () => {
-//     const requestInformation = new RequestInformation();
-//     let methodCalledCount = 0;
-//     const mockRequestAdapter = {
-//       getSerializationWriterFactory: () => {
-//         return {
-//           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//           getSerializationWriter: (_: string) => {
-//             return {
-//               writeCollectionOfObjectValues: <T extends Parsable>(
-//                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//                 key?: string | undefined,
-//                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//                 values?: T[]
-//               ) => {
-//                 methodCalledCount++;
-//               },
-//               getSerializedContent: () => {
-//                 return new ArrayBuffer(0);
-//               },
-//             } as unknown as SerializationWriter;
-//           },
-//         } as SerializationWriterFactory;
-//       },
-//     } as RequestAdapter;
-//     requestInformation.setContentFromParsable(
-//       mockRequestAdapter,
-//       "application/json",
-//       [{} as unknown]
-//     );
-//     const headers: Record<string, string> = { ConsistencyLevel: "eventual" };
-//     requestInformation.addRequestHeaders(headers);
-//     assert.isNotEmpty(requestInformation.headers);
-//     assert.equal(methodCalledCount, 1);
-//   });
+  it("Sets a parsable collection content", () => {
+    const requestInformation = new RequestInformation();
+    let methodCalledCount = 0;
+    const mockRequestAdapter = {
+      getSerializationWriterFactory: () => {
+        return {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          getSerializationWriter: (_: string) => {
+            return {
+              writeCollectionOfObjectValues: <T extends Parsable>(
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                key?: string | undefined,
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                values?: T[]
+              ) => {
+                methodCalledCount++;
+              },
+              getSerializedContent: () => {
+                return new ArrayBuffer(0);
+              },
+            } as unknown as SerializationWriter;
+          },
+        } as SerializationWriterFactory;
+      },
+    } as RequestAdapter;
+    requestInformation.setContentFromParsable(
+      mockRequestAdapter,
+      "application/json",
+      [{} as unknown as Parsable]
+    );
+    const headers: Record<string, string[]> = {
+      ConsistencyLevel: ["eventual"],
+    };
+    requestInformation.addRequestHeaders(headers);
+    assert.isNotEmpty(requestInformation.headers);
+    assert.equal(methodCalledCount, 1);
+  });
 
   it("Sets a scalar content", () => {
     const requestInformation = new RequestInformation();
@@ -164,7 +182,9 @@ describe("RequestInformation", () => {
       "application/json",
       "some content"
     );
-    const headers: Record<string, string> = { ConsistencyLevel: "eventual" };
+    const headers: Record<string, string[]> = {
+      ConsistencyLevel: ["eventual"],
+    };
     requestInformation.addRequestHeaders(headers);
     assert.isNotEmpty(requestInformation.headers);
     assert.equal(writtenValue, "some content");
@@ -198,7 +218,9 @@ describe("RequestInformation", () => {
       "application/json",
       ["some content"]
     );
-    const headers: Record<string, string> = { ConsistencyLevel: "eventual" };
+    const headers: Record<string, string[]> = {
+      ConsistencyLevel: ["eventual"],
+    };
     requestInformation.addRequestHeaders(headers);
     assert.isNotEmpty(requestInformation.headers);
     assert.equal(writtenValue, '["some content"]');
