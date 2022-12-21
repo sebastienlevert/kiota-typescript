@@ -52,47 +52,30 @@ export class JsonParseNode implements ParseNode {
       }
     });
   };
+
   public getCollectionOfObjectValues = <T extends Parsable>(
-    type: ParsableFactory<T>
-  ): T[] | undefined => {
-    return (this._jsonNode as unknown[])
-      .map((x) => new JsonParseNode(x))
-      .map((x) => x.getObjectValue<T>(type));
-  };
-
-  public getObjectValue = <T extends Parsable>(type: ParsableFactory<T>): T => {
-    const result = type(this);
-    if (this.onBeforeAssignFieldValues) {
-      this.onBeforeAssignFieldValues(result);
-    }
-    this.assignFieldValues(result);
-    if (this.onAfterAssignFieldValues) {
-      this.onAfterAssignFieldValues(result);
-    }
-    return result;
-  };
-
-  public getCollectionOfObjectValuesFromMethod = <T>(
     method: DeserializeMethod<T>
   ): T[] | undefined => {
     return (this._jsonNode as unknown[])
       .map((x) => new JsonParseNode(x))
-      .map((x) => x.getObject<T>(method)); // test this
+      .map((x) => x.getObjectValue<T>(method)); // test this
   };
 
-  public getObject = <T>(deserializerFunction: DeserializeMethod<T>): T => {
-    const model = {} as T;
-    // if (this.onBeforeAssignFieldValues) {
-    //   this.onBeforeAssignFieldValues(result);
-    // }
-    this.aF(model, deserializerFunction);
-    // if (this.onAfterAssignFieldValues) {
-    //   this.onAfterAssignFieldValues(result);
-    // }
-    return model;
+  public getObject = <T extends Parsable>(
+    deserializerFunction: DeserializeMethod<T>,
+    value: T = {} as T
+  ): T => {
+    if (this.onBeforeAssignFieldValues) {
+      this.onBeforeAssignFieldValues(value);
+    }
+    this.assignFieldValues(value, deserializerFunction);
+    if (this.onAfterAssignFieldValues) {
+      this.onAfterAssignFieldValues(value);
+    }
+    return value;
   };
 
-  private aF = (
+  private assignFieldValues = (
     model: unknown,
     deserializerFunction: (model: any) => Record<string, (n: ParseNode) => void>
   ): void => {
