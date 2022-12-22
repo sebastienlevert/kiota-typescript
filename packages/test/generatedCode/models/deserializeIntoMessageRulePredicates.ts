@@ -11,7 +11,7 @@ export function deserializeIntoMessageRulePredicates(messageRulePredicates: Mess
         "bodyContains": n => { messageRulePredicates.bodyContains = n.getCollectionOfPrimitiveValues<string>() as any ; },
         "bodyOrSubjectContains": n => { messageRulePredicates.bodyOrSubjectContains = n.getCollectionOfPrimitiveValues<string>() as any ; },
         "categories": n => { messageRulePredicates.categories = n.getCollectionOfPrimitiveValues<string>() as any ; },
-        "fromAddresses": n => { messageRulePredicates.fromAddresses = n.getCollectionOfObjectValuesFromMethod(deserializeIntoRecipient) as any ; },
+        "fromAddresses": n => { messageRulePredicates.fromAddresses = n.getCollectionOfObjectValues(deserializeIntoRecipient) as any ; },
         "hasAttachments": n => { messageRulePredicates.hasAttachments = n.getBooleanValue() as any ; },
         "headerContains": n => { messageRulePredicates.headerContains = n.getCollectionOfPrimitiveValues<string>() as any ; },
         "importance": n => { messageRulePredicates.importance = n.getEnumValue<Importance>(Importance) as any ; },
@@ -33,10 +33,10 @@ export function deserializeIntoMessageRulePredicates(messageRulePredicates: Mess
         "sensitivity": n => { messageRulePredicates.sensitivity = n.getEnumValue<Sensitivity>(Sensitivity) as any ; },
         "sentCcMe": n => { messageRulePredicates.sentCcMe = n.getBooleanValue() as any ; },
         "sentOnlyToMe": n => { messageRulePredicates.sentOnlyToMe = n.getBooleanValue() as any ; },
-        "sentToAddresses": n => { messageRulePredicates.sentToAddresses = n.getCollectionOfObjectValuesFromMethod(deserializeIntoRecipient) as any ; },
+        "sentToAddresses": n => { messageRulePredicates.sentToAddresses = n.getCollectionOfObjectValues(deserializeIntoRecipient) as any ; },
         "sentToMe": n => { messageRulePredicates.sentToMe = n.getBooleanValue() as any ; },
         "sentToOrCcMe": n => { messageRulePredicates.sentToOrCcMe = n.getBooleanValue() as any ; },
         "subjectContains": n => { messageRulePredicates.subjectContains = n.getCollectionOfPrimitiveValues<string>() as any ; },
-        "withinSizeRange": n => { messageRulePredicates.withinSizeRange = n.getObject(deserializeIntoSizeRange) as any ; },
+        "withinSizeRange": n => { messageRulePredicates.withinSizeRange = n.getObjectValue(deserializeIntoSizeRange) as any ; },
     }
 }

@@ -5,6 +5,6 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 export function deserializeIntoMailFolderCollectionResponse(mailFolderCollectionResponse: MailFolderCollectionResponse | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "@odata.nextLink": n => { mailFolderCollectionResponse.odataNextLink = n.getStringValue() as any ; },
-        "value": n => { mailFolderCollectionResponse.value = n.getCollectionOfObjectValuesFromMethod(deserializeIntoMailFolder) as any ; },
+        "value": n => { mailFolderCollectionResponse.value = n.getCollectionOfObjectValues(deserializeIntoMailFolder) as any ; },
     }
 }

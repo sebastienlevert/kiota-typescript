@@ -92,7 +92,7 @@ export interface ParseNode {
    */
   onBeforeAssignFieldValues: ((value: Parsable) => void) | undefined;
   /**
-   * Gets the callback called after the node is deseserialized.
+   * Gets the callback called after the node is deserialized.
    * @return the callback called after the node is deserialized.
    */
   onAfterAssignFieldValues: ((value: Parsable) => void) | undefined;

@@ -110,11 +110,11 @@ export class RequestInformation {
    * @param requestAdapter The adapter service to get the serialization writer from.
    * @typeParam T the model type.
    */
-  public setContentFromParsable = <T>(
+  public setContentFromParsable = <T extends Parsable>(
     requestAdapter?: RequestAdapter | undefined,
     contentType?: string | undefined,
     value?: T[] | T,
-    serializerMethod?: SerializerMethod
+    serializerMethod?: SerializerMethod<T>
   ): void => {
     trace
       .getTracer(RequestInformation.tracerKey)
@@ -131,7 +131,7 @@ export class RequestInformation {
 
           if (Array.isArray(value)) {
             span.setAttribute(RequestInformation.requestTypeKey, "object[]");
-            writer.writeCollectionOfObjectValuesFromMethod(
+            writer.writeCollectionOfObjectValues(
               undefined,
               value,
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -139,11 +139,7 @@ export class RequestInformation {
             );
           } else {
             span.setAttribute(RequestInformation.requestTypeKey, "object");
-            writer.writeObjectValueFromMethod(
-              undefined,
-              value,
-              serializerMethod!
-            );
+            writer.writeObjectValue(undefined, value, serializerMethod);
           }
           this.setContentAndContentType(writer, contentType);
         } finally {

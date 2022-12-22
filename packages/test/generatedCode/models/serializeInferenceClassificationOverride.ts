@@ -7,5 +7,5 @@ import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstrac
 export function serializeInferenceClassificationOverride(writer: SerializationWriter, inferenceClassificationOverride: InferenceClassificationOverride | undefined = {}) : void {
         serializeEntity(writer, inferenceClassificationOverride)
             writer.writeEnumValue<InferenceClassificationType>("classifyAs", inferenceClassificationOverride.classifyAs);
-            writer.writeObjectValueFromMethod("senderEmailAddress", inferenceClassificationOverride.senderEmailAddress as any, serializeEmailAddress);
+            writer.writeObjectValue("senderEmailAddress", inferenceClassificationOverride.senderEmailAddress as any, serializeEmailAddress);
 }

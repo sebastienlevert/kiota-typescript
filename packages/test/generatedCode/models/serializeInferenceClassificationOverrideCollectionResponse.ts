@@ -4,5 +4,5 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function serializeInferenceClassificationOverrideCollectionResponse(writer: SerializationWriter, inferenceClassificationOverrideCollectionResponse: InferenceClassificationOverrideCollectionResponse | undefined = {}) : void {
             writer.writeStringValue("@odata.nextLink", inferenceClassificationOverrideCollectionResponse.odataNextLink);
-            writer.writeCollectionOfObjectValuesFromMethod("value", inferenceClassificationOverrideCollectionResponse.value as any, serializeInferenceClassificationOverride);
+            writer.writeCollectionOfObjectValues("value", inferenceClassificationOverrideCollectionResponse.value as any, serializeInferenceClassificationOverride);
 }

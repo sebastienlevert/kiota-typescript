@@ -8,6 +8,6 @@ export function deserializeIntoInferenceClassificationOverride(inferenceClassifi
     return {
         ...deserializeIntoEntity(inferenceClassificationOverride),
         "classifyAs": n => { inferenceClassificationOverride.classifyAs = n.getEnumValue<InferenceClassificationType>(InferenceClassificationType) as any ; },
-        "senderEmailAddress": n => { inferenceClassificationOverride.senderEmailAddress = n.getObject(deserializeIntoEmailAddress) as any ; },
+        "senderEmailAddress": n => { inferenceClassificationOverride.senderEmailAddress = n.getObjectValue(deserializeIntoEmailAddress) as any ; },
     }
 }

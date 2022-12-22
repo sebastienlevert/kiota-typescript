@@ -6,6 +6,6 @@ import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstrac
 export function deserializeIntoInferenceClassification(inferenceClassification: InferenceClassification | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         ...deserializeIntoEntity(inferenceClassification),
-        "overrides": n => { inferenceClassification.overrides = n.getCollectionOfObjectValuesFromMethod(deserializeIntoInferenceClassificationOverride) as any ; },
+        "overrides": n => { inferenceClassification.overrides = n.getCollectionOfObjectValues(deserializeIntoInferenceClassificationOverride) as any ; },
     }
 }

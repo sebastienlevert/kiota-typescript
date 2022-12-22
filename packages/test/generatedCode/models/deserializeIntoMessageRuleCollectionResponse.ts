@@ -5,6 +5,6 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 export function deserializeIntoMessageRuleCollectionResponse(messageRuleCollectionResponse: MessageRuleCollectionResponse | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "@odata.nextLink": n => { messageRuleCollectionResponse.odataNextLink = n.getStringValue() as any ; },
-        "value": n => { messageRuleCollectionResponse.value = n.getCollectionOfObjectValuesFromMethod(deserializeIntoMessageRule) as any ; },
+        "value": n => { messageRuleCollectionResponse.value = n.getCollectionOfObjectValues(deserializeIntoMessageRule) as any ; },
     }
 }

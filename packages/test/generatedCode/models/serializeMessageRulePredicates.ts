@@ -10,7 +10,7 @@ export function serializeMessageRulePredicates(writer: SerializationWriter, mess
             writer.writeCollectionOfPrimitiveValues<string>("bodyContains", messageRulePredicates.bodyContains);
             writer.writeCollectionOfPrimitiveValues<string>("bodyOrSubjectContains", messageRulePredicates.bodyOrSubjectContains);
             writer.writeCollectionOfPrimitiveValues<string>("categories", messageRulePredicates.categories);
-            writer.writeCollectionOfObjectValuesFromMethod("fromAddresses", messageRulePredicates.fromAddresses as any, serializeRecipient);
+            writer.writeCollectionOfObjectValues("fromAddresses", messageRulePredicates.fromAddresses as any, serializeRecipient);
             writer.writeBooleanValue("hasAttachments", messageRulePredicates.hasAttachments);
             writer.writeCollectionOfPrimitiveValues<string>("headerContains", messageRulePredicates.headerContains);
             writer.writeEnumValue<Importance>("importance", messageRulePredicates.importance);
@@ -32,9 +32,9 @@ export function serializeMessageRulePredicates(writer: SerializationWriter, mess
             writer.writeEnumValue<Sensitivity>("sensitivity", messageRulePredicates.sensitivity);
             writer.writeBooleanValue("sentCcMe", messageRulePredicates.sentCcMe);
             writer.writeBooleanValue("sentOnlyToMe", messageRulePredicates.sentOnlyToMe);
-            writer.writeCollectionOfObjectValuesFromMethod("sentToAddresses", messageRulePredicates.sentToAddresses as any, serializeRecipient);
+            writer.writeCollectionOfObjectValues("sentToAddresses", messageRulePredicates.sentToAddresses as any, serializeRecipient);
             writer.writeBooleanValue("sentToMe", messageRulePredicates.sentToMe);
             writer.writeBooleanValue("sentToOrCcMe", messageRulePredicates.sentToOrCcMe);
             writer.writeCollectionOfPrimitiveValues<string>("subjectContains", messageRulePredicates.subjectContains);
-            writer.writeObjectValueFromMethod("withinSizeRange", messageRulePredicates.withinSizeRange as any, serializeSizeRange);
+            writer.writeObjectValue("withinSizeRange", messageRulePredicates.withinSizeRange as any, serializeSizeRange);
 }

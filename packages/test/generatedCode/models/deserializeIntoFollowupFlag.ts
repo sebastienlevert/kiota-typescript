@@ -5,9 +5,9 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function deserializeIntoFollowupFlag(followupFlag: FollowupFlag | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "completedDateTime": n => { followupFlag.completedDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
-        "dueDateTime": n => { followupFlag.dueDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
+        "completedDateTime": n => { followupFlag.completedDateTime = n.getObjectValue(deserializeIntoDateTimeTimeZone) as any ; },
+        "dueDateTime": n => { followupFlag.dueDateTime = n.getObjectValue(deserializeIntoDateTimeTimeZone) as any ; },
         "flagStatus": n => { followupFlag.flagStatus = n.getEnumValue<FollowupFlagStatus>(FollowupFlagStatus) as any ; },
-        "startDateTime": n => { followupFlag.startDateTime = n.getObject(deserializeIntoDateTimeTimeZone) as any ; },
+        "startDateTime": n => { followupFlag.startDateTime = n.getObjectValue(deserializeIntoDateTimeTimeZone) as any ; },
     }
 }

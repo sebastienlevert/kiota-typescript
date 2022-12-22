@@ -5,6 +5,6 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 export function deserializeIntoInferenceClassificationOverrideCollectionResponse(inferenceClassificationOverrideCollectionResponse: InferenceClassificationOverrideCollectionResponse | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "@odata.nextLink": n => { inferenceClassificationOverrideCollectionResponse.odataNextLink = n.getStringValue() as any ; },
-        "value": n => { inferenceClassificationOverrideCollectionResponse.value = n.getCollectionOfObjectValuesFromMethod(deserializeIntoInferenceClassificationOverride) as any ; },
+        "value": n => { inferenceClassificationOverrideCollectionResponse.value = n.getCollectionOfObjectValues(deserializeIntoInferenceClassificationOverride) as any ; },
     }
 }

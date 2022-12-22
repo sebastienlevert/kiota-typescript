@@ -4,5 +4,5 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function serializeMessageCollectionResponse(writer: SerializationWriter, messageCollectionResponse: MessageCollectionResponse | undefined = {}) : void {
             writer.writeStringValue("@odata.nextLink", messageCollectionResponse.odataNextLink);
-            writer.writeCollectionOfObjectValuesFromMethod("value", messageCollectionResponse.value as any, serializeMessage);
+            writer.writeCollectionOfObjectValues("value", messageCollectionResponse.value as any, serializeMessage);
 }

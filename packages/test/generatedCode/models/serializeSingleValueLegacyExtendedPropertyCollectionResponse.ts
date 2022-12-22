@@ -4,5 +4,5 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function serializeSingleValueLegacyExtendedPropertyCollectionResponse(writer: SerializationWriter, singleValueLegacyExtendedPropertyCollectionResponse: SingleValueLegacyExtendedPropertyCollectionResponse | undefined = {}) : void {
             writer.writeStringValue("@odata.nextLink", singleValueLegacyExtendedPropertyCollectionResponse.odataNextLink);
-            writer.writeCollectionOfObjectValuesFromMethod("value", singleValueLegacyExtendedPropertyCollectionResponse.value as any, serializeSingleValueLegacyExtendedProperty);
+            writer.writeCollectionOfObjectValues("value", singleValueLegacyExtendedPropertyCollectionResponse.value as any, serializeSingleValueLegacyExtendedProperty);
 }

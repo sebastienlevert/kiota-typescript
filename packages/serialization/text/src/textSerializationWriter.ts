@@ -81,7 +81,8 @@ export class TextSerializationWriter implements SerializationWriter {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     key?: string,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    values?: T[]
+    values?: T[],
+    serializerMethod?: SerializerMethod<T>
   ): void => {
     throw new Error(TextSerializationWriter.noStructuredDataMessage);
   };
@@ -89,7 +90,8 @@ export class TextSerializationWriter implements SerializationWriter {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     key?: string,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    value?: T
+    value?: T,
+    serializerMethod?: SerializerMethod<T>
   ): void => {
     throw new Error(TextSerializationWriter.noStructuredDataMessage);
   };
@@ -126,21 +128,4 @@ export class TextSerializationWriter implements SerializationWriter {
   public writeAdditionalData = (value: Record<string, unknown>): void => {
     throw new Error(TextSerializationWriter.noStructuredDataMessage);
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public writeObjectValueFromMethod<T>(
-    key: string,
-    value: T,
-    serializerMethod: SerializerMethod
-  ): void {
-    throw new Error("Method not implemented.");
-  }
-
-  public writeCollectionOfObjectValuesFromMethod<T>(
-    key: string,
-    values: T[],
-    serializerMethod: SerializerMethod
-  ): void {
-    throw new Error("Method not implemented.");
-  }
 }

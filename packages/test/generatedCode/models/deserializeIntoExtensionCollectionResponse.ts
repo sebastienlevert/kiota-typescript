@@ -5,6 +5,6 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 export function deserializeIntoExtensionCollectionResponse(extensionCollectionResponse: ExtensionCollectionResponse | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "@odata.nextLink": n => { extensionCollectionResponse.odataNextLink = n.getStringValue() as any ; },
-        "value": n => { extensionCollectionResponse.value = n.getCollectionOfObjectValuesFromMethod(deserializeIntoExtension) as any ; },
+        "value": n => { extensionCollectionResponse.value = n.getCollectionOfObjectValues(deserializeIntoExtension) as any ; },
     }
 }

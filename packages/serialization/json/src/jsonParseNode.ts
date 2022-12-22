@@ -1,10 +1,8 @@
 import {
-  AdditionalDataHolder,
   DateOnly,
   DeserializeMethod,
   Duration,
   Parsable,
-  ParsableFactory,
   ParseNode,
   TimeOnly,
   toFirstCharacterUpper,
@@ -61,7 +59,7 @@ export class JsonParseNode implements ParseNode {
       .map((x) => x.getObjectValue<T>(method)); // test this
   };
 
-  public getObject = <T extends Parsable>(
+  public getObjectValue = <T extends Parsable>(
     deserializerFunction: DeserializeMethod<T>,
     value: T = {} as T
   ): T => {
@@ -75,23 +73,19 @@ export class JsonParseNode implements ParseNode {
     return value;
   };
 
-  private assignFieldValues = (
-    model: unknown,
-    deserializerFunction: (model: any) => Record<string, (n: ParseNode) => void>
+  private assignFieldValues = <T extends Parsable>(
+    model: T,
+    deserializerFunction: (model: T) => Record<string, (n: ParseNode) => void>
   ): void => {
     const fields = deserializerFunction(model);
-    let itemAdditionalData: Record<string, unknown> | undefined;
-    // const holder = item as unknown as AdditionalDataHolder;
-    // if (holder && holder.additionalData) {
-    //   itemAdditionalData = holder.additionalData;
-    // }
+
     if (!this._jsonNode) return;
     Object.entries(this._jsonNode as any).forEach(([k, v]) => {
       const deserializer = fields[k];
       if (deserializer) {
         deserializer(new JsonParseNode(v));
-      } else if (itemAdditionalData) {
-        itemAdditionalData[k] = v;
+      } else {
+        (model as Record<string, unknown>)[k] = v;
       }
     });
   };
@@ -109,22 +103,5 @@ export class JsonParseNode implements ParseNode {
     } else {
       return undefined;
     }
-  };
-  private assignFieldValues = <T extends Parsable>(item: T): void => {
-    const fields = item.getFieldDeserializers();
-    let itemAdditionalData: Record<string, unknown> | undefined;
-    const holder = item as unknown as AdditionalDataHolder;
-    if (holder && holder.additionalData) {
-      itemAdditionalData = holder.additionalData;
-    }
-    if (!this._jsonNode) return;
-    Object.entries(this._jsonNode as any).forEach(([k, v]) => {
-      const deserializer = fields[k];
-      if (deserializer) {
-        deserializer(new JsonParseNode(v));
-      } else if (itemAdditionalData) {
-        itemAdditionalData[k] = v;
-      }
-    });
   };
 }

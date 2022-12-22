@@ -5,6 +5,6 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 export function deserializeIntoAttachmentCollectionResponse(attachmentCollectionResponse: AttachmentCollectionResponse | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "@odata.nextLink": n => { attachmentCollectionResponse.odataNextLink = n.getStringValue() as any ; },
-        "value": n => { attachmentCollectionResponse.value = n.getCollectionOfObjectValuesFromMethod(deserializeIntoAttachment) as any ; },
+        "value": n => { attachmentCollectionResponse.value = n.getCollectionOfObjectValues(deserializeIntoAttachment) as any ; },
     }
 }

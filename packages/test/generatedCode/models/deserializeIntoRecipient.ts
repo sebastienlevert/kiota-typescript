@@ -4,6 +4,6 @@ import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@m
 
 export function deserializeIntoRecipient(recipient: Recipient | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "emailAddress": n => { recipient.emailAddress = n.getObject(deserializeIntoEmailAddress) as any ; },
+        "emailAddress": n => { recipient.emailAddress = n.getObjectValue(deserializeIntoEmailAddress) as any ; },
     }
 }
