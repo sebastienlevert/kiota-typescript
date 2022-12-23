@@ -1108,7 +1108,7 @@
     "npmlog" "^6.0.2"
     "write-file-atomic" "^4.0.1"
 
-"@microsoft/kiota-abstractions@^1.0.0-preview.7", "@microsoft/kiota-abstractions@1.0.0-preview.7", "@microsoft/kiota-abstractions@file:C:\\Work\\Projects\\SDKS\\kiota-typescript\\packages\\abstractions":
+"@microsoft/kiota-abstractions@^1.0.0-preview.7", "@microsoft/kiota-abstractions@1.0.0-preview.7", "@microsoft/kiota-abstractions@file:/home/slevert/source/microsoft/kiota-typescript/packages/abstractions":
   "resolved" "file:packages/abstractions"
   "version" "1.0.0-preview.7"
   dependencies:
@@ -1117,7 +1117,7 @@
     "uri-template-lite" "^22.1.0"
     "uuid" "^9.0.0"
 
-"@microsoft/kiota-authentication-azure@^1.0.0-preview.5", "@microsoft/kiota-authentication-azure@file:C:\\Work\\Projects\\SDKS\\kiota-typescript\\packages\\authentication\\azure":
+"@microsoft/kiota-authentication-azure@^1.0.0-preview.5", "@microsoft/kiota-authentication-azure@file:/home/slevert/source/microsoft/kiota-typescript/packages/authentication/azure":
   "resolved" "file:packages/authentication/azure"
   "version" "1.0.0-preview.5"
   dependencies:
@@ -1125,7 +1125,7 @@
     "@microsoft/kiota-abstractions" "1.0.0-preview.7"
     "tslib" "^2.3.1"
 
-"@microsoft/kiota-authentication-spfx@file:C:\\Work\\Projects\\SDKS\\kiota-typescript\\packages\\authentication\\spfx":
+"@microsoft/kiota-authentication-spfx@file:/home/slevert/source/microsoft/kiota-typescript/packages/authentication/spfx":
   "resolved" "file:packages/authentication/spfx"
   "version" "1.0.0-preview.1"
   dependencies:
@@ -1133,7 +1133,7 @@
     "@microsoft/sp-http" "^1.15.2"
     "tslib" "^2.3.1"
 
-"@microsoft/kiota-http-fetchlibrary@^1.0.0-preview.8", "@microsoft/kiota-http-fetchlibrary@file:C:\\Work\\Projects\\SDKS\\kiota-typescript\\packages\\http\\fetch":
+"@microsoft/kiota-http-fetchlibrary@^1.0.0-preview.8", "@microsoft/kiota-http-fetchlibrary@file:/home/slevert/source/microsoft/kiota-typescript/packages/http/fetch":
   "resolved" "file:packages/http/fetch"
   "version" "1.0.0-preview.8"
   dependencies:
@@ -1141,14 +1141,14 @@
     "node-fetch" "^2.6.5"
     "tslib" "^2.3.1"
 
-"@microsoft/kiota-serialization-json@^1.0.0-preview.8", "@microsoft/kiota-serialization-json@file:C:\\Work\\Projects\\SDKS\\kiota-typescript\\packages\\serialization\\json":
+"@microsoft/kiota-serialization-json@^1.0.0-preview.8", "@microsoft/kiota-serialization-json@file:/home/slevert/source/microsoft/kiota-typescript/packages/serialization/json":
   "resolved" "file:packages/serialization/json"
   "version" "1.0.0-preview.8"
   dependencies:
     "@microsoft/kiota-abstractions" "1.0.0-preview.7"
     "tslib" "^2.3.1"
 
-"@microsoft/kiota-serialization-text@^1.0.0-preview.7", "@microsoft/kiota-serialization-text@file:C:\\Work\\Projects\\SDKS\\kiota-typescript\\packages\\serialization\\text":
+"@microsoft/kiota-serialization-text@^1.0.0-preview.7", "@microsoft/kiota-serialization-text@file:/home/slevert/source/microsoft/kiota-typescript/packages/serialization/text":
   "resolved" "file:packages/serialization/text"
   "version" "1.0.0-preview.7"
   dependencies:
@@ -7084,7 +7084,7 @@
     "commander" "^2.20.0"
     "source-map-support" "~0.5.20"
 
-"test-kiota-typescript-libraries@file:C:\\Work\\Projects\\SDKS\\kiota-typescript\\packages\\test":
+"test-kiota-typescript-libraries@file:/home/slevert/source/microsoft/kiota-typescript/packages/test":
   "resolved" "file:packages/test"
   "version" "0.0.1-preview.4"
   dependencies:
